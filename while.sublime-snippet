@@ -1,0 +1,10 @@
+<snippet>
+    <tabTrigger>while</tabTrigger>
+    <scope>source.jcsh</scope>
+    <description>While loop</description>
+    <content><![CDATA[
+while ${1:$SELECTION}
+	${0}
+end
+]]></content>
+</snippet>

@@ -1,0 +1,17 @@
+{
+"scope": "meta.variable.modifier.source.jcsh",
+"completions":
+	[
+		"dirname",
+		"filename",
+		"basename",
+		"extension",
+		"l",
+		"q",
+		"qq",
+		"lc",
+		"uc",
+		{ "trigger": "h", "contents": "h${0:2}" },
+		{ "trigger": "s", "contents": "s${1:4},${0:2}" }
+	]
+}

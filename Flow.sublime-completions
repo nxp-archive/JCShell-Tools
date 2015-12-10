@@ -1,0 +1,18 @@
+{
+"scope": "meta.callable.source.jcsh",
+"completions":
+	[
+		"break",
+		"catch",
+		"continue",
+		"else",
+		"elseif",
+		"end",
+		"END",
+		"for",
+		"goto",
+		"if",
+		"try",
+		"while"
+	]
+}

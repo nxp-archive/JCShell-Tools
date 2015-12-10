@@ -1,0 +1,12 @@
+<snippet>
+    <tabTrigger>try</tabTrigger>
+    <scope>source.jcsh</scope>
+    <description>Try/Catch</description>
+    <content><![CDATA[
+try
+	${1:$SELECTION}
+catch ${2:1}
+	${0}
+end
+]]></content>
+</snippet>

@@ -1,0 +1,12 @@
+<snippet>
+    <tabTrigger>DEFUN</tabTrigger>
+    <scope>source.jcsh</scope>
+    <description>Function definition</description>
+    <content><![CDATA[
+# Function ${1:$SELECTION}: ${2}
+# Arguments: ${3}
+DEFUN ${1:$SELECTION}
+	${0:return}
+END
+]]></content>
+</snippet>

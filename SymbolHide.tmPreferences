@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>name</key>
+    <string>Symbol List to exclude</string>
+    <key>scope</key>
+    <string>source.jcsh meta.callable.source</string>
+    <key>settings</key>
+    <dict>
+        <key>showInSymbolList</key>
+        <integer>0</integer>
+        <key>showInIndexedSymbolList</key>
+        <integer>0</integer>
+    </dict>
+    <key>uuid</key>
+    <string>85c82265-a740-4b7a-95a4-aab4490c9ee0</string>
+</dict>
+</plist>

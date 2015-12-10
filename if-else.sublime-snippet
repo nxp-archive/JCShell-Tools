@@ -1,0 +1,12 @@
+<snippet>
+    <tabTrigger>if</tabTrigger>
+    <scope>source.jcsh</scope>
+    <description>If/Else condition</description>
+    <content><![CDATA[
+if ${1:$SELECTION}
+	${2}
+else
+	${0}
+end
+]]></content>
+</snippet>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>name</key>
+    <string>Symbol List</string>
+    <key>scope</key>
+    <string>source.jcsh entity.name.function.definition.source.jcsh</string>
+    <key>settings</key>
+    <dict>
+        <key>showInSymbolList</key>
+        <integer>1</integer>
+        <key>showInIndexedSymbolList</key>
+        <integer>1</integer>
+    </dict>
+    <key>uuid</key>
+    <string>b8f7b993-ae37-47ad-8952-4e11b2adf4db</string>
+</dict>
+</plist>
