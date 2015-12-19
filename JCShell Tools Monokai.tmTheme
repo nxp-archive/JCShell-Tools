@@ -665,20 +665,9 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>JCShell assignment command</string>
+			<string>JCShell assignment command/operator</string>
 			<key>scope</key>
-			<string>keyword.assignment.command</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#FEC481</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell assignment operator</string>
-			<key>scope</key>
-			<string>keyword.operator.assignment</string>
+			<string>keyword.assignment</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>

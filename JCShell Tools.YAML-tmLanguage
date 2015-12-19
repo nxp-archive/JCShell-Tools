@@ -61,148 +61,64 @@ repository:
 
   assignment-command:
     patterns:
-    - comment: Variable assignment with command and no subscript
+    - comment: Variable assignment with explicit command
       name: meta.assignment.source.jcsh
-      begin: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(/set-var|/s-v)\s+((?:(?:-d|--def|-g|--global|-q|--quote)\s+)*)(\w[\w\-\.]*)\s*(?=(\s[^\[])|$|\\)
+      begin: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(/set-var|/s-v)\s((?:\s*(?:-d|--def|-g|--global|-q|--quote)\s)*)
       beginCaptures:
         '1': {name: keyword.control.label.definition.source.jcsh}
         '2': {name: punctuation.definition.label.source.jcsh}
         '3': {name: keyword.assignment.command.source.jcsh}
         '4': {name: variable.parameter.flag.assignment.source.jcsh}
-        '5': {name: variable.assigned.source.jcsh}
-      end: \s*(?=(\s#[^\(])|$|\\)
+      end: (?=(?:\s#[^\(])|$|\\)
       patterns:
-      - include: '#expression'
-      - match: \s
-      - include: '#invalid-character'
-
-  assignment-command-subscript:
-    patterns:
-    - comment: Subscript in assignment command
-      name: meta.assignment.susbcript.source.jcsh
-      begin: (\[)
-      beginCaptures:
-        '1': {name: punctuation.definition.subscript.begin.source.jcsh}
-      end: (\])\s*
-      endCaptures:
-        '1': {name: punctuation.definition.subscript.end.source.jcsh}
-      patterns:
-      - name: punctuation.subscript.content.asterisk.source.jcsh
-        match: \s*\*\s*
-      - include: '#expression'
-      - name: punctuation.subscript.content.number-sign.source.jcsh
-        match: \s*#\s*
-      - match: \s
-      - include: '#invalid-character'
-
-  assignment-command-subscript-target:
-    patterns:
-    - comment: Variable that is assigned a value with a subscript
-      name: meta.assignment.target.jcsh
-      begin: (?<=/set-var\s|/s-v\s)
-      end: (?<=[\w\}\)])(?=\s*\[)
-      patterns:
-      - comment: Name of an assigned variable
-        name: meta.variable.assigned.source.jcsh
-        begin: (?<=/set-var\s|/s-v\s)\s*((?:(?:-d|--def|-g|--global|-q|--quote)\s+)*)
-        beginCaptures:
-          '1': {name: variable.parameter.flag.assignment.source.jcsh}
-        end: \s*(?=\[)
+      - comment: Match the newly defined variable name (consume up to the next space). We have to rematch the beginning of the line to make sure we only take the first word after the space (and that the regex is not applied to each word on the line)
+        begin: (?<=(?:/set-var\s|/s-v\s|-d\s|--def\s|-g\s|--global\s|-q\s|--quote\s))\s*
+        end: (?<=\S)\s+(?=.*|(?:\s#[^\(])|$|\\)
         patterns:
-        - include: '#variable'
-        - include: '#nested-call'
-        - name: variable.assigned.surrounding.source.jcsh
-          match: \w[\w\-\.]*
-        - include: '#invalid-character'
-
-  assignment-command-with-subscript:
-    patterns:
-    - comment: Variable assignment with command and subscript
-      name: meta.assignment.source.jcsh
-      begin: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(/set-var|/s-v)\s
-      beginCaptures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
-        '3': {name: keyword.assignment.command.source.jcsh}
-      end: \s*(?=(\s#[^\(])|$|\\)
-      patterns:
-      - include: '#assignment-command-subscript-target'
-      - include: '#assignment-command-subscript'
-      - include: '#expression'
-      - match: \s
+        - comment: Handle the subscript first (array '[]')
+          include: '#subscript'
+        - comment: Then the newly defined variable name
+          include: '#assignment-name'
+      - comment: Process the value assigned (after the first space)
+        include: '#expression'
+      - comment: Spaces are legit for variable assignment
+        match: \s
       - include: '#invalid-character'
 
   assignment-operator:
     patterns:
-    - comment: Variable assignment with operator and no subscript
+    - comment: Variable assignment with operator ('=')
       name: meta.assignment.source.jcsh
-      begin: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(@)?(\w[\w\-\.]*)\s*(\=)
+      begin: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(?=.*\=)
       beginCaptures:
         '1': {name: keyword.control.label.definition.source.jcsh}
         '2': {name: punctuation.definition.label.source.jcsh}
-        '3': {name: punctuation.call-modifier.builtin.source.jcsh}
-        '4': {name: variable.assigned.source.jcsh}
-        '5': {name: keyword.operator.assignment.source.jcsh}
-      end: (?<=.)\s*(?=(\s#[^\(])|$|\\)
+      end: (?<=.)\s*(?=(?:\s#[^\(])|$|\\)
       patterns:
-      - include: '#expression'
-      - match: \s
-      - include: '#invalid-character'
-
-  assignment-operator-subscript:
-    patterns:
-    - comment: Subscript in assignment operation
-      name: meta.assignment.subscript.source.jcsh
-      begin: (\[)
-      beginCaptures:
-        '1': {name: punctuation.definition.subscript.begin.source.jcsh}
-      end: (\])\s*(\=)
-      endCaptures:
-        '1': {name: punctuation.definition.subscript.end.source.jcsh}
-        '2': {name: keyword.operator.assignment.source.jcsh}
-      patterns:
-      - match: \s*\*\s*
-        name: punctuation.subscript.content.asterisk.source.jcsh
-      - include: '#expression'
-      - match: \s*#\s*
-        name: punctuation.subscript.content.number-sign.source.jcsh
-      - match: \s
-      - include: '#invalid-character'
-
-  assignment-operator-subscript-target:
-    patterns:
-    - comment: Variable that is assigned a value with a subscript
-      name: meta.assignment.target.source.jcsh
-      begin: (?<=^|:)
-      end: (?=\s*\[.*\]\s*\=)
-      patterns:
-      - comment: Name of an assigned variable
-        name: meta.variable.assigned.source.jcsh
-        begin: (?<=^|:)\s*(@)?
-        beginCaptures:
-          '1': {name: punctuation.call-modifier.builtin.source.jcsh}
-        end: \s*(?=\[.*\]\s*\=)
+      - comment: Match the newly defined variable name (consume up to the '=')
+        begin: (?<=(?:.|^))(?=.*\=)
+        end: (=)(?=.|(?:\s#[^\(])|$|\\)
+        endCaptures:
+          '1': {name: keyword.assignment.operator.source.jcsh}
         patterns:
-        - include: '#variable'
-        - include: '#nested-call'
-        - match: \w[\w\-\.]*
-          name: variable.assigned.surrounding.source.jcsh
-        - include: '#invalid-character'
+        - comment: Handle the subscript first (array '[]')
+          include: '#subscript'
+        - comment: Then the newly defined variable name
+          include: '#assignment-name'
+      - comment: Process the value assigned (after the '=')
+        include: '#expression'
+      - comment: Spaces are legit for variable assignment
+        match: \s
+      - include: '#invalid-character'
 
-  assignment-operator-with-subscript:
+  assignment-name:
     patterns:
-    - comment: Variable assignment with operator and subscript
-      name: meta.assignment.source.jcsh
-      begin: '^(?:\s*(\w[\w\-\.]*)\s*(:))?(?=(?:.(?!= #))*\]\s*\=.*$)'
-      beginCaptures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
-      end: (?<=.)\s*(?=(\s#[^\(])|$|\\)
+    - comment: Name of the variable newly created (that can contains variables calls inside)
       patterns:
-      - include: '#assignment-operator-subscript-target'
-      - include: '#assignment-operator-subscript'
-      - include: '#expression'
-      - match: \s
+      - include: '#variable'
+      - include: '#nested-call'
+      - match: \S
+        name: variable.assigned.source.jcsh
       - include: '#invalid-character'
 
   break-statement:
@@ -267,19 +183,13 @@ repository:
       begin: (?<=;)\s*(fmt|len)\s*(\=)
       beginCaptures:
         '1': {name: keyword.modifier.builtin.source.jcsh}
-        '2': {name: keyword.operator.assignment.source.jcsh}
+        '2': {name: keyword.assignment.operator.source.jcsh}
       end: \s*(?=[;\}])
       patterns:
       - include: '#variable'
       - name: string.unquoted.assigned-modifier.surrounding.source.jcsh
         match: .
       - include: '#invalid-character'
-
-  builtin-variable-name:
-    patterns:
-    - comment: Name of a JCShell built-in variable.
-      name: support.variable.name.builtin.source.jcsh
-      <<: *VAR_LIST_BUILTIN
 
   call:
     patterns:
@@ -329,7 +239,7 @@ repository:
       - comment: User-defined callable
         name: meta.callable.user.source.jcsh
         begin: (?<=^|:|\()
-        end: (?<=[\}\)\w])(?=\s|#|\)|$)
+        end: (?<=[\}\)\w])(?=\s|\)|#|$)
         patterns:
         - match: (?<=^|:|\()\s*([@\-])?
           captures:
@@ -424,15 +334,6 @@ repository:
     - comment: Line containing only whitespace
       name: meta.empty.source.jcsh
       match: ^\s*(\\)?$
-
-  environment-variable-name:
-    patterns:
-    - comment: Name of an environment variable.
-      name: meta.variable.name.environment.source.jcsh
-      match: (?<=\{)\s*(\*)([\w.]+)\s*(?=[\[;\}])
-      captures:
-        '1': {name: punctuation.definition.variable.name.environment.source.jcsh}
-        '2': {name: variable.name.environment.source.jcsh}
 
   expression:
     patterns:
@@ -569,7 +470,8 @@ repository:
 
   invalid-character:
     patterns:
-    - name: invalid.character.source.jcsh
+    - comment: Match anything not matched yet
+      name: invalid.character.source.jcsh
       match: .
 
   label:
@@ -657,12 +559,6 @@ repository:
         match: \s*\w[\w\-\.]*\s*
       - include: '#invalid-character'
 
-  positional-variable-name:
-    patterns:
-    - comment: Name of a positional variable
-      name: support.variable.name.positional.source.jcsh
-      match: (?<=\{)\s*\d+\s*(?=[\[;\}])
-
   return-statement:
     patterns:
     - comment: Continue statement
@@ -709,24 +605,6 @@ repository:
       - name: string.quoted.double.surrounding.source.jcsh
         match: .
 
-  subscript:
-    patterns:
-    - comment: Variable subscript
-      begin: (\[)
-      beginCaptures:
-        '1': {name: punctuation.definition.subscript.begin.source.jcsh}
-      end: (\])\s*(?=[:\[;\}])
-      endCaptures:
-        '1': {name: punctuation.definition.subscript.end.source.jcsh}
-      patterns:
-      - match: \s*\*\s*
-        name: punctuation.subscript.content.asterisk.source.jcsh
-      - include: '#expression'
-      - match: \s*#\s*
-        name: punctuation.subscript.content.number-sign.source.jcsh
-      - match: \s
-      - include: '#invalid-character'
-
   try-block:
     patterns:
     - comment: Try block
@@ -747,19 +625,6 @@ repository:
       - include: '#catch-clause'
       - include: $self
 
-  user-variable-name:
-    patterns:
-    - comment: User-defined variable name
-      name: meta.variable.name.user.source.jcsh
-      begin: (?<=\{)\s*
-      end: \s*(?=[:\[;\}])
-      patterns:
-      - include: '#variable'
-      - include: '#nested-call'
-      - name: variable.name.user.surrounding.source.jcsh
-        match: \w[\w\-\.]*
-      - include: '#invalid-character'
-
   variable:
     patterns:
     - comment: Bracket-style variable reference
@@ -772,10 +637,10 @@ repository:
       endCaptures:
         '0': {name: punctuation.definition.reference.variable.end.source.jcsh}
       patterns:
-      - include: '#variable-name'
       - include: '#plugin-modifier'
       - include: '#subscript'
       - include: '#modifier'
+      - include: '#variable-name'
       - include: '#invalid-character'
 
   variable-name:
@@ -789,6 +654,58 @@ repository:
       - include: '#positional-variable-name'
       - include: '#environment-variable-name'
       - include: '#user-variable-name'
+      - include: '#invalid-character'
+
+  builtin-variable-name:
+    patterns:
+    - comment: Name of a JCShell built-in variable.
+      name: support.variable.name.builtin.source.jcsh
+      <<: *VAR_LIST_BUILTIN
+
+  positional-variable-name:
+    patterns:
+    - comment: Name of a positional variable
+      name: support.variable.name.positional.source.jcsh
+      match: (?<=\{)\d+(?=[\[;\}])
+
+  environment-variable-name:
+    patterns:
+    - comment: Name of an environment variable (starting with '*')
+      name: meta.variable.name.environment.source.jcsh
+      match: (?<=\{)(\*)([\w.]+)(?=[\[;\}])
+      captures:
+        '1': {name: punctuation.definition.variable.name.environment.source.jcsh}
+        '2': {name: variable.name.environment.source.jcsh}
+
+  user-variable-name:
+    patterns:
+    - comment: User-defined variable name
+      name: meta.variable.name.user.source.jcsh
+      begin: (?<=\{)
+      end: \s*(?=[:\[;\}])
+      patterns:
+      - include: '#variable'
+      - include: '#nested-call'
+      - match: \S
+        name: variable.name.user.source.jcsh
+      - include: '#invalid-character'
+
+  subscript:
+    patterns:
+    - comment: Variable subscript (array '[]')
+      begin: (\[)
+      beginCaptures:
+        '1': {name: punctuation.definition.subscript.begin.source.jcsh}
+      end: (\])
+      endCaptures:
+        '1': {name: punctuation.definition.subscript.end.source.jcsh}
+      patterns:
+      - comment: Inside the '[]' (no space allowed)
+      - match: \*
+        name: punctuation.subscript.content.asterisk.source.jcsh
+      - include: '#expression'
+      - match: \#
+        name: punctuation.subscript.content.number-sign.source.jcsh
       - include: '#invalid-character'
 
   while-block:

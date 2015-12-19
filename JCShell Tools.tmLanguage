@@ -118,7 +118,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(/set-var|/s-v)\s+((?:(?:-d|--def|-g|--global|-q|--quote)\s+)*)(\w[\w\-\.]*)\s*(?=(\s[^\[])|$|\\)</string>
+					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(/set-var|/s-v)\s((?:\s*(?:-d|--def|-g|--global|-q|--quote)\s)*)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -141,201 +141,80 @@
 							<key>name</key>
 							<string>variable.parameter.flag.assignment.source.jcsh</string>
 						</dict>
-						<key>5</key>
-						<dict>
-							<key>name</key>
-							<string>variable.assigned.source.jcsh</string>
-						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Variable assignment with command and no subscript</string>
+					<string>Variable assignment with explicit command</string>
 					<key>end</key>
-					<string>\s*(?=(\s#[^\(])|$|\\)</string>
+					<string>(?=(?:\s#[^\(])|$|\\)</string>
 					<key>name</key>
 					<string>meta.assignment.source.jcsh</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#expression</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<key>assignment-command-subscript</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(\[)</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.subscript.begin.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>comment</key>
-					<string>Subscript in assignment command</string>
-					<key>end</key>
-					<string>(\])\s*</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.subscript.end.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>name</key>
-					<string>meta.assignment.susbcript.source.jcsh</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>match</key>
-							<string>\s*\*\s*</string>
-							<key>name</key>
-							<string>punctuation.subscript.content.asterisk.source.jcsh</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#expression</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s*#\s*</string>
-							<key>name</key>
-							<string>punctuation.subscript.content.number-sign.source.jcsh</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<key>assignment-command-subscript-target</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(?&lt;=/set-var\s|/s-v\s)</string>
-					<key>comment</key>
-					<string>Variable that is assigned a value with a subscript</string>
-					<key>end</key>
-					<string>(?&lt;=[\w\}\)])(?=\s*\[)</string>
-					<key>name</key>
-					<string>meta.assignment.target.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
 							<key>begin</key>
-							<string>(?&lt;=/set-var\s|/s-v\s)\s*((?:(?:-d|--def|-g|--global|-q|--quote)\s+)*)</string>
-							<key>beginCaptures</key>
-							<dict>
-								<key>1</key>
-								<dict>
-									<key>name</key>
-									<string>variable.parameter.flag.assignment.source.jcsh</string>
-								</dict>
-							</dict>
+							<string>(?&lt;=(?:/set-var\s|/s-v\s|-d\s|--def\s|-g\s|--global\s|-q\s|--quote\s))\s*</string>
 							<key>comment</key>
-							<string>Name of an assigned variable</string>
+							<string>Match the newly defined variable name (consume up to the next space). We have to rematch the begining of the line to make sure we only take the first word after the space and the regex is not applied to each word on the line</string>
 							<key>end</key>
-							<string>\s*(?=\[)</string>
-							<key>name</key>
-							<string>meta.variable.assigned.source.jcsh</string>
+							<string>(?&lt;=\S)\s+(?=.*|(?:\s#[^\(])|$|\\)</string>
 							<key>patterns</key>
 							<array>
 								<dict>
+									<key>comment</key>
+									<string>Handle the subscript first (array '[]')</string>
 									<key>include</key>
-									<string>#variable</string>
+									<string>#subscript</string>
 								</dict>
 								<dict>
+									<key>comment</key>
+									<string>Then the newly defined variable name</string>
 									<key>include</key>
-									<string>#nested-call</string>
-								</dict>
-								<dict>
-									<key>match</key>
-									<string>\w[\w\-\.]*</string>
-									<key>name</key>
-									<string>variable.assigned.surrounding.source.jcsh</string>
-								</dict>
-								<dict>
-									<key>include</key>
-									<string>#invalid-character</string>
+									<string>#assignment-name</string>
 								</dict>
 							</array>
+						</dict>
+						<dict>
+							<key>comment</key>
+							<string>Process the value assigned (after the first space)</string>
+							<key>include</key>
+							<string>#expression</string>
+						</dict>
+						<dict>
+							<key>comment</key>
+							<string>Spaces are legit for variable assignment</string>
+							<key>match</key>
+							<string>\s</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#invalid-character</string>
 						</dict>
 					</array>
 				</dict>
 			</array>
 		</dict>
-		<key>assignment-command-with-subscript</key>
+		<key>assignment-name</key>
 		<dict>
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>begin</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(/set-var|/s-v)\s</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.assignment.command.source.jcsh</string>
-						</dict>
-					</dict>
 					<key>comment</key>
-					<string>Variable assignment with command and subscript</string>
-					<key>end</key>
-					<string>\s*(?=(\s#[^\(])|$|\\)</string>
-					<key>name</key>
-					<string>meta.assignment.source.jcsh</string>
+					<string>Name of the variable newly created (that can contains variables calls inside)</string>
 					<key>patterns</key>
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#assignment-command-subscript-target</string>
+							<string>#variable</string>
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#assignment-command-subscript</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#expression</string>
+							<string>#nested-call</string>
 						</dict>
 						<dict>
 							<key>match</key>
-							<string>\s</string>
+							<string>\S</string>
+							<key>name</key>
+							<string>variable.assigned.source.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -351,7 +230,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(@)?(\w[\w\-\.]*)\s*(\=)</string>
+					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(?=.*\=)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -364,209 +243,55 @@
 							<key>name</key>
 							<string>punctuation.definition.label.source.jcsh</string>
 						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.call-modifier.builtin.source.jcsh</string>
-						</dict>
-						<key>4</key>
-						<dict>
-							<key>name</key>
-							<string>variable.assigned.source.jcsh</string>
-						</dict>
-						<key>5</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.operator.assignment.source.jcsh</string>
-						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Variable assignment with operator and no subscript</string>
+					<string>Variable assignment with operator ('=')</string>
 					<key>end</key>
-					<string>(?&lt;=.)\s*(?=(\s#[^\(])|$|\\)</string>
+					<string>(?&lt;=.)\s*(?=(?:\s#[^\(])|$|\\)</string>
 					<key>name</key>
 					<string>meta.assignment.source.jcsh</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#expression</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<key>assignment-operator-subscript</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(\[)</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.subscript.begin.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>comment</key>
-					<string>Subscript in assignment operation</string>
-					<key>end</key>
-					<string>(\])\s*(\=)</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.subscript.end.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.operator.assignment.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>name</key>
-					<string>meta.assignment.subscript.source.jcsh</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>match</key>
-							<string>\s*\*\s*</string>
-							<key>name</key>
-							<string>punctuation.subscript.content.asterisk.source.jcsh</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#expression</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s*#\s*</string>
-							<key>name</key>
-							<string>punctuation.subscript.content.number-sign.source.jcsh</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<key>assignment-operator-subscript-target</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(?&lt;=^|:)</string>
-					<key>comment</key>
-					<string>Variable that is assigned a value with a subscript</string>
-					<key>end</key>
-					<string>(?=\s*\[.*\]\s*\=)</string>
-					<key>name</key>
-					<string>meta.assignment.target.source.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
 							<key>begin</key>
-							<string>(?&lt;=^|:)\s*(@)?</string>
-							<key>beginCaptures</key>
+							<string>(?&lt;=(?:.|^))(?=.*\=)</string>
+							<key>comment</key>
+							<string>Match the newly defined variable name (consume up to the '=')</string>
+							<key>end</key>
+							<string>(=)(?=.|(?:\s#[^\(])|$|\\)</string>
+							<key>endCaptures</key>
 							<dict>
 								<key>1</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.call-modifier.builtin.source.jcsh</string>
+									<string>keyword.assignment.operator.source.jcsh</string>
 								</dict>
 							</dict>
-							<key>comment</key>
-							<string>Name of an assigned variable</string>
-							<key>end</key>
-							<string>\s*(?=\[.*\]\s*\=)</string>
-							<key>name</key>
-							<string>meta.variable.assigned.source.jcsh</string>
 							<key>patterns</key>
 							<array>
 								<dict>
+									<key>comment</key>
+									<string>Handle the subscript first (array '[]')</string>
 									<key>include</key>
-									<string>#variable</string>
+									<string>#subscript</string>
 								</dict>
 								<dict>
+									<key>comment</key>
+									<string>Then the newly defined variable name</string>
 									<key>include</key>
-									<string>#nested-call</string>
-								</dict>
-								<dict>
-									<key>match</key>
-									<string>\w[\w\-\.]*</string>
-									<key>name</key>
-									<string>variable.assigned.surrounding.source.jcsh</string>
-								</dict>
-								<dict>
-									<key>include</key>
-									<string>#invalid-character</string>
+									<string>#assignment-name</string>
 								</dict>
 							</array>
 						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<key>assignment-operator-with-subscript</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?(?=(?:.(?!= #))*\]\s*\=.*$)</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
 						<dict>
-							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>comment</key>
-					<string>Variable assignment with operator and subscript</string>
-					<key>end</key>
-					<string>(?&lt;=.)\s*(?=(\s#[^\(])|$|\\)</string>
-					<key>name</key>
-					<string>meta.assignment.source.jcsh</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#assignment-operator-subscript-target</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#assignment-operator-subscript</string>
-						</dict>
-						<dict>
+							<key>comment</key>
+							<string>Process the value assigned (after the '=')</string>
 							<key>include</key>
 							<string>#expression</string>
 						</dict>
 						<dict>
+							<key>comment</key>
+							<string>Spaces are legit for variable assignment</string>
 							<key>match</key>
 							<string>\s</string>
 						</dict>
@@ -784,7 +509,7 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.operator.assignment.source.jcsh</string>
+							<string>keyword.assignment.operator.source.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -974,7 +699,7 @@
 							<key>comment</key>
 							<string>User-defined callable</string>
 							<key>end</key>
-							<string>(?&lt;=[\}\)\w])(?=\s|#|\)|$)</string>
+							<string>(?&lt;=[\}\)\w])(?=\s|\)|#|$)</string>
 							<key>name</key>
 							<string>meta.callable.user.source.jcsh</string>
 							<key>patterns</key>
@@ -1326,9 +1051,9 @@
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Name of an environment variable.</string>
+					<string>Name of an environment variable (starting with '*')</string>
 					<key>match</key>
-					<string>(?&lt;=\{)\s*(\*)([\w.]+)\s*(?=[\[;\}])</string>
+					<string>(?&lt;=\{)(\*)([\w.]+)(?=[\[;\}])</string>
 					<key>name</key>
 					<string>meta.variable.name.environment.source.jcsh</string>
 				</dict>
@@ -1800,6 +1525,8 @@
 			<key>patterns</key>
 			<array>
 				<dict>
+					<key>comment</key>
+					<string>Match anything not matched yet</string>
 					<key>match</key>
 					<string>.</string>
 					<key>name</key>
@@ -2068,7 +1795,7 @@
 					<key>comment</key>
 					<string>Name of a positional variable</string>
 					<key>match</key>
-					<string>(?&lt;=\{)\s*\d+\s*(?=[\[;\}])</string>
+					<string>(?&lt;=\{)\d+(?=[\[;\}])</string>
 					<key>name</key>
 					<string>support.variable.name.positional.source.jcsh</string>
 				</dict>
@@ -2235,9 +1962,9 @@
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Variable subscript</string>
+					<string>Variable subscript (array '[]')</string>
 					<key>end</key>
-					<string>(\])\s*(?=[:\[;\}])</string>
+					<string>(\])</string>
 					<key>endCaptures</key>
 					<dict>
 						<key>1</key>
@@ -2249,8 +1976,12 @@
 					<key>patterns</key>
 					<array>
 						<dict>
+							<key>comment</key>
+							<string>Inside the '[]' (no space allowed)</string>
+						</dict>
+						<dict>
 							<key>match</key>
-							<string>\s*\*\s*</string>
+							<string>\*</string>
 							<key>name</key>
 							<string>punctuation.subscript.content.asterisk.source.jcsh</string>
 						</dict>
@@ -2260,13 +1991,9 @@
 						</dict>
 						<dict>
 							<key>match</key>
-							<string>\s*#\s*</string>
+							<string>\#</string>
 							<key>name</key>
 							<string>punctuation.subscript.content.number-sign.source.jcsh</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -2355,7 +2082,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?&lt;=\{)\s*</string>
+					<string>(?&lt;=\{)</string>
 					<key>comment</key>
 					<string>User-defined variable name</string>
 					<key>end</key>
@@ -2374,9 +2101,9 @@
 						</dict>
 						<dict>
 							<key>match</key>
-							<string>\w[\w\-\.]*</string>
+							<string>\S</string>
 							<key>name</key>
-							<string>variable.name.user.surrounding.source.jcsh</string>
+							<string>variable.name.user.source.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -2424,10 +2151,6 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#variable-name</string>
-						</dict>
-						<dict>
-							<key>include</key>
 							<string>#plugin-modifier</string>
 						</dict>
 						<dict>
@@ -2437,6 +2160,10 @@
 						<dict>
 							<key>include</key>
 							<string>#modifier</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#variable-name</string>
 						</dict>
 						<dict>
 							<key>include</key>
