@@ -12,7 +12,7 @@
 	<array>
 		<dict>
 			<key>include</key>
-			<string>#line-continuation</string>
+			<string>#empty-line</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -20,11 +20,11 @@
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#comment-line</string>
+			<string>#line-continuation</string>
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#empty-line</string>
+			<string>#comment-line</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -56,15 +56,7 @@
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#assignment-operator-with-subscript</string>
-		</dict>
-		<dict>
-			<key>include</key>
 			<string>#assignment-command</string>
-		</dict>
-		<dict>
-			<key>include</key>
-			<string>#assignment-command-with-subscript</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -154,7 +146,7 @@
 							<key>begin</key>
 							<string>(?&lt;=(?:/set-var\s|/s-v\s|-d\s|--def\s|-g\s|--global\s|-q\s|--quote\s))\s*</string>
 							<key>comment</key>
-							<string>Match the newly defined variable name (consume up to the next space). We have to rematch the begining of the line to make sure we only take the first word after the space and the regex is not applied to each word on the line</string>
+							<string>Match the newly defined variable name (consume up to the next space). We have to rematch the beginning of the line to make sure we only take the first word after the space (and that the regex is not applied to each word on the line)</string>
 							<key>end</key>
 							<string>(?&lt;=\S)\s+(?=.*|(?:\s#[^\(])|$|\\)</string>
 							<key>patterns</key>
@@ -230,7 +222,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(?=.*\=)</string>
+					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(?=.*[^&lt;&gt;\=\!]\=[^~\=])</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -245,7 +237,7 @@
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Variable assignment with operator ('=')</string>
+					<string>Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': &lt;= &gt;= == != =~</string>
 					<key>end</key>
 					<string>(?&lt;=.)\s*(?=(?:\s#[^\(])|$|\\)</string>
 					<key>name</key>
@@ -533,20 +525,6 @@
 							<string>#invalid-character</string>
 						</dict>
 					</array>
-				</dict>
-			</array>
-		</dict>
-		<key>builtin-variable-name</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>comment</key>
-					<string>Name of a JCShell built-in variable.</string>
-					<key>match</key>
-					<string>(?&lt;=\{)\s*(?:[Aa]rgv|[Cc]hannel|ECC_CURVEPARAM_A|ECC_CURVEPARAM_B|ECC_CURVEPARAM_G|ECC_CURVEPARAM_N|ECC_CURVEPARAM_P|ECC_SharedSecret|exec\.dir|exec\.errorlog|exec\.output|JCOPDIR|KEY_ECC_PrivateKey|KEY_ECC_PublicKeyX|KEY_ECC_PublicKeyY|KEY_RSA_PrivateKey|KEY_RSA_PrivateKey_dP|KEY_RSA_PrivateKey_dQ|KEY_RSA_PrivateKey_P|KEY_RSA_PrivateKey_PQ|KEY_RSA_PrivateKey_Q|KEY_RSA_PublicKey|last\.apdu\.executiontime|last\.apdu\.executiontime\.unit|last\.error|last\.errorlog|last\.executiontime|last\.executiontime\.unit|last\.response\.data|last\.response\.status|last\.return|logfile\.list|[Pp]ath|[Pp]lugin|[Rr]andom|[Rr]esponse|script\.dir|script\.line|script\.name|scrtimer\.exec\.time|SIGNATURE_ECDSA_R|SIGNATURE_ECDSA_S|SIGNATURE_RSA|timer\.execution\.time|timer\.id|[Tt]erminal|[Tt]ime|VERIFY_SIGN|[Vv]ersion)\s*(?=[\[;\}])</string>
-					<key>name</key>
-					<string>support.variable.name.builtin.source.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1032,33 +1010,6 @@
 				</dict>
 			</array>
 		</dict>
-		<key>environment-variable-name</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.variable.name.environment.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>variable.name.environment.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>comment</key>
-					<string>Name of an environment variable (starting with '*')</string>
-					<key>match</key>
-					<string>(?&lt;=\{)(\*)([\w.]+)(?=[\[;\}])</string>
-					<key>name</key>
-					<string>meta.variable.name.environment.source.jcsh</string>
-				</dict>
-			</array>
-		</dict>
 		<key>expression</key>
 		<dict>
 			<key>patterns</key>
@@ -1392,7 +1343,7 @@
 						<key>5</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh </string>
+							<string>comment.line.number-sign.source.jcsh</string>
 						</dict>
 						<key>6</key>
 						<dict>
@@ -1553,7 +1504,7 @@
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Leading label that can be jumped to using goto</string>
+					<string>Leading label that can be jumped to using goto. Labels can be placed at the beginning of any line</string>
 					<key>match</key>
 					<string>^\s*(\w[\w\-\.]*)\s*(:)</string>
 					<key>name</key>
@@ -1662,7 +1613,7 @@
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Nested call</string>
+					<string>Nested call ('$()')</string>
 					<key>end</key>
 					<string>\)</string>
 					<key>endCaptures</key>
@@ -1784,20 +1735,6 @@
 							<string>#invalid-character</string>
 						</dict>
 					</array>
-				</dict>
-			</array>
-		</dict>
-		<key>positional-variable-name</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>comment</key>
-					<string>Name of a positional variable</string>
-					<key>match</key>
-					<string>(?&lt;=\{)\d+(?=[\[;\}])</string>
-					<key>name</key>
-					<string>support.variable.name.positional.source.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -2076,43 +2013,6 @@
 				</dict>
 			</array>
 		</dict>
-		<key>user-variable-name</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(?&lt;=\{)</string>
-					<key>comment</key>
-					<string>User-defined variable name</string>
-					<key>end</key>
-					<string>\s*(?=[:\[;\}])</string>
-					<key>name</key>
-					<string>meta.variable.name.user.source.jcsh</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#variable</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested-call</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\S</string>
-							<key>name</key>
-							<string>variable.name.user.source.jcsh</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
 		<key>variable</key>
 		<dict>
 			<key>patterns</key>
@@ -2151,11 +2051,11 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#plugin-modifier</string>
+							<string>#subscript</string>
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#subscript</string>
+							<string>#plugin-modifier</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -2190,19 +2090,111 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#builtin-variable-name</string>
+							<string>#variable-name-builtin</string>
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#positional-variable-name</string>
+							<string>#variable-name-positional</string>
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#environment-variable-name</string>
+							<string>#variable-name-environment</string>
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#user-variable-name</string>
+							<string>#variable-name-user</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#invalid-character</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>variable-name-builtin</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>comment</key>
+					<string>Name of a JCShell built-in variable.</string>
+					<key>match</key>
+					<string>(?&lt;=\{)\s*(?:[Aa]rgv|[Cc]hannel|ECC_CURVEPARAM_A|ECC_CURVEPARAM_B|ECC_CURVEPARAM_G|ECC_CURVEPARAM_N|ECC_CURVEPARAM_P|ECC_SharedSecret|exec\.dir|exec\.errorlog|exec\.output|JCOPDIR|KEY_ECC_PrivateKey|KEY_ECC_PublicKeyX|KEY_ECC_PublicKeyY|KEY_RSA_PrivateKey|KEY_RSA_PrivateKey_dP|KEY_RSA_PrivateKey_dQ|KEY_RSA_PrivateKey_P|KEY_RSA_PrivateKey_PQ|KEY_RSA_PrivateKey_Q|KEY_RSA_PublicKey|last\.apdu\.executiontime|last\.apdu\.executiontime\.unit|last\.error|last\.errorlog|last\.executiontime|last\.executiontime\.unit|last\.response\.data|last\.response\.status|last\.return|logfile\.list|[Pp]ath|[Pp]lugin|[Rr]andom|[Rr]esponse|script\.dir|script\.line|script\.name|scrtimer\.exec\.time|SIGNATURE_ECDSA_R|SIGNATURE_ECDSA_S|SIGNATURE_RSA|timer\.execution\.time|timer\.id|[Tt]erminal|[Tt]ime|VERIFY_SIGN|[Vv]ersion)\s*(?=[\[;\}])</string>
+					<key>name</key>
+					<string>support.variable.name.builtin.source.jcsh</string>
+				</dict>
+			</array>
+		</dict>
+		<key>variable-name-environment</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.variable.name.environment.source.jcsh</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>variable.name.environment.source.jcsh</string>
+						</dict>
+					</dict>
+					<key>comment</key>
+					<string>Name of an environment variable (starting with '*')</string>
+					<key>match</key>
+					<string>(?&lt;=\{)(\*)([\w.]+)(?=[\[;\}])</string>
+					<key>name</key>
+					<string>meta.variable.name.environment.source.jcsh</string>
+				</dict>
+			</array>
+		</dict>
+		<key>variable-name-positional</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>comment</key>
+					<string>Name of a positional variable</string>
+					<key>match</key>
+					<string>(?&lt;=\{)\d+(?=[\[;\}])</string>
+					<key>name</key>
+					<string>support.variable.name.positional.source.jcsh</string>
+				</dict>
+			</array>
+		</dict>
+		<key>variable-name-user</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(?&lt;=\{)</string>
+					<key>comment</key>
+					<string>User-defined variable name</string>
+					<key>end</key>
+					<string>\s*(?=[:\[;\}])</string>
+					<key>name</key>
+					<string>meta.variable.name.user.source.jcsh</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#variable</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#nested-call</string>
+						</dict>
+						<dict>
+							<key>match</key>
+							<string>\S</string>
+							<key>name</key>
+							<string>variable.name.user.source.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
