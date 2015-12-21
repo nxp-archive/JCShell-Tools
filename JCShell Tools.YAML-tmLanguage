@@ -22,7 +22,7 @@ yaml_variable: # Clear the node (variable)
 patterns:
 - include: '#empty-line'
 - include: '#comment'
-# - include: '#label'
+- include: '#label'
 - include: '#line-continuation'
 - include: '#comment-line'
 - include: '#function-definition'
@@ -95,7 +95,7 @@ repository:
 
   label:
     patterns:
-    - comment: Leading label that can be jumped to using goto. Labels can be placed at the beginning of any line 
+    - comment: Leading label that can be jumped to using goto. Labels can be placed at the beginning of any line and cannot contain variables
       name: meta.control.label.definition.source.jcsh
       match: ^\s*(\w[\w\-\.]*)\s*(:)
       captures:
@@ -104,14 +104,12 @@ repository:
 
   assignment-command:
     patterns:
-    - comment: Variable assignment with explicit command
+    - comment: Variable assignment with explicit command, only a label can be placed in front
       name: meta.assignment.source.jcsh
-      begin: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(/set-var|/s-v)\s((?:\s*(?:-d|--def|-g|--global|-q|--quote)\s)*)
+      begin: (?:^|(?<=.:))\s*(/set-var|/s-v)\s((?:\s*(?:-d|--def|-g|--global|-q|--quote)\s)*)
       beginCaptures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
-        '3': {name: keyword.assignment.command.source.jcsh}
-        '4': {name: variable.parameter.flag.assignment.source.jcsh}
+        '1': {name: keyword.assignment.command.source.jcsh}
+        '2': {name: variable.parameter.flag.assignment.source.jcsh}
       end: (?=(?:\s#[^\(])|$|\\)
       patterns:
       - comment: Match the newly defined variable name (consume up to the next space). We have to rematch the beginning of the line to make sure we only take the first word after the space (and that the regex is not applied to each word on the line)
@@ -130,12 +128,9 @@ repository:
 
   assignment-operator:
     patterns:
-    - comment: "Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': <= >= == != =~"
+    - comment: "Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': <= >= == != =~. Only a label can be placed in front"
       name: meta.assignment.source.jcsh
-      begin: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(?=.*[^<>\=\!]\=[^~\=])
-      beginCaptures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
+      begin: (?:^|(?<=.:))\s*(?=.*[^<>\=\!]\=[^~\=])
       end: (?<=.)\s*(?=(?:\s#[^\(])|$|\\)
       patterns:
       - comment: Match the newly defined variable name (consume up to the '=')
@@ -337,12 +332,11 @@ repository:
 
   call:
     patterns:
-    - comment: Call to a built-in command, function or external script
+    - comment: Call to a built-in command, function or external script. Only a label can be placed in front
       name: meta.control.call.source.jcsh
-      begin: ^
+      begin: (?:^|(?<=.:))
       end: (?<=.)\s*(?=\)|#[^//(]|$|\\)
       patterns:
-      - include: '#label'
       - include: '#callable'
       - include: '#argument'
       - match: \s
@@ -508,13 +502,11 @@ repository:
 
   if-block:
     patterns:
-    - comment: If block
+    - comment: If block, only a label can be placed in front
       name: meta.control.if.source.jcsh
-      begin: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(if)(?=\s+\S+.*$|(\\))
+      begin: (?:^|(?<=.:))\s*(if)(?=\s+\S+.*$|(\\))
       beginCaptures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
-        '3': {name: keyword.control.if.source.jcsh}
+        '1': {name: keyword.control.if.source.jcsh}
       end: ^\s*(end)\s*(?:\s(#)(.*))?$
       endCaptures:
         '1': {name: keyword.control.if.end.source.jcsh}
@@ -566,15 +558,13 @@ repository:
 
   try-block:
     patterns:
-    - comment: Try block
+    - comment: Try block, only a label can be placed in front
       name: meta.control.try.source.jcsh
-      begin: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(try)\s*(?:\s(#)(.*))?$|(\\)
+      begin: (?:^|(?<=.:))\s*(try)\s*(?:\s(#)(.*))?$|(\\)
       beginCaptures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
-        '3': {name: keyword.control.try.source.jcsh}
-        '4': {name: comment.line.number-sign.source.jcsh}
-        '5': {name: comment.line.source.jcsh}
+        '1': {name: keyword.control.try.source.jcsh}
+        '2': {name: comment.line.number-sign.source.jcsh}
+        '3': {name: comment.line.source.jcsh}
       end: ^\s*(end)\s*(?:\s(#)(.*))?$
       endCaptures:
         '1': {name: keyword.control.try.end.source.jcsh}
@@ -601,13 +591,11 @@ repository:
 
   for-block:
     patterns:
-    - comment: For block
+    - comment: For block, only a label can be placed in front
       name: meta.control.for.source.jcsh
-      begin: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(for)(?=\s+\S+.*$|(\\))
+      begin: (?:^|(?<=.:))\s*(for)(?=\s+\S+.*$|(\\))
       beginCaptures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
-        '3': {name: keyword.control.for.source.jcsh}
+        '1': {name: keyword.control.for.source.jcsh}
       end: ^\s*(end)\s*(?:\s(#)(.*))?$
       endCaptures:
         '1': {name: keyword.control.for.end.source.jcsh}
@@ -635,39 +623,33 @@ repository:
 
   break-statement:
     patterns:
-    - comment: Break statement
+    - comment: Break statement, only a label can be placed in front
       name: meta.control.break.source.jcsh
-      match: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(break)(?:\s+(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)
+      match: (?:^|(?<=.:))\s*(break)(?:\s+(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)
       captures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
-        '3': {name: keyword.control.break.source.jcsh}
-        '4': {name: keyword.control.label.target.source.jcsh}
-        '5': {name: comment.line.number-sign.source.jcsh}
-        '6': {name: comment.line.source.jcsh}
+        '1': {name: keyword.control.break.source.jcsh}
+        '2': {name: keyword.control.label.target.source.jcsh}
+        '3': {name: comment.line.number-sign.source.jcsh}
+        '4': {name: comment.line.source.jcsh}
 
   continue-statement:
     patterns:
-    - comment: Continue statement
+    - comment: Continue statement, only a label can be placed in front
       name: meta.control.continue.source.jcsh
-      match: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(continue)(?:\s+(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)
+      match: (?:^|(?<=.:))\s*(continue)(?:\s+(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)
       captures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
-        '3': {name: keyword.control.continue.source.jcsh}
-        '4': {name: keyword.control.label.target.source.jcsh}
-        '5': {name: comment.line.number-sign.source.jcsh}
-        '6': {name: comment.line.source.jcsh}
+        '1': {name: keyword.control.continue.source.jcsh}
+        '2': {name: keyword.control.label.target.source.jcsh}
+        '3': {name: comment.line.number-sign.source.jcsh}
+        '4': {name: comment.line.source.jcsh}
 
   while-block:
     patterns:
-    - comment: While block
+    - comment: While block, only a label can be placed in front
       name: meta.control.while.source.jcsh
-      begin: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(while)(?=\s+\S+.*$|(\\))
+      begin: (?:^|(?<=.:))\s*(while)(?=\s+\S+.*$|(\\))
       beginCaptures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
-        '3': {name: keyword.control.while.source.jcsh}
+        '1': {name: keyword.control.while.source.jcsh}
       end: ^\s*(end)\s*(?:\s(#)(.*))?$
       endCaptures:
         '1': {name: keyword.control.while.end.source.jcsh}
@@ -713,13 +695,11 @@ repository:
 
   return-statement:
     patterns:
-    - comment: Continue statement
-      name: meta.control.continue.source.jcsh
-      begin: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(return)
+    - comment: Return statement, only a label can be placed in front
+      name: meta.control.return.source.jcsh
+      begin: (?:^|(?<=.:))\s*(return)
       beginCaptures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
-        '3': {name: keyword.control.return.source.jcsh}
+        '1': {name: keyword.control.return.source.jcsh}
       end: \s*(?=(\s#)|$|\\)
       patterns:
       - include: '#expression'
@@ -728,15 +708,13 @@ repository:
 
   goto-statement:
     patterns:
-    - comment: Goto statement
+    - comment: Goto statement, only a label can be placed in front
       name: meta.control.goto.source.jcsh
-      match: ^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(goto)\s+(\w[\w\-\.]*)\s*(?:\s(#)(.*))?$|(\\)
+      match: (?:^|(?<=.:))\s*(goto)\s+(\w[\w\-\.]*)\s*(?:\s(#)(.*))?$|(\\)
       captures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
-        '3': {name: keyword.control.goto.source.jcsh}
-        '4': {name: keyword.control.label.target.source.jcsh}
-        '5': {name: comment.line.number-sign.source.jcsh}
-        '6': {name: comment.line.source.jcsh}
+        '1': {name: keyword.control.goto.source.jcsh}
+        '2': {name: keyword.control.label.target.source.jcsh}
+        '3': {name: comment.line.number-sign.source.jcsh}
+        '4': {name: comment.line.source.jcsh}
 
 ...

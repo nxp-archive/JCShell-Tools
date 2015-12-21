@@ -20,6 +20,10 @@
 		</dict>
 		<dict>
 			<key>include</key>
+			<string>#label</string>
+		</dict>
+		<dict>
+			<key>include</key>
 			<string>#line-continuation</string>
 		</dict>
 		<dict>
@@ -110,32 +114,22 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(/set-var|/s-v)\s((?:\s*(?:-d|--def|-g|--global|-q|--quote)\s)*)</string>
+					<string>(?:^|(?&lt;=.:))\s*(/set-var|/s-v)\s((?:\s*(?:-d|--def|-g|--global|-q|--quote)\s)*)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
 							<string>keyword.assignment.command.source.jcsh</string>
 						</dict>
-						<key>4</key>
+						<key>2</key>
 						<dict>
 							<key>name</key>
 							<string>variable.parameter.flag.assignment.source.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Variable assignment with explicit command</string>
+					<string>Variable assignment with explicit command, only a label can be placed in front</string>
 					<key>end</key>
 					<string>(?=(?:\s#[^\(])|$|\\)</string>
 					<key>name</key>
@@ -222,22 +216,9 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(?=.*[^&lt;&gt;\=\!]\=[^~\=])</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
-						</dict>
-					</dict>
+					<string>(?:^|(?&lt;=.:))\s*(?=.*[^&lt;&gt;\=\!]\=[^~\=])</string>
 					<key>comment</key>
-					<string>Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': &lt;= &gt;= == != =~</string>
+					<string>Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': &lt;= &gt;= == != =~. Only a label can be placed in front</string>
 					<key>end</key>
 					<string>(?&lt;=.)\s*(?=(?:\s#[^\(])|$|\\)</string>
 					<key>name</key>
@@ -305,38 +286,28 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
+							<string>keyword.control.break.source.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
+							<string>keyword.control.label.target.source.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.break.source.jcsh</string>
-						</dict>
-						<key>4</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.target.source.jcsh</string>
-						</dict>
-						<key>5</key>
-						<dict>
-							<key>name</key>
 							<string>comment.line.number-sign.source.jcsh</string>
 						</dict>
-						<key>6</key>
+						<key>4</key>
 						<dict>
 							<key>name</key>
 							<string>comment.line.source.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Break statement</string>
+					<string>Break statement, only a label can be placed in front</string>
 					<key>match</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(break)(?:\s+(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)</string>
+					<string>(?:^|(?&lt;=.:))\s*(break)(?:\s+(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)</string>
 					<key>name</key>
 					<string>meta.control.break.source.jcsh</string>
 				</dict>
@@ -534,19 +505,15 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^</string>
+					<string>(?:^|(?&lt;=.:))</string>
 					<key>comment</key>
-					<string>Call to a built-in command, function or external script</string>
+					<string>Call to a built-in command, function or external script. Only a label can be placed in front</string>
 					<key>end</key>
 					<string>(?&lt;=.)\s*(?=\)|#[^//(]|$|\\)</string>
 					<key>name</key>
 					<string>meta.control.call.source.jcsh</string>
 					<key>patterns</key>
 					<array>
-						<dict>
-							<key>include</key>
-							<string>#label</string>
-						</dict>
 						<dict>
 							<key>include</key>
 							<string>#callable</string>
@@ -839,38 +806,28 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
+							<string>keyword.control.continue.source.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
+							<string>keyword.control.label.target.source.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.continue.source.jcsh</string>
-						</dict>
-						<key>4</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.target.source.jcsh</string>
-						</dict>
-						<key>5</key>
-						<dict>
-							<key>name</key>
 							<string>comment.line.number-sign.source.jcsh</string>
 						</dict>
-						<key>6</key>
+						<key>4</key>
 						<dict>
 							<key>name</key>
 							<string>comment.line.source.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Continue statement</string>
+					<string>Continue statement, only a label can be placed in front</string>
 					<key>match</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(continue)(?:\s+(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)</string>
+					<string>(?:^|(?&lt;=.:))\s*(continue)(?:\s+(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)</string>
 					<key>name</key>
 					<string>meta.control.continue.source.jcsh</string>
 				</dict>
@@ -1127,27 +1084,17 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(for)(?=\s+\S+.*$|(\\))</string>
+					<string>(?:^|(?&lt;=.:))\s*(for)(?=\s+\S+.*$|(\\))</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
-						</dict>
-						<key>3</key>
 						<dict>
 							<key>name</key>
 							<string>keyword.control.for.source.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>For block</string>
+					<string>For block, only a label can be placed in front</string>
 					<key>end</key>
 					<string>^\s*(end)\s*(?:\s(#)(.*))?$</string>
 					<key>endCaptures</key>
@@ -1323,38 +1270,28 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
+							<string>keyword.control.goto.source.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
+							<string>keyword.control.label.target.source.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.goto.source.jcsh</string>
-						</dict>
-						<key>4</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.target.source.jcsh</string>
-						</dict>
-						<key>5</key>
-						<dict>
-							<key>name</key>
 							<string>comment.line.number-sign.source.jcsh</string>
 						</dict>
-						<key>6</key>
+						<key>4</key>
 						<dict>
 							<key>name</key>
 							<string>comment.line.source.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Goto statement</string>
+					<string>Goto statement, only a label can be placed in front</string>
 					<key>match</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(goto)\s+(\w[\w\-\.]*)\s*(?:\s(#)(.*))?$|(\\)</string>
+					<string>(?:^|(?&lt;=.:))\s*(goto)\s+(\w[\w\-\.]*)\s*(?:\s(#)(.*))?$|(\\)</string>
 					<key>name</key>
 					<string>meta.control.goto.source.jcsh</string>
 				</dict>
@@ -1366,27 +1303,17 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(if)(?=\s+\S+.*$|(\\))</string>
+					<string>(?:^|(?&lt;=.:))\s*(if)(?=\s+\S+.*$|(\\))</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
-						</dict>
-						<key>3</key>
 						<dict>
 							<key>name</key>
 							<string>keyword.control.if.source.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>If block</string>
+					<string>If block, only a label can be placed in front</string>
 					<key>end</key>
 					<string>^\s*(end)\s*(?:\s(#)(.*))?$</string>
 					<key>endCaptures</key>
@@ -1504,7 +1431,7 @@
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Leading label that can be jumped to using goto. Labels can be placed at the beginning of any line</string>
+					<string>Leading label that can be jumped to using goto. Labels can be placed at the beginning of any line and cannot contain variables</string>
 					<key>match</key>
 					<string>^\s*(\w[\w\-\.]*)\s*(:)</string>
 					<key>name</key>
@@ -1744,31 +1671,21 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(return)</string>
+					<string>(?:^|(?&lt;=.:))\s*(return)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
-						</dict>
-						<key>3</key>
 						<dict>
 							<key>name</key>
 							<string>keyword.control.return.source.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Continue statement</string>
+					<string>Return statement, only a label can be placed in front</string>
 					<key>end</key>
 					<string>\s*(?=(\s#)|$|\\)</string>
 					<key>name</key>
-					<string>meta.control.continue.source.jcsh</string>
+					<string>meta.control.return.source.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1946,37 +1863,27 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(try)\s*(?:\s(#)(.*))?$|(\\)</string>
+					<string>(?:^|(?&lt;=.:))\s*(try)\s*(?:\s(#)(.*))?$|(\\)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
+							<string>keyword.control.try.source.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.try.source.jcsh</string>
-						</dict>
-						<key>4</key>
-						<dict>
-							<key>name</key>
 							<string>comment.line.number-sign.source.jcsh</string>
 						</dict>
-						<key>5</key>
+						<key>3</key>
 						<dict>
 							<key>name</key>
 							<string>comment.line.source.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Try block</string>
+					<string>Try block, only a label can be placed in front</string>
 					<key>end</key>
 					<string>^\s*(end)\s*(?:\s(#)(.*))?$</string>
 					<key>endCaptures</key>
@@ -2210,27 +2117,17 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(?:\s*(\w[\w\-\.]*)\s*(:))?\s*(while)(?=\s+\S+.*$|(\\))</string>
+					<string>(?:^|(?&lt;=.:))\s*(while)(?=\s+\S+.*$|(\\))</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
-						</dict>
-						<key>3</key>
 						<dict>
 							<key>name</key>
 							<string>keyword.control.while.source.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>While block</string>
+					<string>While block, only a label can be placed in front</string>
 					<key>end</key>
 					<string>^\s*(end)\s*(?:\s(#)(.*))?$</string>
 					<key>endCaptures</key>
