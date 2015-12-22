@@ -5,6 +5,7 @@ name: JCShell Tools
 scopeName: source.jcsh
 fileTypes: [jcsh]
 uuid: 18d303a3-9fdd-4503-8eba-e8c0b283ddc1
+version: 1.0.0
 
 # Define here variables to be re-used in the file for ease of modification
 yaml_variable: &CMD_LIST_SLASH_BUILTIN
@@ -18,7 +19,6 @@ yaml_variable: &CMD_LIST_GP
 yaml_variable: &VAR_LIST_BUILTIN
   match: (?<=\{)\s*(?:[Aa]rgv|[Cc]hannel|ECC_CURVEPARAM_A|ECC_CURVEPARAM_B|ECC_CURVEPARAM_G|ECC_CURVEPARAM_N|ECC_CURVEPARAM_P|ECC_SharedSecret|exec\.dir|exec\.errorlog|exec\.output|JCOPDIR|KEY_ECC_PrivateKey|KEY_ECC_PublicKeyX|KEY_ECC_PublicKeyY|KEY_RSA_PrivateKey|KEY_RSA_PrivateKey_dP|KEY_RSA_PrivateKey_dQ|KEY_RSA_PrivateKey_P|KEY_RSA_PrivateKey_PQ|KEY_RSA_PrivateKey_Q|KEY_RSA_PublicKey|last\.apdu\.executiontime|last\.apdu\.executiontime\.unit|last\.error|last\.errorlog|last\.executiontime|last\.executiontime\.unit|last\.response\.data|last\.response\.status|last\.return|logfile\.list|[Pp]ath|[Pp]lugin|random|[Rr]esponse|script\.dir|script\.line|script\.name|scrtimer\.exec\.time|SIGNATURE_ECDSA_R|SIGNATURE_ECDSA_S|SIGNATURE_RSA|timer\.execution\.time|timer\.id|[Tt]erminal|time|VERIFY_SIGN|[Vv]ersion)\s*(?=[\[;\}])
 yaml_variable: # Clear the node (variable)
-version: 1.0.0
 
 patterns:
 - include: '#empty-line'
@@ -647,15 +647,13 @@ repository:
 
   function-definition:
     patterns:
-    - comment: DEFUN function definition
+    - comment: DEFUN function definition. 'GLOBAL' is the only value allowed after function name (with comments)
       name: meta.section.function-definition.source.jcsh
-      begin: ^\s*(DEFUN)\s+(\w[\w\-]*)((?:\s+\w[\w\-\.]*)*)\s*(?:\s(#)(.*))?$|(\\)
+      begin: ^\s*(DEFUN)\s+(\S*)\s*(GLOBAL)?\s*(?=\s|\)|#|$)
       beginCaptures:
         '1': {name: keyword.function.definition.begin.source.jcsh}
         '2': {name: entity.name.function.definition.source.jcsh}
         '3': {name: variable.parameter.definition.source.jcsh}
-        '4': {name: comment.line.number-sign.source.jcsh}
-        '5': {name: comment.line.source.jcsh}
       end: ^\s*(END)\s*(?:\s(#)(.*))?$
       endCaptures:
         '1': {name: keyword.function.definition.begin.source.jcsh}

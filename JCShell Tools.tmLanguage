@@ -1172,7 +1172,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^\s*(DEFUN)\s+(\w[\w\-]*)((?:\s+\w[\w\-\.]*)*)\s*(?:\s(#)(.*))?$|(\\)</string>
+					<string>^\s*(DEFUN)\s+(\S*)\s*(GLOBAL)?\s*(?=\s|\)|#|$)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -1190,19 +1190,9 @@
 							<key>name</key>
 							<string>variable.parameter.definition.source.jcsh</string>
 						</dict>
-						<key>4</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
-						</dict>
-						<key>5</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.source.jcsh</string>
-						</dict>
 					</dict>
 					<key>comment</key>
-					<string>DEFUN function definition</string>
+					<string>DEFUN function definition. 'GLOBAL' is the only value allowed after function name (with comments)</string>
 					<key>end</key>
 					<string>^\s*(END)\s*(?:\s(#)(.*))?$</string>
 					<key>endCaptures</key>
