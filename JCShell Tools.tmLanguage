@@ -216,9 +216,9 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?:^|(?&lt;=.:))\s*(?=.*[^&lt;&gt;\=\!]\=[^~\=])</string>
+					<string>(?:^|(?&lt;=.:))\s*(?=.*[^&lt;&gt;\=\!]\=[^~\=])(?!.*;\w\w\w\=)</string>
 					<key>comment</key>
-					<string>Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': &lt;= &gt;= == != =~. Only a label can be placed in front</string>
+					<string>Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': &lt;= &gt;= == != =~ or if part of a modifier (';xxx='). Only a label can be placed in front</string>
 					<key>end</key>
 					<string>(?&lt;=.)\s*(?=(?:\s#[^\(])|$|\\)</string>
 					<key>name</key>
@@ -290,15 +290,15 @@
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Built-in variable modifier name</string>
+					<string>Built-in variable modifier name (no space allowed)</string>
 					<key>match</key>
-					<string>(?&lt;=;)\s*([Dd]irname|[Ff]ilename|[Bb]asename|[Ee]xtension|[Ll]|[Qq]|[Qq]q|[Ll]c|[Uu]c)\s*(?=[;\}])</string>
+					<string>(?&lt;=;)([Dd]irname|[Ff]ilename|[Bb]asename|[Ee]xtension|[Ll]|[Qq]|[Qq]q|[Ll]c|[Uu]c)(?=[;\}])</string>
 					<key>name</key>
 					<string>meta.modifier.name.builtin.source.jcsh</string>
 				</dict>
 				<dict>
 					<key>begin</key>
-					<string>(?&lt;=;)\s*(h)\s*</string>
+					<string>(?&lt;=;)(h)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -308,7 +308,7 @@
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Built-in hex variable modifier</string>
+					<string>Built-in hex variable modifier ('h')</string>
 					<key>end</key>
 					<string>\s*(?=[;\}])</string>
 					<key>patterns</key>
@@ -335,7 +335,7 @@
 				</dict>
 				<dict>
 					<key>begin</key>
-					<string>(?&lt;=;)\s*(s)</string>
+					<string>(?&lt;=;)(s)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -345,18 +345,18 @@
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Built-in substring variable modifier</string>
+					<string>Built-in substring variable modifier ('s')</string>
 					<key>end</key>
-					<string>\s*(?=[;\}])</string>
+					<string>(?=[;\}])</string>
 					<key>patterns</key>
 					<array>
 						<dict>
 							<key>begin</key>
-							<string>(?&lt;=s)\s*</string>
+							<string>(?&lt;=s)</string>
 							<key>comment</key>
 							<string>First argument of substring variable modifier</string>
 							<key>end</key>
-							<string>\s*(?=[,;\}])</string>
+							<string>(?=[,;\}])</string>
 							<key>patterns</key>
 							<array>
 								<dict>
@@ -381,7 +381,7 @@
 						</dict>
 						<dict>
 							<key>begin</key>
-							<string>(,)\s*</string>
+							<string>(,)</string>
 							<key>beginCaptures</key>
 							<dict>
 								<key>1</key>
@@ -393,7 +393,7 @@
 							<key>comment</key>
 							<string>Second argument of substring variable modifier</string>
 							<key>end</key>
-							<string>\s*(?=[;\}])</string>
+							<string>(?=[;\}])</string>
 							<key>patterns</key>
 							<array>
 								<dict>
@@ -424,7 +424,7 @@
 				</dict>
 				<dict>
 					<key>begin</key>
-					<string>(?&lt;=;)\s*(fmt|len)\s*(\=)</string>
+					<string>(?&lt;={time;)(fmt)(\=)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -439,9 +439,55 @@
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Built-in assigned variable modifier</string>
+					<string>Built-in assigned variable modifier for Time ('time')</string>
 					<key>end</key>
 					<string>\s*(?=[;\}])</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#string</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#variable</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#nested-call</string>
+						</dict>
+						<dict>
+							<key>match</key>
+							<string>.</string>
+							<key>name</key>
+							<string>string.unquoted.assigned-modifier.surrounding.source.jcsh</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#invalid-character</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>(?&lt;={random;)(max|len)(\=)</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.modifier.builtin.source.jcsh</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.assignment.operator.source.jcsh</string>
+						</dict>
+					</dict>
+					<key>comment</key>
+					<string>Built-in assigned variable modifier for Random ('random')</string>
+					<key>end</key>
+					<string>(?=[;\}])</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -449,10 +495,14 @@
 							<string>#variable</string>
 						</dict>
 						<dict>
+							<key>include</key>
+							<string>#nested-call</string>
+						</dict>
+						<dict>
 							<key>match</key>
-							<string>.</string>
+							<string>\d*</string>
 							<key>name</key>
-							<string>string.unquoted.assigned-modifier.surrounding.source.jcsh</string>
+							<string>constant.numeric.decimal.hex-modifier.surrounding.source.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -970,7 +1020,7 @@
 					<key>begin</key>
 					<string>(?&lt;=for|if|elseif|while|catch|return)\s+</string>
 					<key>comment</key>
-					<string>Expression check for flow control blocks: if, for, while, elseif, catch</string>
+					<string>Expression check for flow control blocks: if, for, while, elseif, catch, return</string>
 					<key>end</key>
 					<string>\s*(?:\s(#)(.*))?$|(\\)</string>
 					<key>endCaptures</key>
@@ -986,8 +1036,6 @@
 							<string>comment.line.source.jcsh</string>
 						</dict>
 					</dict>
-					<key>name</key>
-					<string>meta.DEBUG</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1340,7 +1388,7 @@
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Variable modifier</string>
+					<string>Variable modifier (no space allowed)</string>
 					<key>end</key>
 					<string>(?=[;\}])</string>
 					<key>name</key>
@@ -1358,12 +1406,6 @@
 						<dict>
 							<key>include</key>
 							<string>#nested-call</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s*\w[\w\-\.]*\s*</string>
-							<key>name</key>
-							<string>keyword.modifier.user.surrounding.source.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1680,8 +1722,10 @@
 							<string>Inside the '[]' (no space allowed)</string>
 						</dict>
 						<dict>
+							<key>comment</key>
+							<string>Match '[*]' to color the '*'</string>
 							<key>match</key>
-							<string>\*</string>
+							<string>(?&lt;=\[)\*(?=\])</string>
 							<key>name</key>
 							<string>punctuation.subscript.content.asterisk.source.jcsh</string>
 						</dict>
@@ -1690,8 +1734,10 @@
 							<string>#expression</string>
 						</dict>
 						<dict>
+							<key>comment</key>
+							<string>Match '[#]' to color the '#', only if it's not part of a variable call</string>
 							<key>match</key>
-							<string>\#</string>
+							<string>(?&lt;=\[)\#(?=\](?:\s|=))</string>
 							<key>name</key>
 							<string>punctuation.subscript.content.number-sign.source.jcsh</string>
 						</dict>
@@ -1930,7 +1976,7 @@
 					<key>comment</key>
 					<string>User-defined variable name</string>
 					<key>end</key>
-					<string>\s*(?=[:\[;\}])</string>
+					<string>(?=[:\[;\}])</string>
 					<key>name</key>
 					<string>meta.variable.name.user.source.jcsh</string>
 					<key>patterns</key>

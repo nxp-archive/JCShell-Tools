@@ -128,9 +128,9 @@ repository:
 
   assignment-operator:
     patterns:
-    - comment: "Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': <= >= == != =~. Only a label can be placed in front"
+    - comment: "Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': <= >= == != =~ or if part of a modifier (';xxx='). Only a label can be placed in front"
       name: meta.assignment.source.jcsh
-      begin: (?:^|(?<=.:))\s*(?=.*[^<>\=\!]\=[^~\=])
+      begin: (?:^|(?<=.:))\s*(?=.*[^<>\=\!]\=[^~\=])(?!.*;\w\w\w\=)
       end: (?<=.)\s*(?=(?:\s#[^\(])|$|\\)
       patterns:
       - comment: Match the newly defined variable name (consume up to the '=')
@@ -188,10 +188,12 @@ repository:
         '1': {name: punctuation.definition.subscript.end.source.jcsh}
       patterns:
       - comment: Inside the '[]' (no space allowed)
-      - match: \*
+      - comment: Match '[*]' to color the '*'
+        match: (?<=\[)\*(?=\])
         name: punctuation.subscript.content.asterisk.source.jcsh
       - include: '#expression'
-      - match: \#
+      - comment: Match '[#]' to color the '#', only if it's not part of a variable call
+        match: (?<=\[)\#(?=\](?:\s|=))
         name: punctuation.subscript.content.number-sign.source.jcsh
       - include: '#invalid-character'
 
@@ -234,7 +236,7 @@ repository:
     - comment: User-defined variable name
       name: meta.variable.name.user.source.jcsh
       begin: (?<=\{)
-      end: \s*(?=[:\[;\}])
+      end: (?=[:\[;\}])
       patterns:
       - include: '#variable'
       - include: '#nested-call'
@@ -244,7 +246,7 @@ repository:
 
   modifier:
     patterns:
-    - comment: Variable modifier
+    - comment: Variable modifier (no space allowed)
       name: meta.variable.modifier.source.jcsh
       begin: ;
       beginCaptures:
@@ -254,19 +256,17 @@ repository:
       - include: '#builtin-modifier'
       - include: '#variable'
       - include: '#nested-call'
-      - name: keyword.modifier.user.surrounding.source.jcsh
-        match: \s*\w[\w\-\.]*\s*
       - include: '#invalid-character'
 
   builtin-modifier:
     patterns:
-    - comment: Built-in variable modifier name
+    - comment: Built-in variable modifier name (no space allowed)
       name: meta.modifier.name.builtin.source.jcsh
-      match: (?<=;)\s*([Dd]irname|[Ff]ilename|[Bb]asename|[Ee]xtension|[Ll]|[Qq]|[Qq]q|[Ll]c|[Uu]c)\s*(?=[;\}])
+      match: (?<=;)([Dd]irname|[Ff]ilename|[Bb]asename|[Ee]xtension|[Ll]|[Qq]|[Qq]q|[Ll]c|[Uu]c)(?=[;\}])
       captures:
         '0': {name: keyword.modifier.builtin.source.jcsh}
-    - comment: Built-in hex variable modifier
-      begin: (?<=;)\s*(h)\s*
+    - comment: Built-in hex variable modifier ('h')
+      begin: (?<=;)(h)
       beginCaptures:
         '1': {name: keyword.modifier.builtin.source.jcsh}
       end: \s*(?=[;\}])
@@ -276,15 +276,15 @@ repository:
       - name: constant.numeric.decimal.hex-modifier.surrounding.source.jcsh
         match: \d*
       - include: '#invalid-character'
-    - comment: Built-in substring variable modifier
-      begin: (?<=;)\s*(s)
+    - comment: Built-in substring variable modifier ('s')
+      begin: (?<=;)(s)
       beginCaptures:
         '1': {name: keyword.modifier.builtin.source.jcsh}
-      end: \s*(?=[;\}])
+      end: (?=[;\}])
       patterns:
       - comment: First argument of substring variable modifier
-        begin: (?<=s)\s*
-        end: \s*(?=[,;\}])
+        begin: (?<=s)
+        end: (?=[,;\}])
         patterns:
         - include: '#variable'
         - include: '#nested-call'
@@ -292,10 +292,10 @@ repository:
           match: \d*
         - include: '#invalid-character'
       - comment: Second argument of substring variable modifier
-        begin: (,)\s*
+        begin: (,)
         beginCaptures:
           '1': {name: punctuation.separator.variable.modifier}
-        end: \s*(?=[;\}])
+        end: (?=[;\}])
         patterns:
         - include: '#variable'
         - include: '#nested-call'
@@ -303,16 +303,30 @@ repository:
           match: \d*
         - include: '#invalid-character'
       - include: '#invalid-character'
-    - comment: Built-in assigned variable modifier
-      begin: (?<=;)\s*(fmt|len)\s*(\=)
+    - comment: Built-in assigned variable modifier for Time ('time')
+      begin: (?<={time;)(fmt)(\=)
       beginCaptures:
         '1': {name: keyword.modifier.builtin.source.jcsh}
         '2': {name: keyword.assignment.operator.source.jcsh}
       end: \s*(?=[;\}])
       patterns:
+      - include: '#string'
       - include: '#variable'
+      - include: '#nested-call'
       - name: string.unquoted.assigned-modifier.surrounding.source.jcsh
         match: .
+      - include: '#invalid-character'
+    - comment: Built-in assigned variable modifier for Random ('random')
+      begin: (?<={random;)(max|len)(\=)
+      beginCaptures:
+        '1': {name: keyword.modifier.builtin.source.jcsh}
+        '2': {name: keyword.assignment.operator.source.jcsh}
+      end: (?=[;\}])
+      patterns:
+      - include: '#variable'
+      - include: '#nested-call'
+      - name: constant.numeric.decimal.hex-modifier.surrounding.source.jcsh
+        match: \d*
       - include: '#invalid-character'
 
   plugin-modifier:
