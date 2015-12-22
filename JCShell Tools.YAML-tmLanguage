@@ -30,7 +30,7 @@ patterns:
 - include: '#while-block'
 - include: '#for-block'
 - include: '#try-block'
-- include: '#goto-statement'
+- include: '#flow-statement'
 - include: '#assignment-operator'
 - include: '#assignment-command'
 - include: '#continued-line'
@@ -498,7 +498,7 @@ repository:
   operator:
     patterns:
     - name: keyword.operator.source.jcsh
-      match: (-|\*|/|%|\+|<<|>>>|>>|<=|<|>=|>|==|!=|!|=~|~|&|\^|\||\.\.|\?)
+      match: -|\*|/|%|\+|<<|>>>|>>|<=|<|>=|>|==|!=|!|=~|~|&|\^|\||\.\.|\?
 
   if-block:
     patterns:
@@ -513,19 +513,23 @@ repository:
         '2': {name: comment.line.number-sign.source.jcsh}
         '3': {name: comment.line.source.jcsh}
       patterns:
-      - include: '#if-expression'
+      - include: '#flow-expression'
       - include: '#elseif-clause'
       - include: '#else-clause'
       - include: $self
 
-  if-expression:
+  flow-expression:
     patterns:
-    - begin: (?<=if)\s+
+    - comment: "Expression check for flow control blocks: if, for, while, elseif, catch, return"
+      begin: (?<=for|if|elseif|while|catch|return)\s+
       end: \s*(?:\s(#)(.*))?$|(\\)
       endCaptures:
         '1': {name: comment.line.number-sign.source.jcsh}
         '2': {name: comment.line.source.jcsh}
       patterns:
+      - comment: The 'for' block as an additional iterator provided
+        match: (?<=for\s)\s*(\w[\w\-\.]*)
+        name: variable.parameter.iterator.source.jcsh
       - include: '#expression'
       - match: \s
       - include: '#invalid-character'
@@ -544,17 +548,12 @@ repository:
     patterns:
     - comment: Elseif clause
       name: meta.control.elseif.jcsh
-      begin: ^\s*(elseif)\s+
+      begin: ^\s*(elseif)
       beginCaptures:
         '1': {name: keyword.control.elseif.jcsh}
-      end: \s*(?:\s(#)(.*))?$|(\\)
-      endCaptures:
-        '1': {name: comment.line.number-sign.source.jcsh}
-        '2': {name: comment.line.source.jcsh}
+      end: \s*(?:\s#.*)?$|\\
       patterns:
-      - include: '#expression'
-      - match: \s
-      - include: '#invalid-character'
+      - include: '#flow-expression'
 
   try-block:
     patterns:
@@ -577,17 +576,12 @@ repository:
   catch-clause:
     comment: Catch clause
     name: meta.control.catch.source.jcsh
-    begin: ^\s*(catch)\s+
+    begin: ^\s*(catch)
     beginCaptures:
       '1': {name: keyword.control.catch.source.jcsh}
-    end: \s*(?:\s(#)(.*))?$|(\\)
-    endCaptures:
-      '1': {name: comment.line.number-sign.source.jcsh}
-      '2': {name: comment.line.source.jcsh}
+    end: \s*(?:\s#.*)?$|\\
     patterns:
-    - include: '#expression'
-    - match: \s
-    - include: '#invalid-character'
+    - include: '#flow-expression'
 
   for-block:
     patterns:
@@ -602,46 +596,22 @@ repository:
         '2': {name: comment.line.number-sign.source.jcsh}
         '3': {name: comment.line.source.jcsh}
       patterns:
-      - include: '#for-expression'
-      - include: '#break-statement'
-      - include: '#continue-statement'
+      - include: '#flow-expression'
+      - include: '#flow-statement'
       - include: $self
 
-  for-expression:
+  flow-statement:
     patterns:
-    - begin: (?<=for)\s+(\w[\w\-\.]*)
-      beginCaptures:
-        '1': {name: variable.parameter.iterator.source.jcsh}
-      end: \s*(?:\s(#)(.*))?$
-      endCaptures:
-        '1': {name: comment.line.number-sign.source.jcsh}
-        '2': {name: comment.line.source.jcsh}
-      patterns:
-      - include: '#expression'
-      - match: \s
-      - include: '#invalid-character'
-
-  break-statement:
-    patterns:
-    - comment: Break statement, only a label can be placed in front
-      name: meta.control.break.source.jcsh
-      match: (?:^|(?<=.:))\s*(break)(?:\s+(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)
+    - comment: Break, continue or goto statement, only a label can be placed in front. Goto requires a label after. This is check before callable, thus we enforce keywords continue, goto and break to not be used as function/script name even though JCShell is not actively forbidding it (outside loops)
+      name: meta.control.flow.source.jcsh
+      match: (?:^|(?<=.:))\s*(?:(break)|(continue)|(?:(goto)(?=\s+\S)))(?:\s*(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)
       captures:
         '1': {name: keyword.control.break.source.jcsh}
-        '2': {name: keyword.control.label.target.source.jcsh}
-        '3': {name: comment.line.number-sign.source.jcsh}
-        '4': {name: comment.line.source.jcsh}
-
-  continue-statement:
-    patterns:
-    - comment: Continue statement, only a label can be placed in front
-      name: meta.control.continue.source.jcsh
-      match: (?:^|(?<=.:))\s*(continue)(?:\s+(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)
-      captures:
-        '1': {name: keyword.control.continue.source.jcsh}
-        '2': {name: keyword.control.label.target.source.jcsh}
-        '3': {name: comment.line.number-sign.source.jcsh}
-        '4': {name: comment.line.source.jcsh}
+        '2': {name: keyword.control.continue.source.jcsh}
+        '3': {name: keyword.control.goto.source.jcsh}
+        '4': {name: keyword.control.label.target.source.jcsh}
+        '5': {name: comment.line.number-sign.source.jcsh}
+        '6': {name: comment.line.source.jcsh}
 
   while-block:
     patterns:
@@ -656,22 +626,9 @@ repository:
         '2': {name: comment.line.number-sign.source.jcsh}
         '3': {name: comment.line.source.jcsh}
       patterns:
-      - include: '#while-expression'
-      - include: '#break-statement'
-      - include: '#continue-statement'
+      - include: '#flow-expression'
+      - include: '#flow-statement'
       - include: $self
-
-  while-expression:
-    patterns:
-    - begin: (?<=while)\s+
-      end: \s*(?:\s(#)(.*))?$|(\\)
-      endCaptures:
-        '1': {name: comment.line.number-sign.source.jcsh}
-        '2': {name: comment.line.source.jcsh}
-      patterns:
-      - include: '#expression'
-      - match: \s
-      - include: '#invalid-character'
 
   function-definition:
     patterns:
@@ -700,21 +657,8 @@ repository:
       begin: (?:^|(?<=.:))\s*(return)
       beginCaptures:
         '1': {name: keyword.control.return.source.jcsh}
-      end: \s*(?=(\s#)|$|\\)
+      end: \s*(?:\s#.*)?$|\\
       patterns:
-      - include: '#expression'
-      - match: \s
-      - include: '#invalid-character'
-
-  goto-statement:
-    patterns:
-    - comment: Goto statement, only a label can be placed in front
-      name: meta.control.goto.source.jcsh
-      match: (?:^|(?<=.:))\s*(goto)\s+(\w[\w\-\.]*)\s*(?:\s(#)(.*))?$|(\\)
-      captures:
-        '1': {name: keyword.control.goto.source.jcsh}
-        '2': {name: keyword.control.label.target.source.jcsh}
-        '3': {name: comment.line.number-sign.source.jcsh}
-        '4': {name: comment.line.source.jcsh}
+      - include: '#flow-expression'
 
 ...

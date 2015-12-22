@@ -52,7 +52,7 @@
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#goto-statement</string>
+			<string>#flow-statement</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -273,43 +273,6 @@
 							<string>#invalid-character</string>
 						</dict>
 					</array>
-				</dict>
-			</array>
-		</dict>
-		<key>break-statement</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.break.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.target.source.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
-						</dict>
-						<key>4</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>comment</key>
-					<string>Break statement, only a label can be placed in front</string>
-					<key>match</key>
-					<string>(?:^|(?&lt;=.:))\s*(break)(?:\s+(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)</string>
-					<key>name</key>
-					<string>meta.control.break.source.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -698,7 +661,7 @@
 		<key>catch-clause</key>
 		<dict>
 			<key>begin</key>
-			<string>^\s*(catch)\s+</string>
+			<string>^\s*(catch)</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -710,35 +673,14 @@
 			<key>comment</key>
 			<string>Catch clause</string>
 			<key>end</key>
-			<string>\s*(?:\s(#)(.*))?$|(\\)</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>comment.line.number-sign.source.jcsh</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>comment.line.source.jcsh</string>
-				</dict>
-			</dict>
+			<string>\s*(?:\s#.*)?$|\\</string>
 			<key>name</key>
 			<string>meta.control.catch.source.jcsh</string>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>include</key>
-					<string>#expression</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>\s</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#invalid-character</string>
+					<string>#flow-expression</string>
 				</dict>
 			</array>
 		</dict>
@@ -793,43 +735,6 @@
 					<string>^\s*(#)(.*)$</string>
 					<key>name</key>
 					<string>meta.comment.line.full.source.jcsh</string>
-				</dict>
-			</array>
-		</dict>
-		<key>continue-statement</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.continue.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.target.source.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
-						</dict>
-						<key>4</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>comment</key>
-					<string>Continue statement, only a label can be placed in front</string>
-					<key>match</key>
-					<string>(?:^|(?&lt;=.:))\s*(continue)(?:\s+(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)</string>
-					<key>name</key>
-					<string>meta.control.continue.source.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -907,7 +812,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^\s*(elseif)\s+</string>
+					<string>^\s*(elseif)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -919,35 +824,14 @@
 					<key>comment</key>
 					<string>Elseif clause</string>
 					<key>end</key>
-					<string>\s*(?:\s(#)(.*))?$|(\\)</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.source.jcsh</string>
-						</dict>
-					</dict>
+					<string>\s*(?:\s#.*)?$|\\</string>
 					<key>name</key>
 					<string>meta.control.elseif.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#expression</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
+							<string>#flow-expression</string>
 						</dict>
 					</array>
 				</dict>
@@ -1078,6 +962,105 @@
 				</dict>
 			</array>
 		</dict>
+		<key>flow-expression</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(?&lt;=for|if|elseif|while|catch|return)\s+</string>
+					<key>comment</key>
+					<string>Expression check for flow control blocks: if, for, while, elseif, catch</string>
+					<key>end</key>
+					<string>\s*(?:\s(#)(.*))?$|(\\)</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>comment.line.number-sign.source.jcsh</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>comment.line.source.jcsh</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>meta.DEBUG</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>comment</key>
+							<string>The 'for' block as an additional iterator provided</string>
+							<key>match</key>
+							<string>(?&lt;=for\s)\s*(\w[\w\-\.]*)</string>
+							<key>name</key>
+							<string>variable.parameter.iterator.source.jcsh</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#expression</string>
+						</dict>
+						<dict>
+							<key>match</key>
+							<string>\s</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#invalid-character</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>flow-statement</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.break.source.jcsh</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.continue.source.jcsh</string>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.goto.source.jcsh</string>
+						</dict>
+						<key>4</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.label.target.source.jcsh</string>
+						</dict>
+						<key>5</key>
+						<dict>
+							<key>name</key>
+							<string>comment.line.number-sign.source.jcsh</string>
+						</dict>
+						<key>6</key>
+						<dict>
+							<key>name</key>
+							<string>comment.line.source.jcsh</string>
+						</dict>
+					</dict>
+					<key>comment</key>
+					<string>Break, continue or goto statement, only a label can be placed in front. Goto requires a label after. This is check before callable, thus we enforce keywords continue, goto and break to not be used as function/script name even though JCShell is not actively forbidding it (outside loops)</string>
+					<key>match</key>
+					<string>(?:^|(?&lt;=.:))\s*(?:(break)|(continue)|(?:(goto)(?=\s+\S)))(?:\s*(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)</string>
+					<key>name</key>
+					<string>meta.control.flow.source.jcsh</string>
+				</dict>
+			</array>
+		</dict>
 		<key>for-block</key>
 		<dict>
 			<key>patterns</key>
@@ -1121,67 +1104,15 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#for-expression</string>
+							<string>#flow-expression</string>
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#break-statement</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#continue-statement</string>
+							<string>#flow-statement</string>
 						</dict>
 						<dict>
 							<key>include</key>
 							<string>$self</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<key>for-expression</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(?&lt;=for)\s+(\w[\w\-\.]*)</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>variable.parameter.iterator.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\s*(?:\s(#)(.*))?$</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#expression</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
 						</dict>
 					</array>
 				</dict>
@@ -1260,43 +1191,6 @@
 				</dict>
 			</array>
 		</dict>
-		<key>goto-statement</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.goto.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.target.source.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
-						</dict>
-						<key>4</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>comment</key>
-					<string>Goto statement, only a label can be placed in front</string>
-					<key>match</key>
-					<string>(?:^|(?&lt;=.:))\s*(goto)\s+(\w[\w\-\.]*)\s*(?:\s(#)(.*))?$|(\\)</string>
-					<key>name</key>
-					<string>meta.control.goto.source.jcsh</string>
-				</dict>
-			</array>
-		</dict>
 		<key>if-block</key>
 		<dict>
 			<key>patterns</key>
@@ -1340,7 +1234,7 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#if-expression</string>
+							<string>#flow-expression</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1353,46 +1247,6 @@
 						<dict>
 							<key>include</key>
 							<string>$self</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<key>if-expression</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(?&lt;=if)\s+</string>
-					<key>end</key>
-					<string>\s*(?:\s(#)(.*))?$|(\\)</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#expression</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
 						</dict>
 					</array>
 				</dict>
@@ -1614,7 +1468,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(-|\*|/|%|\+|&lt;&lt;|&gt;&gt;&gt;|&gt;&gt;|&lt;=|&lt;|&gt;=|&gt;|==|!=|!|=~|~|&amp;|\^|\||\.\.|\?)</string>
+					<string>-|\*|/|%|\+|&lt;&lt;|&gt;&gt;&gt;|&gt;&gt;|&lt;=|&lt;|&gt;=|&gt;|==|!=|!|=~|~|&amp;|\^|\||\.\.|\?</string>
 					<key>name</key>
 					<string>keyword.operator.source.jcsh</string>
 				</dict>
@@ -1683,22 +1537,14 @@
 					<key>comment</key>
 					<string>Return statement, only a label can be placed in front</string>
 					<key>end</key>
-					<string>\s*(?=(\s#)|$|\\)</string>
+					<string>\s*(?:\s#.*)?$|\\</string>
 					<key>name</key>
 					<string>meta.control.return.source.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#expression</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
+							<string>#flow-expression</string>
 						</dict>
 					</array>
 				</dict>
@@ -2154,59 +2000,15 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#while-expression</string>
+							<string>#flow-expression</string>
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#break-statement</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#continue-statement</string>
+							<string>#flow-statement</string>
 						</dict>
 						<dict>
 							<key>include</key>
 							<string>$self</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<key>while-expression</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(?&lt;=while)\s+</string>
-					<key>end</key>
-					<string>\s*(?:\s(#)(.*))?$|(\\)</string>
-					<key>endCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.source.jcsh</string>
-						</dict>
-					</dict>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#expression</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\s</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
 						</dict>
 					</array>
 				</dict>
