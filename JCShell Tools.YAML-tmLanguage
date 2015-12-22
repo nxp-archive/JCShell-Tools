@@ -649,7 +649,7 @@ repository:
     patterns:
     - comment: DEFUN function definition. 'GLOBAL' is the only value allowed after function name (with comments)
       name: meta.section.function-definition.source.jcsh
-      begin: ^\s*(DEFUN)\s+(\S*)\s*(GLOBAL)?\s*(?=\s|\)|#|$)
+      begin: ^\s*(DEFUN)\s+(\S*)(\s*GLOBAL)?\s*(?=\s|\)|#|$)
       beginCaptures:
         '1': {name: keyword.function.definition.begin.source.jcsh}
         '2': {name: entity.name.function.definition.source.jcsh}

@@ -1172,7 +1172,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^\s*(DEFUN)\s+(\S*)\s*(GLOBAL)?\s*(?=\s|\)|#|$)</string>
+					<string>^\s*(DEFUN)\s+(\S*)(\s*GLOBAL)?\s*(?=\s|\)|#|$)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
