@@ -16,8 +16,9 @@ yaml_variable: &CMD_LIST_CRYPTO
 yaml_variable: &CMD_LIST_GP
   match: (?<=^|:|\()\s*([@\-])?(delete|extradite|install|registry-update|upload)(?=\s|\)|#|$)
 yaml_variable: &VAR_LIST_BUILTIN
-  match: (?<=\{)\s*(?:[Aa]rgv|[Cc]hannel|ECC_CURVEPARAM_A|ECC_CURVEPARAM_B|ECC_CURVEPARAM_G|ECC_CURVEPARAM_N|ECC_CURVEPARAM_P|ECC_SharedSecret|exec\.dir|exec\.errorlog|exec\.output|JCOPDIR|KEY_ECC_PrivateKey|KEY_ECC_PublicKeyX|KEY_ECC_PublicKeyY|KEY_RSA_PrivateKey|KEY_RSA_PrivateKey_dP|KEY_RSA_PrivateKey_dQ|KEY_RSA_PrivateKey_P|KEY_RSA_PrivateKey_PQ|KEY_RSA_PrivateKey_Q|KEY_RSA_PublicKey|last\.apdu\.executiontime|last\.apdu\.executiontime\.unit|last\.error|last\.errorlog|last\.executiontime|last\.executiontime\.unit|last\.response\.data|last\.response\.status|last\.return|logfile\.list|[Pp]ath|[Pp]lugin|[Rr]andom|[Rr]esponse|script\.dir|script\.line|script\.name|scrtimer\.exec\.time|SIGNATURE_ECDSA_R|SIGNATURE_ECDSA_S|SIGNATURE_RSA|timer\.execution\.time|timer\.id|[Tt]erminal|[Tt]ime|VERIFY_SIGN|[Vv]ersion)\s*(?=[\[;\}])
+  match: (?<=\{)\s*(?:[Aa]rgv|[Cc]hannel|ECC_CURVEPARAM_A|ECC_CURVEPARAM_B|ECC_CURVEPARAM_G|ECC_CURVEPARAM_N|ECC_CURVEPARAM_P|ECC_SharedSecret|exec\.dir|exec\.errorlog|exec\.output|JCOPDIR|KEY_ECC_PrivateKey|KEY_ECC_PublicKeyX|KEY_ECC_PublicKeyY|KEY_RSA_PrivateKey|KEY_RSA_PrivateKey_dP|KEY_RSA_PrivateKey_dQ|KEY_RSA_PrivateKey_P|KEY_RSA_PrivateKey_PQ|KEY_RSA_PrivateKey_Q|KEY_RSA_PublicKey|last\.apdu\.executiontime|last\.apdu\.executiontime\.unit|last\.error|last\.errorlog|last\.executiontime|last\.executiontime\.unit|last\.response\.data|last\.response\.status|last\.return|logfile\.list|[Pp]ath|[Pp]lugin|random|[Rr]esponse|script\.dir|script\.line|script\.name|scrtimer\.exec\.time|SIGNATURE_ECDSA_R|SIGNATURE_ECDSA_S|SIGNATURE_RSA|timer\.execution\.time|timer\.id|[Tt]erminal|time|VERIFY_SIGN|[Vv]ersion)\s*(?=[\[;\}])
 yaml_variable: # Clear the node (variable)
+version: 1.0.0
 
 patterns:
 - include: '#empty-line'
@@ -398,7 +399,7 @@ repository:
             '1': {name: punctuation.call-modifier.user.source.jcsh}
         - include: '#variable'
         - include: '#nested-call'
-        - match: ([\w\/][\w\-\/\.\\]*)
+        - match: (\S)
           captures:
             '1': {name: entity.name.function.surrounding.source.jcsh}
         - include: '#invalid-character'
@@ -474,7 +475,7 @@ repository:
   number:
     patterns:
     - name: constant.numeric.hexadecimal.source.jcsh
-      match: (?<!\w)(0x)?[\da-fA-F]+(?![\w.])
+      match: (?<!\w)(0x)[\da-fA-F]+(?![\w.])
     - name: constant.numeric.decimal.source.jcsh
       match: (?<!\w)\d+(?![\w.])
 

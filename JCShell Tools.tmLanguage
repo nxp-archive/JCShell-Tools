@@ -692,7 +692,7 @@
 										</dict>
 									</dict>
 									<key>match</key>
-									<string>([\w\/][\w\-\/\.\\]*)</string>
+									<string>(\S)</string>
 								</dict>
 								<dict>
 									<key>include</key>
@@ -1492,7 +1492,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(?&lt;!\w)(0x)?[\da-fA-F]+(?![\w.])</string>
+					<string>(?&lt;!\w)(0x)[\da-fA-F]+(?![\w.])</string>
 					<key>name</key>
 					<string>constant.numeric.hexadecimal.source.jcsh</string>
 				</dict>
@@ -1919,7 +1919,7 @@
 					<key>comment</key>
 					<string>Name of a JCShell built-in variable.</string>
 					<key>match</key>
-					<string>(?&lt;=\{)\s*(?:[Aa]rgv|[Cc]hannel|ECC_CURVEPARAM_A|ECC_CURVEPARAM_B|ECC_CURVEPARAM_G|ECC_CURVEPARAM_N|ECC_CURVEPARAM_P|ECC_SharedSecret|exec\.dir|exec\.errorlog|exec\.output|JCOPDIR|KEY_ECC_PrivateKey|KEY_ECC_PublicKeyX|KEY_ECC_PublicKeyY|KEY_RSA_PrivateKey|KEY_RSA_PrivateKey_dP|KEY_RSA_PrivateKey_dQ|KEY_RSA_PrivateKey_P|KEY_RSA_PrivateKey_PQ|KEY_RSA_PrivateKey_Q|KEY_RSA_PublicKey|last\.apdu\.executiontime|last\.apdu\.executiontime\.unit|last\.error|last\.errorlog|last\.executiontime|last\.executiontime\.unit|last\.response\.data|last\.response\.status|last\.return|logfile\.list|[Pp]ath|[Pp]lugin|[Rr]andom|[Rr]esponse|script\.dir|script\.line|script\.name|scrtimer\.exec\.time|SIGNATURE_ECDSA_R|SIGNATURE_ECDSA_S|SIGNATURE_RSA|timer\.execution\.time|timer\.id|[Tt]erminal|[Tt]ime|VERIFY_SIGN|[Vv]ersion)\s*(?=[\[;\}])</string>
+					<string>(?&lt;=\{)\s*(?:[Aa]rgv|[Cc]hannel|ECC_CURVEPARAM_A|ECC_CURVEPARAM_B|ECC_CURVEPARAM_G|ECC_CURVEPARAM_N|ECC_CURVEPARAM_P|ECC_SharedSecret|exec\.dir|exec\.errorlog|exec\.output|JCOPDIR|KEY_ECC_PrivateKey|KEY_ECC_PublicKeyX|KEY_ECC_PublicKeyY|KEY_RSA_PrivateKey|KEY_RSA_PrivateKey_dP|KEY_RSA_PrivateKey_dQ|KEY_RSA_PrivateKey_P|KEY_RSA_PrivateKey_PQ|KEY_RSA_PrivateKey_Q|KEY_RSA_PublicKey|last\.apdu\.executiontime|last\.apdu\.executiontime\.unit|last\.error|last\.errorlog|last\.executiontime|last\.executiontime\.unit|last\.response\.data|last\.response\.status|last\.return|logfile\.list|[Pp]ath|[Pp]lugin|random|[Rr]esponse|script\.dir|script\.line|script\.name|scrtimer\.exec\.time|SIGNATURE_ECDSA_R|SIGNATURE_ECDSA_S|SIGNATURE_RSA|timer\.execution\.time|timer\.id|[Tt]erminal|time|VERIFY_SIGN|[Vv]ersion)\s*(?=[\[;\}])</string>
 					<key>name</key>
 					<string>support.variable.name.builtin.source.jcsh</string>
 				</dict>
@@ -2065,6 +2065,8 @@
 	<string>source.jcsh</string>
 	<key>uuid</key>
 	<string>18d303a3-9fdd-4503-8eba-e8c0b283ddc1</string>
+	<key>version</key>
+	<string>1.0.0</string>
 	<key>yaml_variable</key>
 	<false/>
 </dict>
