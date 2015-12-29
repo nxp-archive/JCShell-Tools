@@ -64,7 +64,7 @@
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#continued-line</string>
+			<string>#string</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -216,15 +216,42 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?:^|(?&lt;=.:))\s*(?=.*[^&lt;&gt;\=\!]\=[^~\=])(?!.*;\w\w\w\=)</string>
+					<string>(?:^|(?&lt;=.:))\s*(?=[^\s\"\']*[^&lt;&gt;\=\!]\=[^~\=])</string>
 					<key>comment</key>
-					<string>Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': &lt;= &gt;= == != =~ or if part of a modifier (';xxx='). Only a label can be placed in front</string>
+					<string>Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': &lt;= &gt;= == != =~ or if a space or quote is present. Only a label can be placed in front</string>
 					<key>end</key>
 					<string>(?&lt;=.)\s*(?=(?:\s#[^\(])|$|\\)</string>
 					<key>name</key>
 					<string>meta.assignment.source.jcsh</string>
 					<key>patterns</key>
 					<array>
+						<dict>
+							<key>begin</key>
+							<string>(?&lt;=\=)</string>
+							<key>comment</key>
+							<string>Consume everything after the first '='</string>
+							<key>end</key>
+							<string>(?=(?:\s#[^\(])|$|\\)</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>comment</key>
+									<string>Process the value assigned (after the '=')</string>
+									<key>include</key>
+									<string>#expression</string>
+								</dict>
+								<dict>
+									<key>comment</key>
+									<string>Spaces are legit for variable assignment</string>
+									<key>match</key>
+									<string>\s</string>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#invalid-character</string>
+								</dict>
+							</array>
+						</dict>
 						<dict>
 							<key>begin</key>
 							<string>(?&lt;=(?:.|^))(?=.*\=)</string>
@@ -255,18 +282,6 @@
 									<string>#assignment-name</string>
 								</dict>
 							</array>
-						</dict>
-						<dict>
-							<key>comment</key>
-							<string>Process the value assigned (after the '=')</string>
-							<key>include</key>
-							<string>#expression</string>
-						</dict>
-						<dict>
-							<key>comment</key>
-							<string>Spaces are legit for variable assignment</string>
-							<key>match</key>
-							<string>\s</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -557,53 +572,11 @@
 					<key>comment</key>
 					<string>Callable built-in command, function or external script</string>
 					<key>end</key>
-					<string>(?&lt;=[\w\}\)\?&gt;])(?=\s|\)|#|$)</string>
+					<string>(?&lt;=\S)(?=\s|\)|\s#|$)</string>
 					<key>name</key>
 					<string>meta.callable.source.jcsh</string>
 					<key>patterns</key>
 					<array>
-						<dict>
-							<key>captures</key>
-							<dict>
-								<key>1</key>
-								<dict>
-									<key>name</key>
-									<string>punctuation.call-modifier.builtin.source.jcsh</string>
-								</dict>
-								<key>2</key>
-								<dict>
-									<key>name</key>
-									<string>support.function.plugin.crypto.source.jcsh</string>
-								</dict>
-							</dict>
-							<key>comment</key>
-							<string>JCShell Crypto Plugin command</string>
-							<key>match</key>
-							<string>(?&lt;=^|:|\()\s*([@\-])?(decrypt|encrypt|hash|keygen|mac|pad|sign|unpad)(?=\s|\)|#|$)</string>
-							<key>name</key>
-							<string>meta.support.function.plugin.crypto.source.jcsh</string>
-						</dict>
-						<dict>
-							<key>captures</key>
-							<dict>
-								<key>1</key>
-								<dict>
-									<key>name</key>
-									<string>punctuation.call-modifier.builtin.source.jcsh</string>
-								</dict>
-								<key>2</key>
-								<dict>
-									<key>name</key>
-									<string>support.function.plugin.psd.source.jcsh</string>
-								</dict>
-							</dict>
-							<key>comment</key>
-							<string>JCShell Provider Security Domain Plugin command</string>
-							<key>match</key>
-							<string>(?&lt;=^|:|\()\s*([@\-])?(delete|extradite|install|registry-update|upload)(?=\s|\)|#|$)</string>
-							<key>name</key>
-							<string>meta.support.function.plugin.psd.source.jcsh</string>
-						</dict>
 						<dict>
 							<key>captures</key>
 							<dict>
@@ -652,12 +625,33 @@
 							<string>meta.support.function.builtin.source.jcsh</string>
 						</dict>
 						<dict>
+							<key>captures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.call-modifier.builtin.source.jcsh</string>
+								</dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>support.function.plugin.crypto.source.jcsh</string>
+								</dict>
+							</dict>
+							<key>comment</key>
+							<string>JCShell Crypto Plugin command</string>
+							<key>match</key>
+							<string>(?&lt;=^|:|\()\s*([@\-])?(decrypt|encrypt|hash|keygen|mac|pad|sign|unpad)(?=\s|\)|#|$)</string>
+							<key>name</key>
+							<string>meta.support.function.plugin.crypto.source.jcsh</string>
+						</dict>
+						<dict>
 							<key>begin</key>
 							<string>(?&lt;=^|:|\()</string>
 							<key>comment</key>
 							<string>User-defined callable</string>
 							<key>end</key>
-							<string>(?&lt;=[\}\)\w])(?=\s|\)|#|$)</string>
+							<string>(?&lt;=\S)(?=\s|\)|\s#|$)</string>
 							<key>name</key>
 							<string>meta.callable.user.source.jcsh</string>
 							<key>patterns</key>
@@ -683,16 +677,10 @@
 									<string>#nested-call</string>
 								</dict>
 								<dict>
-									<key>captures</key>
-									<dict>
-										<key>1</key>
-										<dict>
-											<key>name</key>
-											<string>entity.name.function.surrounding.source.jcsh</string>
-										</dict>
-									</dict>
 									<key>match</key>
-									<string>(\S)</string>
+									<string>\S</string>
+									<key>name</key>
+									<string>entity.name.function.surrounding.source.jcsh</string>
 								</dict>
 								<dict>
 									<key>include</key>
@@ -755,7 +743,7 @@
 					<key>comment</key>
 					<string>Single-line comment starting with '#'</string>
 					<key>match</key>
-					<string>\s*(?&lt;!\S)(#)(.*)$</string>
+					<string>\s*(?&lt;=\s)(#)(.*)$</string>
 					<key>name</key>
 					<string>meta.comment.line.source.jcsh</string>
 				</dict>
@@ -785,42 +773,6 @@
 					<string>^\s*(#)(.*)$</string>
 					<key>name</key>
 					<string>meta.comment.line.full.source.jcsh</string>
-				</dict>
-			</array>
-		</dict>
-		<key>continued-line</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>^\s*(?=")</string>
-					<key>comment</key>
-					<string>Continued line</string>
-					<key>end</key>
-					<string>(?=$)</string>
-					<key>name</key>
-					<string>meta.continued-line.source.jcsh</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>begin</key>
-							<string>\s*(?=")</string>
-							<key>end</key>
-							<string>(?&lt;=\S)(?=\s|\)|$|\\)</string>
-							<key>patterns</key>
-							<array>
-								<dict>
-									<key>include</key>
-									<string>#string</string>
-								</dict>
-								<dict>
-									<key>include</key>
-									<string>#invalid-character</string>
-								</dict>
-							</array>
-						</dict>
-					</array>
 				</dict>
 			</array>
 		</dict>
@@ -926,12 +878,6 @@
 					<string>#operator</string>
 				</dict>
 				<dict>
-					<key>match</key>
-					<string>[\w\-\.,\=!:;]+</string>
-					<key>name</key>
-					<string>string.unquoted.expression.surrounding.source.jcsh</string>
-				</dict>
-				<dict>
 					<key>begin</key>
 					<string>(#)?(\()</string>
 					<key>beginCaptures</key>
@@ -947,6 +893,8 @@
 							<string>punctuation.parentheses.begin.source.jcsh</string>
 						</dict>
 					</dict>
+					<key>comment</key>
+					<string>Process the content of parenthesis the same way</string>
 					<key>end</key>
 					<string>\)</string>
 					<key>endCaptures</key>
@@ -964,6 +912,12 @@
 							<string>#expression</string>
 						</dict>
 					</array>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>[\w\-\.\=,!:;\[\]#]+</string>
+					<key>name</key>
+					<string>string.unquoted.expression.surrounding.source.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1720,16 +1674,28 @@
 							<string>punctuation.subscript.content.asterisk.source.jcsh</string>
 						</dict>
 						<dict>
-							<key>include</key>
-							<string>#expression</string>
-						</dict>
-						<dict>
 							<key>comment</key>
 							<string>Match '[#]' to color the '#', only if it's not part of a variable call</string>
 							<key>match</key>
 							<string>(?&lt;=\[)\#(?=\](?:\s|=))</string>
 							<key>name</key>
 							<string>punctuation.subscript.content.number-sign.source.jcsh</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#variable</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#nested-call</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#number</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#operator</string>
 						</dict>
 						<dict>
 							<key>include</key>

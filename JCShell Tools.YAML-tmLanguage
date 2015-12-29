@@ -14,8 +14,6 @@ yaml_variable: &CMD_LIST_BUILTIN
   match: (?<=^|:|\()\s*([@\-])?(>|\?|auth|card-info|delete|delete-key|ext-auth|extradite|flush|get-cplc|get-crs-state|get-data|get-sd-cert|help|init-upd|init-update|install|internal-authenticate|ls|mutual-authenticate|perform-security-operation|personalize|print-key|put-key|put-key-ecc|put-keyset|put-pub-key|quit|registry-update|select|send|session-info|set-applet|set-crs-state|set-key|set-scp|set-sd-state|set-security|set-state|store-aid|store-data|store-keyset|upload|upload-install-make-selectable|version)(?=\s|\)|#|$)
 yaml_variable: &CMD_LIST_CRYPTO
   match: (?<=^|:|\()\s*([@\-])?(decrypt|encrypt|hash|keygen|mac|pad|sign|unpad)(?=\s|\)|#|$)
-yaml_variable: &CMD_LIST_GP
-  match: (?<=^|:|\()\s*([@\-])?(delete|extradite|install|registry-update|upload)(?=\s|\)|#|$)
 yaml_variable: &VAR_LIST_BUILTIN
   match: (?<=\{)\s*(?:[Aa]rgv|[Cc]hannel|ECC_CURVEPARAM_A|ECC_CURVEPARAM_B|ECC_CURVEPARAM_G|ECC_CURVEPARAM_N|ECC_CURVEPARAM_P|ECC_SharedSecret|exec\.dir|exec\.errorlog|exec\.output|JCOPDIR|KEY_ECC_PrivateKey|KEY_ECC_PublicKeyX|KEY_ECC_PublicKeyY|KEY_RSA_PrivateKey|KEY_RSA_PrivateKey_dP|KEY_RSA_PrivateKey_dQ|KEY_RSA_PrivateKey_P|KEY_RSA_PrivateKey_PQ|KEY_RSA_PrivateKey_Q|KEY_RSA_PublicKey|last\.apdu\.executiontime|last\.apdu\.executiontime\.unit|last\.error|last\.errorlog|last\.executiontime|last\.executiontime\.unit|last\.response\.data|last\.response\.status|last\.return|logfile\.list|[Pp]ath|[Pp]lugin|random|[Rr]esponse|script\.dir|script\.line|script\.name|scrtimer\.exec\.time|SIGNATURE_ECDSA_R|SIGNATURE_ECDSA_S|SIGNATURE_RSA|timer\.execution\.time|timer\.id|[Tt]erminal|time|VERIFY_SIGN|[Vv]ersion)\s*(?=[\[;\}])
 yaml_variable: # Clear the node (variable)
@@ -34,7 +32,7 @@ patterns:
 - include: '#flow-statement'
 - include: '#assignment-operator'
 - include: '#assignment-command'
-- include: '#continued-line'
+- include: '#string'
 - include: '#call'
 - include: '#invalid-character'
 
@@ -59,7 +57,7 @@ repository:
     patterns:
     - comment: Single-line comment starting with '#'
       name: meta.comment.line.source.jcsh
-      match: \s*(?<!\S)(#)(.*)$
+      match: \s*(?<=\s)(#)(.*)$
       captures:
         '1': {name: comment.line.number-sign.source.jcsh}
         '2': {name: comment.line.source.jcsh}
@@ -80,19 +78,6 @@ repository:
       end: $
       patterns:
       - include: '#invalid-character'
-
-  continued-line:
-    patterns:
-    - comment: Continued line
-      name: meta.continued-line.source.jcsh
-      begin: ^\s*(?=")
-      end: (?=$)
-      patterns:
-      - begin: \s*(?=")
-        end: (?<=\S)(?=\s|\)|$|\\)
-        patterns:
-        - include: '#string'
-        - include: '#invalid-character'
 
   label:
     patterns:
@@ -129,11 +114,20 @@ repository:
 
   assignment-operator:
     patterns:
-    - comment: "Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': <= >= == != =~ or if part of a modifier (';xxx='). Only a label can be placed in front"
+    - comment: "Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': <= >= == != =~ or if a space or quote is present. Only a label can be placed in front"
       name: meta.assignment.source.jcsh
-      begin: (?:^|(?<=.:))\s*(?=.*[^<>\=\!]\=[^~\=])(?!.*;\w\w\w\=)
+      begin: (?:^|(?<=.:))\s*(?=[^\s\"\']*[^<>\=\!]\=[^~\=])
       end: (?<=.)\s*(?=(?:\s#[^\(])|$|\\)
       patterns:
+      - comment: Consume everything after the first '='
+        begin: (?<=\=)
+        end: (?=(?:\s#[^\(])|$|\\)
+        patterns:
+        - comment: Process the value assigned (after the '=')
+          include: '#expression'
+        - comment: Spaces are legit for variable assignment
+          match: \s
+        - include: '#invalid-character'
       - comment: Match the newly defined variable name (consume up to the '=')
         begin: (?<=(?:.|^))(?=.*\=)
         end: (=)(?=.|(?:\s#[^\(])|$|\\)
@@ -144,10 +138,6 @@ repository:
           include: '#subscript'
         - comment: Then the newly defined variable name
           include: '#assignment-name'
-      - comment: Process the value assigned (after the '=')
-        include: '#expression'
-      - comment: Spaces are legit for variable assignment
-        match: \s
       - include: '#invalid-character'
 
   assignment-name:
@@ -192,10 +182,13 @@ repository:
       - comment: Match '[*]' to color the '*'
         match: (?<=\[)\*(?=\])
         name: punctuation.subscript.content.asterisk.source.jcsh
-      - include: '#expression'
       - comment: Match '[#]' to color the '#', only if it's not part of a variable call
         match: (?<=\[)\#(?=\](?:\s|=))
         name: punctuation.subscript.content.number-sign.source.jcsh
+      - include: '#variable'
+      - include: '#nested-call'
+      - include: '#number'
+      - include: '#operator'
       - include: '#invalid-character'
 
   variable-name:
@@ -362,20 +355,8 @@ repository:
     - comment: Callable built-in command, function or external script
       name: meta.callable.source.jcsh
       begin: (?<=^|:|\()
-      end: (?<=[\w\}\)\?>])(?=\s|\)|#|$)
+      end: (?<=\S)(?=\s|\)|\s#|$)
       patterns:
-      - comment: JCShell Crypto Plugin command
-        name: meta.support.function.plugin.crypto.source.jcsh
-        <<: *CMD_LIST_CRYPTO
-        captures:
-          '1': {name: punctuation.call-modifier.builtin.source.jcsh}
-          '2': {name: support.function.plugin.crypto.source.jcsh}
-      - comment: JCShell Provider Security Domain Plugin command
-        name: meta.support.function.plugin.psd.source.jcsh
-        <<: *CMD_LIST_GP
-        captures:
-          '1': {name: punctuation.call-modifier.builtin.source.jcsh}
-          '2': {name: support.function.plugin.psd.source.jcsh}
       - comment: JCShell built-in slash command
         name: meta.support.function.builtin.slash.source.jcsh
         <<: *CMD_LIST_SLASH_BUILTIN
@@ -389,19 +370,24 @@ repository:
         captures:
           '1': {name: punctuation.call-modifier.builtin.source.jcsh}
           '2': {name: support.function.builtin.source.jcsh}
+      - comment: JCShell Crypto Plugin command
+        name: meta.support.function.plugin.crypto.source.jcsh
+        <<: *CMD_LIST_CRYPTO
+        captures:
+          '1': {name: punctuation.call-modifier.builtin.source.jcsh}
+          '2': {name: support.function.plugin.crypto.source.jcsh}
       - comment: User-defined callable
         name: meta.callable.user.source.jcsh
         begin: (?<=^|:|\()
-        end: (?<=[\}\)\w])(?=\s|\)|#|$)
+        end: (?<=\S)(?=\s|\)|\s#|$)
         patterns:
         - match: (?<=^|:|\()\s*([@\-])?
           captures:
             '1': {name: punctuation.call-modifier.user.source.jcsh}
         - include: '#variable'
         - include: '#nested-call'
-        - match: (\S)
-          captures:
-            '1': {name: entity.name.function.surrounding.source.jcsh}
+        - match: \S
+          name: entity.name.function.surrounding.source.jcsh
         - include: '#invalid-character'
       - include: '#invalid-character'
 
@@ -438,9 +424,8 @@ repository:
     - include: '#nested-call'
     - include: '#number'
     - include: '#operator'
-    - name: string.unquoted.expression.surrounding.source.jcsh
-      match: '[\w\-\.,\=!:;]+'
-    - begin: (#)?(\()
+    - comment: Process the content of parenthesis the same way
+      begin: (#)?(\()
       beginCaptures:
         '1': {name: punctuation.parentheses.modifier.source.jcsh}
         '2': {name: punctuation.parentheses.begin.source.jcsh}
@@ -449,6 +434,8 @@ repository:
         '0': {name: punctuation.parentheses.end.source.jcsh}
       patterns:
       - include: '#expression'
+    - name: string.unquoted.expression.surrounding.source.jcsh
+      match: '[\w\-\.\=,!:;\[\]#]+'
 
   nested-call:
     patterns:
