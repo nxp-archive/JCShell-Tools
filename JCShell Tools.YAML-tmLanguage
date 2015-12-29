@@ -40,41 +40,41 @@ repository:
   empty-line:
     patterns:
     - comment: Line containing only whitespace
-      name: meta.empty.source.jcsh
+      name: meta.empty.jcsh
       match: ^\s*(\\)?$
 
   comment-line:
     patterns:
     - comment: Line containing only whitespace and a single-line comment starting
         with '#'
-      name: meta.comment.line.full.source.jcsh
+      name: meta.comment.line.full.jcsh
       match: ^\s*(#)(.*)$
       captures:
-        '1': {name: comment.line.number-sign.source.jcsh}
-        '2': {name: comment.line.source.jcsh}
+        '1': {name: comment.line.number-sign.jcsh}
+        '2': {name: comment.line.jcsh}
 
   comment:
     patterns:
     - comment: Single-line comment starting with '#'
-      name: meta.comment.line.source.jcsh
+      name: meta.comment.line.jcsh
       match: \s*(?<=\s)(#)(.*)$
       captures:
-        '1': {name: comment.line.number-sign.source.jcsh}
-        '2': {name: comment.line.source.jcsh}
+        '1': {name: comment.line.number-sign.jcsh}
+        '2': {name: comment.line.jcsh}
 
   invalid-character:
     patterns:
     - comment: Match anything not matched yet
-      name: invalid.character.source.jcsh
+      name: invalid.character.jcsh
       match: .
 
   line-continuation:
     patterns:
     - comment: Line continuation
-      name: meta.line-continuation.source.jcsh
+      name: meta.line-continuation.jcsh
       begin: (\\)\s*$
       beginCaptures:
-        '1': {name: punctuation.line-continuation.source.jcsh}
+        '1': {name: punctuation.line-continuation.jcsh}
       end: $
       patterns:
       - include: '#invalid-character'
@@ -82,20 +82,20 @@ repository:
   label:
     patterns:
     - comment: Leading label that can be jumped to using goto. Labels can be placed at the beginning of any line and cannot contain variables
-      name: meta.control.label.definition.source.jcsh
+      name: meta.control.label.definition.jcsh
       match: ^\s*(\w[\w\-\.]*)\s*(:)
       captures:
-        '1': {name: keyword.control.label.definition.source.jcsh}
-        '2': {name: punctuation.definition.label.source.jcsh}
+        '1': {name: keyword.control.label.definition.jcsh}
+        '2': {name: punctuation.definition.label.jcsh}
 
   assignment-command:
     patterns:
     - comment: Variable assignment with explicit command, only a label can be placed in front
-      name: meta.assignment.source.jcsh
+      name: meta.assignment.jcsh
       begin: (?:^|(?<=.:))\s*(/set-var|/s-v)\s((?:\s*(?:-d|--def|-g|--global|-q|--quote)\s)*)
       beginCaptures:
-        '1': {name: keyword.assignment.command.source.jcsh}
-        '2': {name: variable.parameter.flag.assignment.source.jcsh}
+        '1': {name: keyword.assignment.command.jcsh}
+        '2': {name: variable.parameter.flag.assignment.jcsh}
       end: (?=(?:\s#[^\(])|$|\\)
       patterns:
       - comment: Match the newly defined variable name (consume up to the next space). We have to rematch the beginning of the line to make sure we only take the first word after the space (and that the regex is not applied to each word on the line)
@@ -115,7 +115,7 @@ repository:
   assignment-operator:
     patterns:
     - comment: "Variable assignment with operator ('='). Avoid assignment detection if the following operators are formed with the '=': <= >= == != =~ or if a space or quote is present. Only a label can be placed in front"
-      name: meta.assignment.source.jcsh
+      name: meta.assignment.jcsh
       begin: (?:^|(?<=.:))\s*(?=[^\s\"\']*[^<>\=\!]\=[^~\=])
       end: (?<=.)\s*(?=(?:\s#[^\(])|$|\\)
       patterns:
@@ -132,7 +132,7 @@ repository:
         begin: (?<=(?:.|^))(?=.*\=)
         end: (=)(?=.|(?:\s#[^\(])|$|\\)
         endCaptures:
-          '1': {name: keyword.assignment.operator.source.jcsh}
+          '1': {name: keyword.assignment.operator.jcsh}
         patterns:
         - comment: Handle the subscript first (array '[]')
           include: '#subscript'
@@ -147,20 +147,20 @@ repository:
       - include: '#variable'
       - include: '#nested-call'
       - match: \S
-        name: variable.assigned.source.jcsh
+        name: variable.assigned.jcsh
       - include: '#invalid-character'
 
   variable:
     patterns:
     - comment: Bracket-style variable reference
-      name: meta.reference.variable.source.jcsh
+      name: meta.reference.variable.jcsh
       begin: (\$)(\{)
       beginCaptures:
-        '1': {name: punctuation.definition.reference.variable.head.source.jcsh}
-        '2': {name: punctuation.definition.reference.variable.begin.source.jcsh}
+        '1': {name: punctuation.definition.reference.variable.head.jcsh}
+        '2': {name: punctuation.definition.reference.variable.begin.jcsh}
       end: \}
       endCaptures:
-        '0': {name: punctuation.definition.reference.variable.end.source.jcsh}
+        '0': {name: punctuation.definition.reference.variable.end.jcsh}
       patterns:
       - include: '#subscript'
       - include: '#plugin-modifier'
@@ -173,18 +173,18 @@ repository:
     - comment: Variable subscript (array '[]')
       begin: (\[)
       beginCaptures:
-        '1': {name: punctuation.definition.subscript.begin.source.jcsh}
+        '1': {name: punctuation.definition.subscript.begin.jcsh}
       end: (\])
       endCaptures:
-        '1': {name: punctuation.definition.subscript.end.source.jcsh}
+        '1': {name: punctuation.definition.subscript.end.jcsh}
       patterns:
       - comment: Inside the '[]' (no space allowed)
       - comment: Match '[*]' to color the '*'
         match: (?<=\[)\*(?=\])
-        name: punctuation.subscript.content.asterisk.source.jcsh
+        name: punctuation.subscript.content.asterisk.jcsh
       - comment: Match '[#]' to color the '#', only if it's not part of a variable call
         match: (?<=\[)\#(?=\](?:\s|=))
-        name: punctuation.subscript.content.number-sign.source.jcsh
+        name: punctuation.subscript.content.number-sign.jcsh
       - include: '#variable'
       - include: '#nested-call'
       - include: '#operator'
@@ -196,7 +196,7 @@ repository:
   variable-name:
     patterns:
     - comment: Variable name. May contain replaced variables and interpolations
-      name: meta.variable.name.source.jcsh
+      name: meta.variable.name.jcsh
       begin: (?<=\{)
       end: (?=[:\[;\}])
       patterns:
@@ -209,44 +209,44 @@ repository:
   variable-name-builtin:
     patterns:
     - comment: Name of a JCShell built-in variable.
-      name: support.variable.name.builtin.source.jcsh
+      name: support.variable.name.builtin.jcsh
       <<: *VAR_LIST_BUILTIN
 
   variable-name-positional:
     patterns:
     - comment: Name of a positional variable
-      name: support.variable.name.positional.source.jcsh
+      name: support.variable.name.positional.jcsh
       match: (?<=\{)\d+(?=[\[;\}])
 
   variable-name-environment:
     patterns:
     - comment: Name of an environment variable (starting with '*')
-      name: meta.variable.name.environment.source.jcsh
+      name: meta.variable.name.environment.jcsh
       match: (?<=\{)(\*)([\w.]+)(?=[\[;\}])
       captures:
-        '1': {name: punctuation.definition.variable.name.environment.source.jcsh}
-        '2': {name: variable.name.environment.source.jcsh}
+        '1': {name: punctuation.definition.variable.name.environment.jcsh}
+        '2': {name: variable.name.environment.jcsh}
 
   variable-name-user:
     patterns:
     - comment: User-defined variable name
-      name: meta.variable.name.user.source.jcsh
+      name: meta.variable.name.user.jcsh
       begin: (?<=\{)
       end: (?=[:\[;\}])
       patterns:
       - include: '#variable'
       - include: '#nested-call'
       - match: \S
-        name: variable.name.user.source.jcsh
+        name: variable.name.user.jcsh
       - include: '#invalid-character'
 
   modifier:
     patterns:
     - comment: Variable modifier (no space allowed)
-      name: meta.variable.modifier.source.jcsh
+      name: meta.variable.modifier.jcsh
       begin: ;
       beginCaptures:
-        '0': {name: punctuation.separator.variable.modifier.source.jcsh}
+        '0': {name: punctuation.separator.variable.modifier.jcsh}
       end: (?=[;\}])
       patterns:
       - include: '#builtin-modifier'
@@ -257,25 +257,25 @@ repository:
   builtin-modifier:
     patterns:
     - comment: Built-in variable modifier name (no space allowed)
-      name: meta.modifier.name.builtin.source.jcsh
+      name: meta.modifier.name.builtin.jcsh
       match: (?<=;)([Dd]irname|[Ff]ilename|[Bb]asename|[Ee]xtension|[Ll]|[Qq]|[Qq]q|[Ll]c|[Uu]c)(?=[;\}])
       captures:
-        '0': {name: keyword.modifier.builtin.source.jcsh}
+        '0': {name: keyword.modifier.builtin.jcsh}
     - comment: Built-in hex variable modifier ('h')
       begin: (?<=;)(h)
       beginCaptures:
-        '1': {name: keyword.modifier.builtin.source.jcsh}
+        '1': {name: keyword.modifier.builtin.jcsh}
       end: \s*(?=[;\}])
       patterns:
       - include: '#variable'
       - include: '#nested-call'
-      - name: constant.numeric.decimal.hex-modifier.surrounding.source.jcsh
+      - name: constant.numeric.decimal.hex-modifier.surrounding.jcsh
         match: \d*
       - include: '#invalid-character'
     - comment: Built-in substring variable modifier ('s')
       begin: (?<=;)(s)
       beginCaptures:
-        '1': {name: keyword.modifier.builtin.source.jcsh}
+        '1': {name: keyword.modifier.builtin.jcsh}
       end: (?=[;\}])
       patterns:
       - comment: First argument of substring variable modifier
@@ -284,7 +284,7 @@ repository:
         patterns:
         - include: '#variable'
         - include: '#nested-call'
-        - name: constant.numeric.decimal.substring-modifier.offset.surrounding.source.jcsh
+        - name: constant.numeric.decimal.substring-modifier.offset.surrounding.jcsh
           match: \d*
         - include: '#invalid-character'
       - comment: Second argument of substring variable modifier
@@ -295,55 +295,55 @@ repository:
         patterns:
         - include: '#variable'
         - include: '#nested-call'
-        - name: constant.numeric.decimal.substring-modifier.length.surrounding.source.jcsh
+        - name: constant.numeric.decimal.substring-modifier.length.surrounding.jcsh
           match: \d*
         - include: '#invalid-character'
       - include: '#invalid-character'
     - comment: Built-in assigned variable modifier for Time ('time')
       begin: (?<={time;)(fmt)(\=)
       beginCaptures:
-        '1': {name: keyword.modifier.builtin.source.jcsh}
-        '2': {name: keyword.assignment.operator.source.jcsh}
+        '1': {name: keyword.modifier.builtin.jcsh}
+        '2': {name: keyword.assignment.operator.jcsh}
       end: \s*(?=[;\}])
       patterns:
       - include: '#string'
       - include: '#variable'
       - include: '#nested-call'
-      - name: string.unquoted.assigned-modifier.surrounding.source.jcsh
+      - name: string.unquoted.assigned-modifier.surrounding.jcsh
         match: .
       - include: '#invalid-character'
     - comment: Built-in assigned variable modifier for Random ('random')
       begin: (?<={random;)(max|len)(\=)
       beginCaptures:
-        '1': {name: keyword.modifier.builtin.source.jcsh}
-        '2': {name: keyword.assignment.operator.source.jcsh}
+        '1': {name: keyword.modifier.builtin.jcsh}
+        '2': {name: keyword.assignment.operator.jcsh}
       end: (?=[;\}])
       patterns:
       - include: '#variable'
       - include: '#nested-call'
-      - name: constant.numeric.decimal.hex-modifier.surrounding.source.jcsh
+      - name: constant.numeric.decimal.hex-modifier.surrounding.jcsh
         match: \d*
       - include: '#invalid-character'
 
   plugin-modifier:
     patterns:
     - comment: Modifier for accessing plugin variables
-      name: meta.variable.plugin-modifier.source.jcsh
+      name: meta.variable.plugin-modifier.jcsh
       begin: ':'
       beginCaptures:
-        '0': {name: punctuation.separator.variable.modifier.plugin.source.jcsh}
+        '0': {name: punctuation.separator.variable.modifier.plugin.jcsh}
       end: (?=[\[;\}])
       patterns:
       - include: '#variable'
       - include: '#nested-call'
-      - name: support.variable.name.plugin.surrounding.source.jcsh
+      - name: support.variable.name.plugin.surrounding.jcsh
         match: \s*\w[\w\-\.]*\s*
       - include: '#invalid-character'
 
   call:
     patterns:
     - comment: Call to a built-in command, function or external script. Only a label can be placed in front
-      name: meta.control.call.source.jcsh
+      name: meta.control.call.jcsh
       begin: (?:^|(?<=.:))
       end: (?<=.)\s*(?=\)|#[^//(]|$|\\)
       patterns:
@@ -355,48 +355,48 @@ repository:
   callable:
     patterns:
     - comment: Callable built-in command, function or external script
-      name: meta.callable.source.jcsh
+      name: meta.callable.jcsh
       begin: (?<=^|:|\()
       end: (?<=\S)(?=\s|\)|\s#|$)
       patterns:
       - comment: JCShell built-in slash command
-        name: meta.support.function.builtin.slash.source.jcsh
+        name: meta.support.function.builtin.slash.jcsh
         <<: *CMD_LIST_SLASH_BUILTIN
         captures:
-          '1': {name: punctuation.definition.callable.builtin.slash.source.jcsh}
-          '2': {name: punctuation.call-modifier.builtin.source.jcsh}
-          '3': {name: support.function.builtin.slash.source.jcsh}
+          '1': {name: punctuation.definition.callable.builtin.slash.jcsh}
+          '2': {name: punctuation.call-modifier.builtin.jcsh}
+          '3': {name: support.function.builtin.slash.jcsh}
       - comment: JCShell built-in command
-        name: meta.support.function.builtin.source.jcsh
+        name: meta.support.function.builtin.jcsh
         <<: *CMD_LIST_BUILTIN
         captures:
-          '1': {name: punctuation.call-modifier.builtin.source.jcsh}
-          '2': {name: support.function.builtin.source.jcsh}
+          '1': {name: punctuation.call-modifier.builtin.jcsh}
+          '2': {name: support.function.builtin.jcsh}
       - comment: JCShell Crypto Plugin command
-        name: meta.support.function.plugin.crypto.source.jcsh
+        name: meta.support.function.plugin.crypto.jcsh
         <<: *CMD_LIST_CRYPTO
         captures:
-          '1': {name: punctuation.call-modifier.builtin.source.jcsh}
-          '2': {name: support.function.plugin.crypto.source.jcsh}
+          '1': {name: punctuation.call-modifier.builtin.jcsh}
+          '2': {name: support.function.plugin.crypto.jcsh}
       - comment: User-defined callable
-        name: meta.callable.user.source.jcsh
+        name: meta.callable.user.jcsh
         begin: (?<=^|:|\()
         end: (?<=\S)(?=\s|\)|\s#|$)
         patterns:
         - match: (?<=^|:|\()\s*([@\-])?
           captures:
-            '1': {name: punctuation.call-modifier.user.source.jcsh}
+            '1': {name: punctuation.call-modifier.user.jcsh}
         - include: '#variable'
         - include: '#nested-call'
         - match: \S
-          name: entity.name.function.surrounding.source.jcsh
+          name: entity.name.function.surrounding.jcsh
         - include: '#invalid-character'
       - include: '#invalid-character'
 
   argument:
     patterns:
     - comment: Argument of a call
-      name: meta.argument.source.jcsh
+      name: meta.argument.jcsh
       begin: (?<=\s)\s*
       end: (?<=\S)(?=\s|\)|$|\\)
       patterns:
@@ -407,15 +407,15 @@ repository:
   flag:
     patterns:
     - comment: Flag argument of a call
-      name: meta.flag.source.jcsh
+      name: meta.flag.jcsh
       begin: (?<=\s)(--?)(?=\w)
       beginCaptures:
-        '1': {name: punctuation.definition.flag.source.jcsh}
+        '1': {name: punctuation.definition.flag.jcsh}
       end: (?<=[\}\)\w])(?=\)|\s|#|$)
       patterns:
       - include: '#variable'
       - include: '#nested-call'
-      - name: variable.parameter.flag.surrounding.source.jcsh
+      - name: variable.parameter.flag.surrounding.jcsh
         match: \w[\w\-\.]*
       - include: '#invalid-character'
 
@@ -429,29 +429,29 @@ repository:
     - comment: Process the content of parenthesis the same way
       begin: (#)?(\()
       beginCaptures:
-        '1': {name: punctuation.parentheses.modifier.source.jcsh}
-        '2': {name: punctuation.parentheses.begin.source.jcsh}
+        '1': {name: punctuation.parentheses.modifier.jcsh}
+        '2': {name: punctuation.parentheses.begin.jcsh}
       end: \)
       endCaptures:
-        '0': {name: punctuation.parentheses.end.source.jcsh}
+        '0': {name: punctuation.parentheses.end.jcsh}
       patterns:
       - include: '#expression'
-    - name: string.unquoted.expression.surrounding.source.jcsh
+    - name: string.unquoted.expression.surrounding.jcsh
       match: '[\w\-\.\=,!:;\[\]#]+'
 
   nested-call:
     patterns:
     - comment: Nested call ('$()')
-      name: meta.nested-call.source.jcsh
+      name: meta.nested-call.jcsh
       begin: (\$)(\()
       beginCaptures:
-        '1': {name: punctuation.definition.nested-call.head.source.jcsh}
-        '2': {name: punctuation.definition.nested-call.begin.source.jcsh}
+        '1': {name: punctuation.definition.nested-call.head.jcsh}
+        '2': {name: punctuation.definition.nested-call.begin.jcsh}
       end: \)
       endCaptures:
-        '0': {name: punctuation.definition.nested-call.end.source.jcsh}
+        '0': {name: punctuation.definition.nested-call.end.jcsh}
       patterns:
-      - name: meta.nested-call.content.source.jcsh
+      - name: meta.nested-call.content.jcsh
         begin: (?<=\()
         end: (?<=.)\s*(?=\)|#[^\(]|$|(\\))
         patterns:
@@ -471,69 +471,69 @@ repository:
   number-hex:
     patterns:
     - comment: Detect hex numbers starting with '0x'
-      name: constant.numeric.hexadecimal.source.jcsh
+      name: constant.numeric.hexadecimal.jcsh
       match: (?<!\w)(0x)[\da-fA-F]+(?!\w|(?:\.[^\.]))
 
   number-float:
     patterns:
     - comment: "Detect floats numbers (e.g.: 2.2 .2 or 2.) excluding cases of operators '..' (e.g.: [2..3])"
-      name: constant.numeric.float.source.jcsh
+      name: constant.numeric.float.jcsh
       match: (?:\d*(?<!\.)\.\d+)|(?:\d+\.(?!\.)\d*)
 
   number-dec:
     patterns:
     - comment: Detect decimal numbers (separated by word boundary, so not in the middle of a word)
-      name: constant.numeric.decimal.source.jcsh
+      name: constant.numeric.decimal.jcsh
       match: \b\d+\b
 
   string:
     patterns:
     - comment: Single-quoted string literal without variable replacement and interpolation
-      name: meta.string.source.jcsh
+      name: meta.string.jcsh
       begin: "'"
       beginCaptures:
-        '0': {name: punctuation.definition.string.single.begin.source.jcsh}
+        '0': {name: punctuation.definition.string.single.begin.jcsh}
       end: "'"
       endCaptures:
-        '0': {name: punctuation.definition.string.single.end.source.jcsh}
+        '0': {name: punctuation.definition.string.single.end.jcsh}
       patterns:
-      - name: constant.character.escape.source.jcsh
+      - name: constant.character.escape.jcsh
         match: \\['\\]
-      - name: string.quoted.single.surrounding.source.jcsh
+      - name: string.quoted.single.surrounding.jcsh
         match: .
     - comment: Double-quoted string literal with variable replacement and interpolation
-      name: meta.string.source.jcsh
+      name: meta.string.jcsh
       begin: '"'
       beginCaptures:
-        '0': {name: punctuation.definition.string.double.begin.source.jcsh}
+        '0': {name: punctuation.definition.string.double.begin.jcsh}
       end: '"'
       endCaptures:
-        '0': {name: punctuation.definition.string.double.end.source.jcsh}
+        '0': {name: punctuation.definition.string.double.end.jcsh}
       patterns:
       - include: '#variable'
       - include: '#nested-call'
-      - name: constant.character.escape.source.jcsh
+      - name: constant.character.escape.jcsh
         match: \\[\$"\\]
-      - name: string.quoted.double.surrounding.source.jcsh
+      - name: string.quoted.double.surrounding.jcsh
         match: .
 
   operator:
     patterns:
-    - name: keyword.operator.source.jcsh
+    - name: keyword.operator.jcsh
       match: -|\*|/|%|\+|<<|>>>|>>|<=|<|>=|>|==|!=|!|=~|~|&|\^|\||\.\.|\?
 
   if-block:
     patterns:
     - comment: If block, only a label can be placed in front
-      name: meta.control.if.source.jcsh
+      name: meta.control.if.jcsh
       begin: (?:^|(?<=.:))\s*(if)(?=\s+\S+.*$|(\\))
       beginCaptures:
-        '1': {name: keyword.control.if.source.jcsh}
+        '1': {name: keyword.control.if.jcsh}
       end: ^\s*(end)\s*(?:\s(#)(.*))?$
       endCaptures:
-        '1': {name: keyword.control.if.end.source.jcsh}
-        '2': {name: comment.line.number-sign.source.jcsh}
-        '3': {name: comment.line.source.jcsh}
+        '1': {name: keyword.control.if.end.jcsh}
+        '2': {name: comment.line.number-sign.jcsh}
+        '3': {name: comment.line.jcsh}
       patterns:
       - include: '#flow-expression'
       - include: '#elseif-clause'
@@ -546,12 +546,12 @@ repository:
       begin: (?<=for|if|elseif|while|catch|return)\s+
       end: \s*(?:\s(#)(.*))?$|(\\)
       endCaptures:
-        '1': {name: comment.line.number-sign.source.jcsh}
-        '2': {name: comment.line.source.jcsh}
+        '1': {name: comment.line.number-sign.jcsh}
+        '2': {name: comment.line.jcsh}
       patterns:
       - comment: The 'for' block as an additional iterator provided
         match: (?<=for\s)\s*(\w[\w\-\.]*)
-        name: variable.parameter.iterator.source.jcsh
+        name: variable.parameter.iterator.jcsh
       - include: '#expression'
       - match: \s
       - include: '#invalid-character'
@@ -559,12 +559,12 @@ repository:
   else-clause:
     patterns:
     - comment: Else clause
-      name: meta.control.else.source.jcsh
+      name: meta.control.else.jcsh
       match: ^\s*(else)\s*(?:\s(#)(.*))?$|(\\)
       captures:
-        '1': {name: keyword.control.else.source.jcsh}
-        '2': {name: comment.line.number-sign.source.jcsh}
-        '3': {name: comment.line.source.jcsh}
+        '1': {name: keyword.control.else.jcsh}
+        '2': {name: comment.line.number-sign.jcsh}
+        '3': {name: comment.line.jcsh}
 
   elseif-clause:
     patterns:
@@ -580,27 +580,27 @@ repository:
   try-block:
     patterns:
     - comment: Try block, only a label can be placed in front
-      name: meta.control.try.source.jcsh
+      name: meta.control.try.jcsh
       begin: (?:^|(?<=.:))\s*(try)\s*(?:\s(#)(.*))?$|(\\)
       beginCaptures:
-        '1': {name: keyword.control.try.source.jcsh}
-        '2': {name: comment.line.number-sign.source.jcsh}
-        '3': {name: comment.line.source.jcsh}
+        '1': {name: keyword.control.try.jcsh}
+        '2': {name: comment.line.number-sign.jcsh}
+        '3': {name: comment.line.jcsh}
       end: ^\s*(end)\s*(?:\s(#)(.*))?$
       endCaptures:
-        '1': {name: keyword.control.try.end.source.jcsh}
-        '2': {name: comment.line.number-sign.source.jcsh}
-        '3': {name: comment.line.source.jcsh}
+        '1': {name: keyword.control.try.end.jcsh}
+        '2': {name: comment.line.number-sign.jcsh}
+        '3': {name: comment.line.jcsh}
       patterns:
       - include: '#catch-clause'
       - include: $self
 
   catch-clause:
     comment: Catch clause
-    name: meta.control.catch.source.jcsh
+    name: meta.control.catch.jcsh
     begin: ^\s*(catch)
     beginCaptures:
-      '1': {name: keyword.control.catch.source.jcsh}
+      '1': {name: keyword.control.catch.jcsh}
     end: \s*(?:\s#.*)?$|\\
     patterns:
     - include: '#flow-expression'
@@ -608,15 +608,15 @@ repository:
   for-block:
     patterns:
     - comment: For block, only a label can be placed in front
-      name: meta.control.for.source.jcsh
+      name: meta.control.for.jcsh
       begin: (?:^|(?<=.:))\s*(for)(?=\s+\S+.*$|(\\))
       beginCaptures:
-        '1': {name: keyword.control.for.source.jcsh}
+        '1': {name: keyword.control.for.jcsh}
       end: ^\s*(end)\s*(?:\s(#)(.*))?$
       endCaptures:
-        '1': {name: keyword.control.for.end.source.jcsh}
-        '2': {name: comment.line.number-sign.source.jcsh}
-        '3': {name: comment.line.source.jcsh}
+        '1': {name: keyword.control.for.end.jcsh}
+        '2': {name: comment.line.number-sign.jcsh}
+        '3': {name: comment.line.jcsh}
       patterns:
       - include: '#flow-expression'
       - include: '#flow-statement'
@@ -625,28 +625,28 @@ repository:
   flow-statement:
     patterns:
     - comment: Break, continue or goto statement, only a label can be placed in front. Goto requires a label after. This is check before callable, thus we enforce keywords continue, goto and break to not be used as function/script name even though JCShell is not actively forbidding it (outside loops)
-      name: meta.control.flow.source.jcsh
+      name: meta.control.flow.jcsh
       match: (?:^|(?<=.:))\s*(?:(break)|(continue)|(?:(goto)(?=\s+\S)))(?:\s*(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)
       captures:
-        '1': {name: keyword.control.break.source.jcsh}
-        '2': {name: keyword.control.continue.source.jcsh}
-        '3': {name: keyword.control.goto.source.jcsh}
-        '4': {name: keyword.control.label.target.source.jcsh}
-        '5': {name: comment.line.number-sign.source.jcsh}
-        '6': {name: comment.line.source.jcsh}
+        '1': {name: keyword.control.break.jcsh}
+        '2': {name: keyword.control.continue.jcsh}
+        '3': {name: keyword.control.goto.jcsh}
+        '4': {name: keyword.control.label.target.jcsh}
+        '5': {name: comment.line.number-sign.jcsh}
+        '6': {name: comment.line.jcsh}
 
   while-block:
     patterns:
     - comment: While block, only a label can be placed in front
-      name: meta.control.while.source.jcsh
+      name: meta.control.while.jcsh
       begin: (?:^|(?<=.:))\s*(while)(?=\s+\S+.*$|(\\))
       beginCaptures:
-        '1': {name: keyword.control.while.source.jcsh}
+        '1': {name: keyword.control.while.jcsh}
       end: ^\s*(end)\s*(?:\s(#)(.*))?$
       endCaptures:
-        '1': {name: keyword.control.while.end.source.jcsh}
-        '2': {name: comment.line.number-sign.source.jcsh}
-        '3': {name: comment.line.source.jcsh}
+        '1': {name: keyword.control.while.end.jcsh}
+        '2': {name: comment.line.number-sign.jcsh}
+        '3': {name: comment.line.jcsh}
       patterns:
       - include: '#flow-expression'
       - include: '#flow-statement'
@@ -655,17 +655,17 @@ repository:
   function-definition:
     patterns:
     - comment: DEFUN function definition. 'GLOBAL' is the only value allowed after function name (with comments)
-      name: meta.section.function-definition.source.jcsh
+      name: meta.section.function-definition.jcsh
       begin: ^\s*(DEFUN)\s+(\S*)(\s*GLOBAL)?\s*(?=\s|\)|#|$)
       beginCaptures:
-        '1': {name: keyword.function.definition.begin.source.jcsh}
-        '2': {name: entity.name.function.definition.source.jcsh}
-        '3': {name: variable.parameter.definition.source.jcsh}
+        '1': {name: keyword.function.definition.begin.jcsh}
+        '2': {name: entity.name.function.definition.jcsh}
+        '3': {name: variable.parameter.definition.jcsh}
       end: ^\s*(END)\s*(?:\s(#)(.*))?$
       endCaptures:
-        '1': {name: keyword.function.definition.begin.source.jcsh}
-        '2': {name: comment.line.number-sign.source.jcsh}
-        '3': {name: comment.line.source.jcsh}
+        '1': {name: keyword.function.definition.begin.jcsh}
+        '2': {name: comment.line.number-sign.jcsh}
+        '3': {name: comment.line.jcsh}
       patterns:
       - include: '#return-statement'
       - include: $self
@@ -673,10 +673,10 @@ repository:
   return-statement:
     patterns:
     - comment: Return statement, only a label can be placed in front
-      name: meta.control.return.source.jcsh
+      name: meta.control.return.jcsh
       begin: (?:^|(?<=.:))\s*(return)
       beginCaptures:
-        '1': {name: keyword.control.return.source.jcsh}
+        '1': {name: keyword.control.return.jcsh}
       end: \s*(?:\s#.*)?$|\\
       patterns:
       - include: '#flow-expression'
