@@ -89,7 +89,7 @@
 					<key>end</key>
 					<string>(?&lt;=\S)(?=\s|\)|$|\\)</string>
 					<key>name</key>
-					<string>meta.argument.source.jcsh</string>
+					<string>meta.argument.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -120,12 +120,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.assignment.command.source.jcsh</string>
+							<string>keyword.assignment.command.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>variable.parameter.flag.assignment.source.jcsh</string>
+							<string>variable.parameter.flag.assignment.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -133,7 +133,7 @@
 					<key>end</key>
 					<string>(?=(?:\s#[^\(])|$|\\)</string>
 					<key>name</key>
-					<string>meta.assignment.source.jcsh</string>
+					<string>meta.assignment.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -200,7 +200,7 @@
 							<key>match</key>
 							<string>\S</string>
 							<key>name</key>
-							<string>variable.assigned.source.jcsh</string>
+							<string>variable.assigned.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -222,7 +222,7 @@
 					<key>end</key>
 					<string>(?&lt;=.)\s*(?=(?:\s#[^\(])|$|\\)</string>
 					<key>name</key>
-					<string>meta.assignment.source.jcsh</string>
+					<string>meta.assignment.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -264,7 +264,7 @@
 								<key>1</key>
 								<dict>
 									<key>name</key>
-									<string>keyword.assignment.operator.source.jcsh</string>
+									<string>keyword.assignment.operator.jcsh</string>
 								</dict>
 							</dict>
 							<key>patterns</key>
@@ -301,7 +301,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.modifier.builtin.source.jcsh</string>
+							<string>keyword.modifier.builtin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -309,7 +309,7 @@
 					<key>match</key>
 					<string>(?&lt;=;)([Dd]irname|[Ff]ilename|[Bb]asename|[Ee]xtension|[Ll]|[Qq]|[Qq]q|[Ll]c|[Uu]c)(?=[;\}])</string>
 					<key>name</key>
-					<string>meta.modifier.name.builtin.source.jcsh</string>
+					<string>meta.modifier.name.builtin.jcsh</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -319,7 +319,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.modifier.builtin.source.jcsh</string>
+							<string>keyword.modifier.builtin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -340,7 +340,7 @@
 							<key>match</key>
 							<string>\d*</string>
 							<key>name</key>
-							<string>constant.numeric.decimal.hex-modifier.surrounding.source.jcsh</string>
+							<string>constant.numeric.decimal.hex-modifier.surrounding.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -356,7 +356,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.modifier.builtin.source.jcsh</string>
+							<string>keyword.modifier.builtin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -386,7 +386,7 @@
 									<key>match</key>
 									<string>\d*</string>
 									<key>name</key>
-									<string>constant.numeric.decimal.substring-modifier.offset.surrounding.source.jcsh</string>
+									<string>constant.numeric.decimal.substring-modifier.offset.surrounding.jcsh</string>
 								</dict>
 								<dict>
 									<key>include</key>
@@ -423,7 +423,7 @@
 									<key>match</key>
 									<string>\d*</string>
 									<key>name</key>
-									<string>constant.numeric.decimal.substring-modifier.length.surrounding.source.jcsh</string>
+									<string>constant.numeric.decimal.substring-modifier.length.surrounding.jcsh</string>
 								</dict>
 								<dict>
 									<key>include</key>
@@ -445,12 +445,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.modifier.builtin.source.jcsh</string>
+							<string>keyword.modifier.builtin.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.assignment.operator.source.jcsh</string>
+							<string>keyword.assignment.operator.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -475,7 +475,7 @@
 							<key>match</key>
 							<string>.</string>
 							<key>name</key>
-							<string>string.unquoted.assigned-modifier.surrounding.source.jcsh</string>
+							<string>string.unquoted.assigned-modifier.surrounding.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -491,12 +491,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.modifier.builtin.source.jcsh</string>
+							<string>keyword.modifier.builtin.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.assignment.operator.source.jcsh</string>
+							<string>keyword.assignment.operator.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -517,7 +517,7 @@
 							<key>match</key>
 							<string>\d*</string>
 							<key>name</key>
-							<string>constant.numeric.decimal.hex-modifier.surrounding.source.jcsh</string>
+							<string>constant.numeric.decimal.hex-modifier.surrounding.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -539,7 +539,7 @@
 					<key>end</key>
 					<string>(?&lt;=.)\s*(?=\)|#[^//(]|$|\\)</string>
 					<key>name</key>
-					<string>meta.control.call.source.jcsh</string>
+					<string>meta.control.call.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -574,7 +574,7 @@
 					<key>end</key>
 					<string>(?&lt;=\S)(?=\s|\)|\s#|$)</string>
 					<key>name</key>
-					<string>meta.callable.source.jcsh</string>
+					<string>meta.callable.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -583,17 +583,17 @@
 								<key>1</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.definition.callable.builtin.slash.source.jcsh</string>
+									<string>punctuation.definition.callable.builtin.slash.jcsh</string>
 								</dict>
 								<key>2</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.call-modifier.builtin.source.jcsh</string>
+									<string>punctuation.call-modifier.builtin.jcsh</string>
 								</dict>
 								<key>3</key>
 								<dict>
 									<key>name</key>
-									<string>support.function.builtin.slash.source.jcsh</string>
+									<string>support.function.builtin.slash.jcsh</string>
 								</dict>
 							</dict>
 							<key>comment</key>
@@ -601,7 +601,7 @@
 							<key>match</key>
 							<string>(?&lt;=^|:|\()\s*(?:(/)|([@\-]))(app|applet|atr|c-v|cap-clear|cap-del-auth|cap-extrdt-auth|cap-info|cap-inst-auth|cap-load-auth|cap-reg-update|cap-sign|card|change-protocol|channel|clear-vars|close|echo|error|exchange-poweroff|exchange-warmreset|exec|expr|glob|identify|l-r|l-v|list-readers|list-vars|manage-channel|mode|printf|r-echo|register|s-v|select|send|set-channel|set-var|sleep|start-timer|stop-timer|term|terminal)(?=\s|\)|#|$)</string>
 							<key>name</key>
-							<string>meta.support.function.builtin.slash.source.jcsh</string>
+							<string>meta.support.function.builtin.slash.jcsh</string>
 						</dict>
 						<dict>
 							<key>captures</key>
@@ -609,12 +609,12 @@
 								<key>1</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.call-modifier.builtin.source.jcsh</string>
+									<string>punctuation.call-modifier.builtin.jcsh</string>
 								</dict>
 								<key>2</key>
 								<dict>
 									<key>name</key>
-									<string>support.function.builtin.source.jcsh</string>
+									<string>support.function.builtin.jcsh</string>
 								</dict>
 							</dict>
 							<key>comment</key>
@@ -622,7 +622,7 @@
 							<key>match</key>
 							<string>(?&lt;=^|:|\()\s*([@\-])?(&gt;|\?|auth|card-info|delete|delete-key|ext-auth|extradite|flush|get-cplc|get-crs-state|get-data|get-sd-cert|help|init-upd|init-update|install|internal-authenticate|ls|mutual-authenticate|perform-security-operation|personalize|print-key|put-key|put-key-ecc|put-keyset|put-pub-key|quit|registry-update|select|send|session-info|set-applet|set-crs-state|set-key|set-scp|set-sd-state|set-security|set-state|store-aid|store-data|store-keyset|upload|upload-install-make-selectable|version)(?=\s|\)|#|$)</string>
 							<key>name</key>
-							<string>meta.support.function.builtin.source.jcsh</string>
+							<string>meta.support.function.builtin.jcsh</string>
 						</dict>
 						<dict>
 							<key>captures</key>
@@ -630,12 +630,12 @@
 								<key>1</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.call-modifier.builtin.source.jcsh</string>
+									<string>punctuation.call-modifier.builtin.jcsh</string>
 								</dict>
 								<key>2</key>
 								<dict>
 									<key>name</key>
-									<string>support.function.plugin.crypto.source.jcsh</string>
+									<string>support.function.plugin.crypto.jcsh</string>
 								</dict>
 							</dict>
 							<key>comment</key>
@@ -643,7 +643,7 @@
 							<key>match</key>
 							<string>(?&lt;=^|:|\()\s*([@\-])?(decrypt|encrypt|hash|keygen|mac|pad|sign|unpad)(?=\s|\)|#|$)</string>
 							<key>name</key>
-							<string>meta.support.function.plugin.crypto.source.jcsh</string>
+							<string>meta.support.function.plugin.crypto.jcsh</string>
 						</dict>
 						<dict>
 							<key>begin</key>
@@ -653,7 +653,7 @@
 							<key>end</key>
 							<string>(?&lt;=\S)(?=\s|\)|\s#|$)</string>
 							<key>name</key>
-							<string>meta.callable.user.source.jcsh</string>
+							<string>meta.callable.user.jcsh</string>
 							<key>patterns</key>
 							<array>
 								<dict>
@@ -662,7 +662,7 @@
 										<key>1</key>
 										<dict>
 											<key>name</key>
-											<string>punctuation.call-modifier.user.source.jcsh</string>
+											<string>punctuation.call-modifier.user.jcsh</string>
 										</dict>
 									</dict>
 									<key>match</key>
@@ -680,7 +680,7 @@
 									<key>match</key>
 									<string>\S</string>
 									<key>name</key>
-									<string>entity.name.function.surrounding.source.jcsh</string>
+									<string>entity.name.function.surrounding.jcsh</string>
 								</dict>
 								<dict>
 									<key>include</key>
@@ -705,7 +705,7 @@
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>keyword.control.catch.source.jcsh</string>
+					<string>keyword.control.catch.jcsh</string>
 				</dict>
 			</dict>
 			<key>comment</key>
@@ -713,7 +713,7 @@
 			<key>end</key>
 			<string>\s*(?:\s#.*)?$|\\</string>
 			<key>name</key>
-			<string>meta.control.catch.source.jcsh</string>
+			<string>meta.control.catch.jcsh</string>
 			<key>patterns</key>
 			<array>
 				<dict>
@@ -732,12 +732,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
+							<string>comment.line.number-sign.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.source.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -745,7 +745,7 @@
 					<key>match</key>
 					<string>\s*(?&lt;=\s)(#)(.*)$</string>
 					<key>name</key>
-					<string>meta.comment.line.source.jcsh</string>
+					<string>meta.comment.line.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -759,12 +759,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
+							<string>comment.line.number-sign.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.source.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -772,7 +772,7 @@
 					<key>match</key>
 					<string>^\s*(#)(.*)$</string>
 					<key>name</key>
-					<string>meta.comment.line.full.source.jcsh</string>
+					<string>meta.comment.line.full.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -786,17 +786,17 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.else.source.jcsh</string>
+							<string>keyword.control.else.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
+							<string>comment.line.number-sign.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.source.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -804,7 +804,7 @@
 					<key>match</key>
 					<string>^\s*(else)\s*(?:\s(#)(.*))?$|(\\)</string>
 					<key>name</key>
-					<string>meta.control.else.source.jcsh</string>
+					<string>meta.control.else.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -849,7 +849,7 @@
 					<key>match</key>
 					<string>^\s*(\\)?$</string>
 					<key>name</key>
-					<string>meta.empty.source.jcsh</string>
+					<string>meta.empty.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -885,12 +885,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.parentheses.modifier.source.jcsh</string>
+							<string>punctuation.parentheses.modifier.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.parentheses.begin.source.jcsh</string>
+							<string>punctuation.parentheses.begin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -902,7 +902,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.parentheses.end.source.jcsh</string>
+							<string>punctuation.parentheses.end.jcsh</string>
 						</dict>
 					</dict>
 					<key>patterns</key>
@@ -917,7 +917,7 @@
 					<key>match</key>
 					<string>[\w\-\.\=,!:;\[\]#]+</string>
 					<key>name</key>
-					<string>string.unquoted.expression.surrounding.source.jcsh</string>
+					<string>string.unquoted.expression.surrounding.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -933,7 +933,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.flag.source.jcsh</string>
+							<string>punctuation.definition.flag.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -941,7 +941,7 @@
 					<key>end</key>
 					<string>(?&lt;=[\}\)\w])(?=\)|\s|#|$)</string>
 					<key>name</key>
-					<string>meta.flag.source.jcsh</string>
+					<string>meta.flag.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -956,7 +956,7 @@
 							<key>match</key>
 							<string>\w[\w\-\.]*</string>
 							<key>name</key>
-							<string>variable.parameter.flag.surrounding.source.jcsh</string>
+							<string>variable.parameter.flag.surrounding.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -982,12 +982,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
+							<string>comment.line.number-sign.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.source.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 					</dict>
 					<key>patterns</key>
@@ -998,7 +998,7 @@
 							<key>match</key>
 							<string>(?&lt;=for\s)\s*(\w[\w\-\.]*)</string>
 							<key>name</key>
-							<string>variable.parameter.iterator.source.jcsh</string>
+							<string>variable.parameter.iterator.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1026,32 +1026,32 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.break.source.jcsh</string>
+							<string>keyword.control.break.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.continue.source.jcsh</string>
+							<string>keyword.control.continue.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.goto.source.jcsh</string>
+							<string>keyword.control.goto.jcsh</string>
 						</dict>
 						<key>4</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.label.target.source.jcsh</string>
+							<string>keyword.control.label.target.jcsh</string>
 						</dict>
 						<key>5</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
+							<string>comment.line.number-sign.jcsh</string>
 						</dict>
 						<key>6</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.source.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1059,7 +1059,7 @@
 					<key>match</key>
 					<string>(?:^|(?&lt;=.:))\s*(?:(break)|(continue)|(?:(goto)(?=\s+\S)))(?:\s*(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)</string>
 					<key>name</key>
-					<string>meta.control.flow.source.jcsh</string>
+					<string>meta.control.flow.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1075,7 +1075,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.for.source.jcsh</string>
+							<string>keyword.control.for.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1087,21 +1087,21 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.for.end.source.jcsh</string>
+							<string>keyword.control.for.end.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
+							<string>comment.line.number-sign.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.source.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>meta.control.for.source.jcsh</string>
+					<string>meta.control.for.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1132,17 +1132,17 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.function.definition.begin.source.jcsh</string>
+							<string>keyword.function.definition.begin.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>entity.name.function.definition.source.jcsh</string>
+							<string>entity.name.function.definition.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>variable.parameter.definition.source.jcsh</string>
+							<string>variable.parameter.definition.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1154,21 +1154,21 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.function.definition.begin.source.jcsh</string>
+							<string>keyword.function.definition.begin.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
+							<string>comment.line.number-sign.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.source.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>meta.section.function-definition.source.jcsh</string>
+					<string>meta.section.function-definition.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1195,7 +1195,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.if.source.jcsh</string>
+							<string>keyword.control.if.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1207,21 +1207,21 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.if.end.source.jcsh</string>
+							<string>keyword.control.if.end.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
+							<string>comment.line.number-sign.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.source.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>meta.control.if.source.jcsh</string>
+					<string>meta.control.if.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1254,7 +1254,7 @@
 					<key>match</key>
 					<string>.</string>
 					<key>name</key>
-					<string>invalid.character.source.jcsh</string>
+					<string>invalid.character.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1268,12 +1268,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.label.definition.source.jcsh</string>
+							<string>keyword.control.label.definition.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.label.source.jcsh</string>
+							<string>punctuation.definition.label.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1281,7 +1281,7 @@
 					<key>match</key>
 					<string>^\s*(\w[\w\-\.]*)\s*(:)</string>
 					<key>name</key>
-					<string>meta.control.label.definition.source.jcsh</string>
+					<string>meta.control.label.definition.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1297,7 +1297,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.line-continuation.source.jcsh</string>
+							<string>punctuation.line-continuation.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1305,7 +1305,7 @@
 					<key>end</key>
 					<string>$</string>
 					<key>name</key>
-					<string>meta.line-continuation.source.jcsh</string>
+					<string>meta.line-continuation.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1328,7 +1328,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.separator.variable.modifier.source.jcsh</string>
+							<string>punctuation.separator.variable.modifier.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1336,7 +1336,7 @@
 					<key>end</key>
 					<string>(?=[;\}])</string>
 					<key>name</key>
-					<string>meta.variable.modifier.source.jcsh</string>
+					<string>meta.variable.modifier.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1371,12 +1371,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.nested-call.head.source.jcsh</string>
+							<string>punctuation.definition.nested-call.head.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.nested-call.begin.source.jcsh</string>
+							<string>punctuation.definition.nested-call.begin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1388,11 +1388,11 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.nested-call.end.source.jcsh</string>
+							<string>punctuation.definition.nested-call.end.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>meta.nested-call.source.jcsh</string>
+					<string>meta.nested-call.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1401,7 +1401,7 @@
 							<key>end</key>
 							<string>(?&lt;=.)\s*(?=\)|#[^\(]|$|(\\))</string>
 							<key>name</key>
-							<string>meta.nested-call.content.source.jcsh</string>
+							<string>meta.nested-call.content.jcsh</string>
 							<key>patterns</key>
 							<array>
 								<dict>
@@ -1462,7 +1462,7 @@
 					<key>match</key>
 					<string>\b\d+\b</string>
 					<key>name</key>
-					<string>constant.numeric.decimal.source.jcsh</string>
+					<string>constant.numeric.decimal.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1476,7 +1476,7 @@
 					<key>match</key>
 					<string>(?:\d*(?&lt;!\.)\.\d+)|(?:\d+\.(?!\.)\d*)</string>
 					<key>name</key>
-					<string>constant.numeric.float.source.jcsh</string>
+					<string>constant.numeric.float.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1490,7 +1490,7 @@
 					<key>match</key>
 					<string>(?&lt;!\w)(0x)[\da-fA-F]+(?!\w|(?:\.[^\.]))</string>
 					<key>name</key>
-					<string>constant.numeric.hexadecimal.source.jcsh</string>
+					<string>constant.numeric.hexadecimal.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1502,7 +1502,7 @@
 					<key>match</key>
 					<string>-|\*|/|%|\+|&lt;&lt;|&gt;&gt;&gt;|&gt;&gt;|&lt;=|&lt;|&gt;=|&gt;|==|!=|!|=~|~|&amp;|\^|\||\.\.|\?</string>
 					<key>name</key>
-					<string>keyword.operator.source.jcsh</string>
+					<string>keyword.operator.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1518,7 +1518,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.separator.variable.modifier.plugin.source.jcsh</string>
+							<string>punctuation.separator.variable.modifier.plugin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1526,7 +1526,7 @@
 					<key>end</key>
 					<string>(?=[\[;\}])</string>
 					<key>name</key>
-					<string>meta.variable.plugin-modifier.source.jcsh</string>
+					<string>meta.variable.plugin-modifier.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1541,7 +1541,7 @@
 							<key>match</key>
 							<string>\s*\w[\w\-\.]*\s*</string>
 							<key>name</key>
-							<string>support.variable.name.plugin.surrounding.source.jcsh</string>
+							<string>support.variable.name.plugin.surrounding.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1563,7 +1563,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.return.source.jcsh</string>
+							<string>keyword.control.return.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1571,7 +1571,7 @@
 					<key>end</key>
 					<string>\s*(?:\s#.*)?$|\\</string>
 					<key>name</key>
-					<string>meta.control.return.source.jcsh</string>
+					<string>meta.control.return.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1594,7 +1594,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.single.begin.source.jcsh</string>
+							<string>punctuation.definition.string.single.begin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1606,24 +1606,24 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.single.end.source.jcsh</string>
+							<string>punctuation.definition.string.single.end.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>meta.string.source.jcsh</string>
+					<string>meta.string.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
 							<key>match</key>
 							<string>\\['\\]</string>
 							<key>name</key>
-							<string>constant.character.escape.source.jcsh</string>
+							<string>constant.character.escape.jcsh</string>
 						</dict>
 						<dict>
 							<key>match</key>
 							<string>.</string>
 							<key>name</key>
-							<string>string.quoted.single.surrounding.source.jcsh</string>
+							<string>string.quoted.single.surrounding.jcsh</string>
 						</dict>
 					</array>
 				</dict>
@@ -1635,7 +1635,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.double.begin.source.jcsh</string>
+							<string>punctuation.definition.string.double.begin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1647,11 +1647,11 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.string.double.end.source.jcsh</string>
+							<string>punctuation.definition.string.double.end.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>meta.string.source.jcsh</string>
+					<string>meta.string.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1666,13 +1666,13 @@
 							<key>match</key>
 							<string>\\[\$"\\]</string>
 							<key>name</key>
-							<string>constant.character.escape.source.jcsh</string>
+							<string>constant.character.escape.jcsh</string>
 						</dict>
 						<dict>
 							<key>match</key>
 							<string>.</string>
 							<key>name</key>
-							<string>string.quoted.double.surrounding.source.jcsh</string>
+							<string>string.quoted.double.surrounding.jcsh</string>
 						</dict>
 					</array>
 				</dict>
@@ -1690,7 +1690,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.subscript.begin.source.jcsh</string>
+							<string>punctuation.definition.subscript.begin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1702,7 +1702,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.subscript.end.source.jcsh</string>
+							<string>punctuation.definition.subscript.end.jcsh</string>
 						</dict>
 					</dict>
 					<key>patterns</key>
@@ -1717,7 +1717,7 @@
 							<key>match</key>
 							<string>(?&lt;=\[)\*(?=\])</string>
 							<key>name</key>
-							<string>punctuation.subscript.content.asterisk.source.jcsh</string>
+							<string>punctuation.subscript.content.asterisk.jcsh</string>
 						</dict>
 						<dict>
 							<key>comment</key>
@@ -1725,7 +1725,7 @@
 							<key>match</key>
 							<string>(?&lt;=\[)\#(?=\](?:\s|=))</string>
 							<key>name</key>
-							<string>punctuation.subscript.content.number-sign.source.jcsh</string>
+							<string>punctuation.subscript.content.number-sign.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1769,17 +1769,17 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.try.source.jcsh</string>
+							<string>keyword.control.try.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
+							<string>comment.line.number-sign.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.source.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1791,21 +1791,21 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.try.end.source.jcsh</string>
+							<string>keyword.control.try.end.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
+							<string>comment.line.number-sign.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.source.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>meta.control.try.source.jcsh</string>
+					<string>meta.control.try.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1832,12 +1832,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.reference.variable.head.source.jcsh</string>
+							<string>punctuation.definition.reference.variable.head.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.reference.variable.begin.source.jcsh</string>
+							<string>punctuation.definition.reference.variable.begin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1849,11 +1849,11 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.reference.variable.end.source.jcsh</string>
+							<string>punctuation.definition.reference.variable.end.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>meta.reference.variable.source.jcsh</string>
+					<string>meta.reference.variable.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1892,7 +1892,7 @@
 					<key>end</key>
 					<string>(?=[:\[;\}])</string>
 					<key>name</key>
-					<string>meta.variable.name.source.jcsh</string>
+					<string>meta.variable.name.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1929,7 +1929,7 @@
 					<key>match</key>
 					<string>(?&lt;=\{)\s*(?:[Aa]rgv|[Cc]hannel|ECC_CURVEPARAM_A|ECC_CURVEPARAM_B|ECC_CURVEPARAM_G|ECC_CURVEPARAM_N|ECC_CURVEPARAM_P|ECC_SharedSecret|exec\.dir|exec\.errorlog|exec\.output|JCOPDIR|KEY_ECC_PrivateKey|KEY_ECC_PublicKeyX|KEY_ECC_PublicKeyY|KEY_RSA_PrivateKey|KEY_RSA_PrivateKey_dP|KEY_RSA_PrivateKey_dQ|KEY_RSA_PrivateKey_P|KEY_RSA_PrivateKey_PQ|KEY_RSA_PrivateKey_Q|KEY_RSA_PublicKey|last\.apdu\.executiontime|last\.apdu\.executiontime\.unit|last\.error|last\.errorlog|last\.executiontime|last\.executiontime\.unit|last\.response\.data|last\.response\.status|last\.return|logfile\.list|[Pp]ath|[Pp]lugin|random|[Rr]esponse|script\.dir|script\.line|script\.name|scrtimer\.exec\.time|SIGNATURE_ECDSA_R|SIGNATURE_ECDSA_S|SIGNATURE_RSA|timer\.execution\.time|timer\.id|[Tt]erminal|time|VERIFY_SIGN|[Vv]ersion)\s*(?=[\[;\}])</string>
 					<key>name</key>
-					<string>support.variable.name.builtin.source.jcsh</string>
+					<string>support.variable.name.builtin.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1943,12 +1943,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.variable.name.environment.source.jcsh</string>
+							<string>punctuation.definition.variable.name.environment.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>variable.name.environment.source.jcsh</string>
+							<string>variable.name.environment.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1956,7 +1956,7 @@
 					<key>match</key>
 					<string>(?&lt;=\{)(\*)([\w.]+)(?=[\[;\}])</string>
 					<key>name</key>
-					<string>meta.variable.name.environment.source.jcsh</string>
+					<string>meta.variable.name.environment.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1970,7 +1970,7 @@
 					<key>match</key>
 					<string>(?&lt;=\{)\d+(?=[\[;\}])</string>
 					<key>name</key>
-					<string>support.variable.name.positional.source.jcsh</string>
+					<string>support.variable.name.positional.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1986,7 +1986,7 @@
 					<key>end</key>
 					<string>(?=[:\[;\}])</string>
 					<key>name</key>
-					<string>meta.variable.name.user.source.jcsh</string>
+					<string>meta.variable.name.user.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -2001,7 +2001,7 @@
 							<key>match</key>
 							<string>\S</string>
 							<key>name</key>
-							<string>variable.name.user.source.jcsh</string>
+							<string>variable.name.user.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -2023,7 +2023,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.while.source.jcsh</string>
+							<string>keyword.control.while.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -2035,21 +2035,21 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.while.end.source.jcsh</string>
+							<string>keyword.control.while.end.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.source.jcsh</string>
+							<string>comment.line.number-sign.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.source.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>meta.control.while.source.jcsh</string>
+					<string>meta.control.while.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
