@@ -871,11 +871,11 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#number</string>
+					<string>#operator</string>
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#operator</string>
+					<string>#number</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -1435,16 +1435,62 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>match</key>
-					<string>(?&lt;!\w)(0x)[\da-fA-F]+(?![\w.])</string>
-					<key>name</key>
-					<string>constant.numeric.hexadecimal.source.jcsh</string>
+					<key>comment</key>
+					<string>Number are detected if not part of a word</string>
 				</dict>
 				<dict>
+					<key>include</key>
+					<string>#number-hex</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#number-float</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#number-dec</string>
+				</dict>
+			</array>
+		</dict>
+		<key>number-dec</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>comment</key>
+					<string>Detect decimal numbers (separated by word boundary, so not in the middle of a word)</string>
 					<key>match</key>
-					<string>(?&lt;!\w)\d+(?![\w.])</string>
+					<string>\b\d+\b</string>
 					<key>name</key>
 					<string>constant.numeric.decimal.source.jcsh</string>
+				</dict>
+			</array>
+		</dict>
+		<key>number-float</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>comment</key>
+					<string>Detect floats numbers (e.g.: 2.2 .2 or 2.) excluding cases of operators '..' (e.g.: [2..3])</string>
+					<key>match</key>
+					<string>(?:\d*(?&lt;!\.)\.\d+)|(?:\d+\.(?!\.)\d*)</string>
+					<key>name</key>
+					<string>constant.numeric.float.source.jcsh</string>
+				</dict>
+			</array>
+		</dict>
+		<key>number-hex</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>comment</key>
+					<string>Detect hex numbers starting with '0x'</string>
+					<key>match</key>
+					<string>(?&lt;!\w)(0x)[\da-fA-F]+(?!\w|(?:\.[^\.]))</string>
+					<key>name</key>
+					<string>constant.numeric.hexadecimal.source.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1691,11 +1737,17 @@
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#number</string>
+							<string>#operator</string>
+						</dict>
+						<dict>
+							<key>comment</key>
+							<string>Float numbers are not allowed in subscript, this only include hex and dec</string>
+							<key>include</key>
+							<string>#number-hex</string>
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#operator</string>
+							<string>#number-dec</string>
 						</dict>
 						<dict>
 							<key>include</key>

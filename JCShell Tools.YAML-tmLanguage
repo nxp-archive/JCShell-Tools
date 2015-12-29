@@ -187,8 +187,10 @@ repository:
         name: punctuation.subscript.content.number-sign.source.jcsh
       - include: '#variable'
       - include: '#nested-call'
-      - include: '#number'
       - include: '#operator'
+      - comment: Float numbers are not allowed in subscript, this only include hex and dec
+        include: '#number-hex'
+      - include: '#number-dec'
       - include: '#invalid-character'
 
   variable-name:
@@ -422,8 +424,8 @@ repository:
     - include: '#string'
     - include: '#variable'
     - include: '#nested-call'
-    - include: '#number'
     - include: '#operator'
+    - include: '#number'
     - comment: Process the content of parenthesis the same way
       begin: (#)?(\()
       beginCaptures:
@@ -461,10 +463,28 @@ repository:
 
   number:
     patterns:
-    - name: constant.numeric.hexadecimal.source.jcsh
-      match: (?<!\w)(0x)[\da-fA-F]+(?![\w.])
-    - name: constant.numeric.decimal.source.jcsh
-      match: (?<!\w)\d+(?![\w.])
+    - comment: Number are detected if not part of a word
+    - include: '#number-hex'
+    - include: '#number-float'
+    - include: '#number-dec'
+
+  number-hex:
+    patterns:
+    - comment: Detect hex numbers starting with '0x'
+      name: constant.numeric.hexadecimal.source.jcsh
+      match: (?<!\w)(0x)[\da-fA-F]+(?!\w|(?:\.[^\.]))
+
+  number-float:
+    patterns:
+    - comment: "Detect floats numbers (e.g.: 2.2 .2 or 2.) excluding cases of operators '..' (e.g.: [2..3])"
+      name: constant.numeric.float.source.jcsh
+      match: (?:\d*(?<!\.)\.\d+)|(?:\d+\.(?!\.)\d*)
+
+  number-dec:
+    patterns:
+    - comment: Detect decimal numbers (separated by word boundary, so not in the middle of a word)
+      name: constant.numeric.decimal.source.jcsh
+      match: \b\d+\b
 
   string:
     patterns:
