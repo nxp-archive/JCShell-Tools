@@ -1,5 +1,5 @@
 {
-"scope": "meta.callable.source.jcsh",
+"scope": "meta.callable.jcsh",
 "completions":
 	[
 		"break",

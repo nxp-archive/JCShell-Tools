@@ -5,7 +5,7 @@
     <key>name</key>
     <string>Symbol List</string>
     <key>scope</key>
-    <string>source.jcsh entity.name.function.definition.source.jcsh</string>
+    <string>source.jcsh entity.name.function.definition.jcsh</string>
     <key>settings</key>
     <dict>
         <key>showInSymbolList</key>

@@ -1,5 +1,5 @@
 {
-"scope": "meta.variable.modifier.source.jcsh",
+"scope": "meta.variable.modifier.jcsh",
 "completions":
 	[
 		"dirname",

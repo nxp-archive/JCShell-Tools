@@ -5,7 +5,7 @@
     <key>name</key>
     <string>Symbol List to exclude</string>
     <key>scope</key>
-    <string>source.jcsh meta.callable.source</string>
+    <string>source.jcsh meta.callable</string>
     <key>settings</key>
     <dict>
         <key>showInSymbolList</key>

@@ -1,5 +1,5 @@
 {
-"scope": "meta.variable.name.source.jcsh",
+"scope": "meta.variable.name.jcsh",
 "completions":
 	[
 		"version",
