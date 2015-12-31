@@ -50,7 +50,7 @@ repository:
       name: meta.comment.line.full.jcsh
       match: ^\s*(#)(.*)$
       captures:
-        '1': {name: comment.line.number-sign.jcsh}
+        '1': {name: punctuation.definition.comment.jcsh}
         '2': {name: comment.line.jcsh}
 
   comment:
@@ -59,7 +59,7 @@ repository:
       name: meta.comment.line.jcsh
       match: \s*(?<=\s)(#)(.*)$
       captures:
-        '1': {name: comment.line.number-sign.jcsh}
+        '1': {name: punctuation.definition.comment.jcsh}
         '2': {name: comment.line.jcsh}
 
   invalid-character:
@@ -532,7 +532,7 @@ repository:
       end: ^\s*(end)\s*(?:\s(#)(.*))?$
       endCaptures:
         '1': {name: keyword.control.if.end.jcsh}
-        '2': {name: comment.line.number-sign.jcsh}
+        '2': {name: punctuation.definition.comment.jcsh}
         '3': {name: comment.line.jcsh}
       patterns:
       - include: '#flow-expression'
@@ -546,7 +546,7 @@ repository:
       begin: (?<=for|if|elseif|while|catch|return)\s+
       end: \s*(?:\s(#)(.*))?$|(\\)
       endCaptures:
-        '1': {name: comment.line.number-sign.jcsh}
+        '1': {name: punctuation.definition.comment.jcsh}
         '2': {name: comment.line.jcsh}
       patterns:
       - comment: The 'for' block as an additional iterator provided
@@ -563,7 +563,7 @@ repository:
       match: ^\s*(else)\s*(?:\s(#)(.*))?$|(\\)
       captures:
         '1': {name: keyword.control.else.jcsh}
-        '2': {name: comment.line.number-sign.jcsh}
+        '2': {name: punctuation.definition.comment.jcsh}
         '3': {name: comment.line.jcsh}
 
   elseif-clause:
@@ -584,12 +584,12 @@ repository:
       begin: (?:^|(?<=.:))\s*(try)\s*(?:\s(#)(.*))?$|(\\)
       beginCaptures:
         '1': {name: keyword.control.try.jcsh}
-        '2': {name: comment.line.number-sign.jcsh}
+        '2': {name: punctuation.definition.comment.jcsh}
         '3': {name: comment.line.jcsh}
       end: ^\s*(end)\s*(?:\s(#)(.*))?$
       endCaptures:
         '1': {name: keyword.control.try.end.jcsh}
-        '2': {name: comment.line.number-sign.jcsh}
+        '2': {name: punctuation.definition.comment.jcsh}
         '3': {name: comment.line.jcsh}
       patterns:
       - include: '#catch-clause'
@@ -615,7 +615,7 @@ repository:
       end: ^\s*(end)\s*(?:\s(#)(.*))?$
       endCaptures:
         '1': {name: keyword.control.for.end.jcsh}
-        '2': {name: comment.line.number-sign.jcsh}
+        '2': {name: punctuation.definition.comment.jcsh}
         '3': {name: comment.line.jcsh}
       patterns:
       - include: '#flow-expression'
@@ -632,7 +632,7 @@ repository:
         '2': {name: keyword.control.continue.jcsh}
         '3': {name: keyword.control.goto.jcsh}
         '4': {name: keyword.control.label.target.jcsh}
-        '5': {name: comment.line.number-sign.jcsh}
+        '5': {name: punctuation.definition.comment.jcsh}
         '6': {name: comment.line.jcsh}
 
   while-block:
@@ -645,7 +645,7 @@ repository:
       end: ^\s*(end)\s*(?:\s(#)(.*))?$
       endCaptures:
         '1': {name: keyword.control.while.end.jcsh}
-        '2': {name: comment.line.number-sign.jcsh}
+        '2': {name: punctuation.definition.comment.jcsh}
         '3': {name: comment.line.jcsh}
       patterns:
       - include: '#flow-expression'
@@ -664,7 +664,7 @@ repository:
       end: ^\s*(END)\s*(?:\s(#)(.*))?$
       endCaptures:
         '1': {name: keyword.function.definition.begin.jcsh}
-        '2': {name: comment.line.number-sign.jcsh}
+        '2': {name: punctuation.definition.comment.jcsh}
         '3': {name: comment.line.jcsh}
       patterns:
       - include: '#return-statement'

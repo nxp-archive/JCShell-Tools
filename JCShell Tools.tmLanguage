@@ -732,7 +732,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
@@ -759,7 +759,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
@@ -791,7 +791,7 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
@@ -982,7 +982,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
@@ -1046,7 +1046,7 @@
 						<key>5</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 						<key>6</key>
 						<dict>
@@ -1092,7 +1092,7 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
@@ -1159,7 +1159,7 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
@@ -1212,7 +1212,7 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
@@ -1774,7 +1774,7 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
@@ -1796,7 +1796,7 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
@@ -2040,7 +2040,7 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.number-sign.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 						<key>3</key>
 						<dict>
