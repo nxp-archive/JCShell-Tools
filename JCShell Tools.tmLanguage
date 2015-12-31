@@ -125,7 +125,7 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>variable.parameter.flag.assignment.jcsh</string>
+							<string>variable.parameter.flag.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -894,7 +894,7 @@
 					<key>match</key>
 					<string>[\w\-\.\=,!:;\[\]#]+</string>
 					<key>name</key>
-					<string>string.unquoted.expression.surrounding.jcsh</string>
+					<string>string.unquoted.expression.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -910,7 +910,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.flag.jcsh</string>
+							<string>variable.parameter.flag.jcsh punctuation.definition.flag.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -933,7 +933,7 @@
 							<key>match</key>
 							<string>\w[\w\-\.]*</string>
 							<key>name</key>
-							<string>variable.parameter.flag.surrounding.jcsh</string>
+							<string>variable.parameter.flag.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1337,8 +1337,6 @@
 							<string>(?&lt;=\()</string>
 							<key>end</key>
 							<string>(?&lt;=.)\s*(?=\)|#[^\(]|$|(\\))</string>
-							<key>name</key>
-							<string>meta.nested-call.content.jcsh</string>
 							<key>patterns</key>
 							<array>
 								<dict>

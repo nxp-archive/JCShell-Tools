@@ -95,7 +95,7 @@ repository:
       begin: (?:^|(?<=.:))\s*(/set-var|/s-v)\s((?:\s*(?:-d|--def|-g|--global|-q|--quote)\s)*)
       beginCaptures:
         '1': {name: keyword.assignment.command.jcsh}
-        '2': {name: variable.parameter.flag.assignment.jcsh}
+        '2': {name: variable.parameter.flag.jcsh}
       end: (?=(?:\s#[^\(])|$|\\)
       patterns:
       - comment: Match the newly defined variable name (consume up to the next space). We have to rematch the beginning of the line to make sure we only take the first word after the space (and that the regex is not applied to each word on the line)
@@ -412,12 +412,12 @@ repository:
       name: meta.flag.jcsh
       begin: (?<=\s)(--?)(?=\w)
       beginCaptures:
-        '1': {name: punctuation.definition.flag.jcsh}
+        '1': {name: variable.parameter.flag.jcsh punctuation.definition.flag.jcsh}
       end: (?<=[\}\)\w])(?=\)|\s|#|$)
       patterns:
       - include: '#variable'
       - include: '#nested-call'
-      - name: variable.parameter.flag.surrounding.jcsh
+      - name: variable.parameter.flag.jcsh
         match: \w[\w\-\.]*
       - include: '#invalid-character'
 
@@ -438,7 +438,7 @@ repository:
         '0': {name: punctuation.parentheses.end.jcsh}
       patterns:
       - include: '#expression'
-    - name: string.unquoted.expression.surrounding.jcsh
+    - name: string.unquoted.expression.jcsh
       match: '[\w\-\.\=,!:;\[\]#]+'
 
   nested-call:
@@ -453,8 +453,7 @@ repository:
       endCaptures:
         '0': {name: punctuation.definition.nested-call.end.jcsh}
       patterns:
-      - name: meta.nested-call.content.jcsh
-        begin: (?<=\()
+      - begin: (?<=\()
         end: (?<=.)\s*(?=\)|#[^\(]|$|(\\))
         patterns:
         - include: '#callable'
