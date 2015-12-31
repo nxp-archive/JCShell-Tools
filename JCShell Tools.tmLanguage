@@ -698,27 +698,23 @@
 		</dict>
 		<key>catch-clause</key>
 		<dict>
-			<key>begin</key>
-			<string>^\s*(catch)</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.control.catch.jcsh</string>
-				</dict>
-			</dict>
-			<key>comment</key>
-			<string>Catch clause</string>
-			<key>end</key>
-			<string>\s*(?:\s#.*)?$|\\</string>
-			<key>name</key>
-			<string>meta.control.catch.jcsh</string>
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>include</key>
-					<string>#flow-expression</string>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.catch.jcsh</string>
+						</dict>
+					</dict>
+					<key>comment</key>
+					<string>Catch clause</string>
+					<key>match</key>
+					<string>^\s*(catch)(?=\s+[^\s\\#])</string>
+					<key>name</key>
+					<string>meta.control.catch.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -732,18 +728,18 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.comment.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
-					<string>Single-line comment starting with '#'</string>
+					<string>In-line comment starting with '#'</string>
 					<key>match</key>
-					<string>\s*(?&lt;=\s)(#)(.*)$</string>
+					<string>\s*(?&lt;=\s)((#).*)$</string>
 					<key>name</key>
 					<string>meta.comment.line.jcsh</string>
 				</dict>
@@ -759,18 +755,18 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.comment.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
 					<string>Line containing only whitespace and a single-line comment starting with '#'</string>
 					<key>match</key>
-					<string>^\s*(#)(.*)$</string>
+					<string>^\s*((#).*)$</string>
 					<key>name</key>
 					<string>meta.comment.line.full.jcsh</string>
 				</dict>
@@ -788,21 +784,11 @@
 							<key>name</key>
 							<string>keyword.control.else.jcsh</string>
 						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.jcsh</string>
-						</dict>
 					</dict>
 					<key>comment</key>
 					<string>Else clause</string>
 					<key>match</key>
-					<string>^\s*(else)\s*(?:\s(#)(.*))?$|(\\)</string>
+					<string>^\s*(else)\s*(?=\s|$)</string>
 					<key>name</key>
 					<string>meta.control.else.jcsh</string>
 				</dict>
@@ -813,9 +799,7 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>begin</key>
-					<string>^\s*(elseif)</string>
-					<key>beginCaptures</key>
+					<key>captures</key>
 					<dict>
 						<key>1</key>
 						<dict>
@@ -825,17 +809,10 @@
 					</dict>
 					<key>comment</key>
 					<string>Elseif clause</string>
-					<key>end</key>
-					<string>\s*(?:\s#.*)?$|\\</string>
+					<key>match</key>
+					<string>^\s*(elseif)(?=\s+[^\s\\#])</string>
 					<key>name</key>
 					<string>meta.control.elseif.jcsh</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#flow-expression</string>
-						</dict>
-					</array>
 				</dict>
 			</array>
 		</dict>
@@ -976,18 +953,18 @@
 					<key>comment</key>
 					<string>Expression check for flow control blocks: if, for, while, elseif, catch, return</string>
 					<key>end</key>
-					<string>\s*(?:\s(#)(.*))?$|(\\)</string>
+					<string>\s*(?:\s((#).*)?$|(\\))</string>
 					<key>endCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.comment.jcsh</string>
+							<string>comment.line.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>comment.line.jcsh</string>
+							<string>punctuation.definition.comment.jcsh</string>
 						</dict>
 					</dict>
 					<key>patterns</key>
@@ -1043,21 +1020,11 @@
 							<key>name</key>
 							<string>keyword.control.label.target.jcsh</string>
 						</dict>
-						<key>5</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.jcsh</string>
-						</dict>
-						<key>6</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.jcsh</string>
-						</dict>
 					</dict>
 					<key>comment</key>
 					<string>Break, continue or goto statement, only a label can be placed in front. Goto requires a label after. This is check before callable, thus we enforce keywords continue, goto and break to not be used as function/script name even though JCShell is not actively forbidding it (outside loops)</string>
 					<key>match</key>
-					<string>(?:^|(?&lt;=.:))\s*(?:(break)|(continue)|(?:(goto)(?=\s+\S)))(?:\s*(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)</string>
+					<string>(?:^|(?&lt;=.:))\s*(?:(break)|(continue)|(?:(goto)(?=\s+\S)))(?:\s*(\w[\w\-\.]*))?\s*</string>
 					<key>name</key>
 					<string>meta.control.flow.jcsh</string>
 				</dict>
@@ -1069,7 +1036,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?:^|(?&lt;=.:))\s*(for)(?=\s+\S+.*$|(\\))</string>
+					<string>(?:^|(?&lt;=.:))\s*(for)(?=\s+[^\s\\#])</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -1081,23 +1048,13 @@
 					<key>comment</key>
 					<string>For block, only a label can be placed in front</string>
 					<key>end</key>
-					<string>^\s*(end)\s*(?:\s(#)(.*))?$</string>
+					<string>^\s*(end)\s*(?=\s|$)</string>
 					<key>endCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.for.end.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.jcsh</string>
+							<string>keyword.control.end.for.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
@@ -1126,7 +1083,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^\s*(DEFUN)\s+(\S*)(\s*GLOBAL)?\s*(?=\s|\)|#|$)</string>
+					<string>^\s*(DEFUN)\s+(\S+)(\s*GLOBAL)?(?=\s|$)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -1148,27 +1105,17 @@
 					<key>comment</key>
 					<string>DEFUN function definition. 'GLOBAL' is the only value allowed after function name (with comments)</string>
 					<key>end</key>
-					<string>^\s*(END)\s*(?:\s(#)(.*))?$</string>
+					<string>^\s*(END)\s*(?=\s|$)</string>
 					<key>endCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.function.definition.begin.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.jcsh</string>
+							<string>keyword.function.definition.end.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>meta.section.function-definition.jcsh</string>
+					<string>meta.function-definition.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1189,7 +1136,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?:^|(?&lt;=.:))\s*(if)(?=\s+\S+.*$|(\\))</string>
+					<string>(?:^|(?&lt;=.:))\s*(if)(?=\s+[^\s\\#])</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -1201,23 +1148,13 @@
 					<key>comment</key>
 					<string>If block, only a label can be placed in front</string>
 					<key>end</key>
-					<string>^\s*(end)\s*(?:\s(#)(.*))?$</string>
+					<string>^\s*(end)\s*(?=\s|$)</string>
 					<key>endCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.if.end.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.jcsh</string>
+							<string>keyword.control.end.if.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
@@ -1226,15 +1163,15 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#flow-expression</string>
-						</dict>
-						<dict>
-							<key>include</key>
 							<string>#elseif-clause</string>
 						</dict>
 						<dict>
 							<key>include</key>
 							<string>#else-clause</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#flow-expression</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1569,7 +1506,7 @@
 					<key>comment</key>
 					<string>Return statement, only a label can be placed in front</string>
 					<key>end</key>
-					<string>\s*(?:\s#.*)?$|\\</string>
+					<string>\s*(?=(?:\s#.*)|$|\\)</string>
 					<key>name</key>
 					<string>meta.control.return.jcsh</string>
 					<key>patterns</key>
@@ -1610,7 +1547,7 @@
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>meta.string.jcsh</string>
+					<string>string.quoted.single.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1622,8 +1559,6 @@
 						<dict>
 							<key>match</key>
 							<string>.</string>
-							<key>name</key>
-							<string>string.quoted.single.surrounding.jcsh</string>
 						</dict>
 					</array>
 				</dict>
@@ -1651,7 +1586,7 @@
 						</dict>
 					</dict>
 					<key>name</key>
-					<string>meta.string.jcsh</string>
+					<string>string.quoted.double.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1671,8 +1606,6 @@
 						<dict>
 							<key>match</key>
 							<string>.</string>
-							<key>name</key>
-							<string>string.quoted.double.surrounding.jcsh</string>
 						</dict>
 					</array>
 				</dict>
@@ -1763,7 +1696,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?:^|(?&lt;=.:))\s*(try)\s*(?:\s(#)(.*))?$|(\\)</string>
+					<string>(?:^|(?&lt;=.:))\s*(try)\s*(?=\s|$)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -1771,37 +1704,17 @@
 							<key>name</key>
 							<string>keyword.control.try.jcsh</string>
 						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.jcsh</string>
-						</dict>
 					</dict>
 					<key>comment</key>
 					<string>Try block, only a label can be placed in front</string>
 					<key>end</key>
-					<string>^\s*(end)\s*(?:\s(#)(.*))?$</string>
+					<string>^\s*(end)\s*(?=\s|$)</string>
 					<key>endCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.try.end.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.jcsh</string>
+							<string>keyword.control.end.try.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
@@ -1811,6 +1724,10 @@
 						<dict>
 							<key>include</key>
 							<string>#catch-clause</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#flow-expression</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -2017,7 +1934,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?:^|(?&lt;=.:))\s*(while)(?=\s+\S+.*$|(\\))</string>
+					<string>(?:^|(?&lt;=.:))\s*(while)(?=\s+[^\s\\#])</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -2029,23 +1946,13 @@
 					<key>comment</key>
 					<string>While block, only a label can be placed in front</string>
 					<key>end</key>
-					<string>^\s*(end)\s*(?:\s(#)(.*))?$</string>
+					<string>^\s*(end)\s*(?=\s|$)</string>
 					<key>endCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.while.end.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.jcsh</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>comment.line.jcsh</string>
+							<string>keyword.control.end.while.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>

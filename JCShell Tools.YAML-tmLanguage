@@ -48,19 +48,19 @@ repository:
     - comment: Line containing only whitespace and a single-line comment starting
         with '#'
       name: meta.comment.line.full.jcsh
-      match: ^\s*(#)(.*)$
+      match: ^\s*((#).*)$
       captures:
-        '1': {name: punctuation.definition.comment.jcsh}
-        '2': {name: comment.line.jcsh}
+        '1': {name: comment.line.jcsh}
+        '2': {name: punctuation.definition.comment.jcsh}
 
   comment:
     patterns:
-    - comment: Single-line comment starting with '#'
+    - comment: In-line comment starting with '#'
       name: meta.comment.line.jcsh
-      match: \s*(?<=\s)(#)(.*)$
+      match: \s*(?<=\s)((#).*)$
       captures:
-        '1': {name: punctuation.definition.comment.jcsh}
-        '2': {name: comment.line.jcsh}
+        '1': {name: comment.line.jcsh}
+        '2': {name: punctuation.definition.comment.jcsh}
 
   invalid-character:
     patterns:
@@ -491,7 +491,7 @@ repository:
   string:
     patterns:
     - comment: Single-quoted string literal without variable replacement and interpolation
-      name: meta.string.jcsh
+      name: string.quoted.single.jcsh
       begin: "'"
       beginCaptures:
         '0': {name: punctuation.definition.string.single.begin.jcsh}
@@ -501,10 +501,9 @@ repository:
       patterns:
       - name: constant.character.escape.jcsh
         match: \\['\\]
-      - name: string.quoted.single.surrounding.jcsh
-        match: .
+      - match: .
     - comment: Double-quoted string literal with variable replacement and interpolation
-      name: meta.string.jcsh
+      name: string.quoted.double.jcsh
       begin: '"'
       beginCaptures:
         '0': {name: punctuation.definition.string.double.begin.jcsh}
@@ -516,8 +515,7 @@ repository:
       - include: '#nested-call'
       - name: constant.character.escape.jcsh
         match: \\[\$"\\]
-      - name: string.quoted.double.surrounding.jcsh
-        match: .
+      - match: .
 
   operator:
     patterns:
@@ -528,28 +526,26 @@ repository:
     patterns:
     - comment: If block, only a label can be placed in front
       name: meta.control.if.jcsh
-      begin: (?:^|(?<=.:))\s*(if)(?=\s+\S+.*$|(\\))
+      begin: (?:^|(?<=.:))\s*(if)(?=\s+[^\s\\#])
       beginCaptures:
         '1': {name: keyword.control.if.jcsh}
-      end: ^\s*(end)\s*(?:\s(#)(.*))?$
+      end: ^\s*(end)\s*(?=\s|$)
       endCaptures:
-        '1': {name: keyword.control.if.end.jcsh}
-        '2': {name: punctuation.definition.comment.jcsh}
-        '3': {name: comment.line.jcsh}
+        '1': {name: keyword.control.end.if.jcsh}
       patterns:
-      - include: '#flow-expression'
       - include: '#elseif-clause'
       - include: '#else-clause'
+      - include: '#flow-expression'
       - include: $self
 
   flow-expression:
     patterns:
     - comment: "Expression check for flow control blocks: if, for, while, elseif, catch, return"
       begin: (?<=for|if|elseif|while|catch|return)\s+
-      end: \s*(?:\s(#)(.*))?$|(\\)
+      end: \s*(?:\s((#).*)?$|(\\))
       endCaptures:
-        '1': {name: punctuation.definition.comment.jcsh}
-        '2': {name: comment.line.jcsh}
+        '1': {name: comment.line.jcsh}
+        '2': {name: punctuation.definition.comment.jcsh}
       patterns:
       - comment: The 'for' block as an additional iterator provided
         match: (?<=for\s)\s*(\w[\w\-\.]*)
@@ -558,67 +554,55 @@ repository:
       - match: \s
       - include: '#invalid-character'
 
-  else-clause:
-    patterns:
-    - comment: Else clause
-      name: meta.control.else.jcsh
-      match: ^\s*(else)\s*(?:\s(#)(.*))?$|(\\)
-      captures:
-        '1': {name: keyword.control.else.jcsh}
-        '2': {name: punctuation.definition.comment.jcsh}
-        '3': {name: comment.line.jcsh}
-
   elseif-clause:
     patterns:
     - comment: Elseif clause
       name: meta.control.elseif.jcsh
-      begin: ^\s*(elseif)
-      beginCaptures:
+      match: ^\s*(elseif)(?=\s+[^\s\\#])
+      captures:
         '1': {name: keyword.control.elseif.jcsh}
-      end: \s*(?:\s#.*)?$|\\
-      patterns:
-      - include: '#flow-expression'
+
+  else-clause:
+    patterns:
+    - comment: Else clause
+      name: meta.control.else.jcsh
+      match: ^\s*(else)\s*(?=\s|$)
+      captures:
+        '1': {name: keyword.control.else.jcsh}
 
   try-block:
     patterns:
     - comment: Try block, only a label can be placed in front
       name: meta.control.try.jcsh
-      begin: (?:^|(?<=.:))\s*(try)\s*(?:\s(#)(.*))?$|(\\)
+      begin: (?:^|(?<=.:))\s*(try)\s*(?=\s|$)
       beginCaptures:
         '1': {name: keyword.control.try.jcsh}
-        '2': {name: punctuation.definition.comment.jcsh}
-        '3': {name: comment.line.jcsh}
-      end: ^\s*(end)\s*(?:\s(#)(.*))?$
+      end: ^\s*(end)\s*(?=\s|$)
       endCaptures:
-        '1': {name: keyword.control.try.end.jcsh}
-        '2': {name: punctuation.definition.comment.jcsh}
-        '3': {name: comment.line.jcsh}
+        '1': {name: keyword.control.end.try.jcsh}
       patterns:
       - include: '#catch-clause'
+      - include: '#flow-expression'
       - include: $self
 
   catch-clause:
-    comment: Catch clause
-    name: meta.control.catch.jcsh
-    begin: ^\s*(catch)
-    beginCaptures:
-      '1': {name: keyword.control.catch.jcsh}
-    end: \s*(?:\s#.*)?$|\\
     patterns:
-    - include: '#flow-expression'
+    - comment: Catch clause
+      name: meta.control.catch.jcsh
+      match: ^\s*(catch)(?=\s+[^\s\\#])
+      captures:
+        '1': {name: keyword.control.catch.jcsh}
 
   for-block:
     patterns:
     - comment: For block, only a label can be placed in front
       name: meta.control.for.jcsh
-      begin: (?:^|(?<=.:))\s*(for)(?=\s+\S+.*$|(\\))
+      begin: (?:^|(?<=.:))\s*(for)(?=\s+[^\s\\#])
       beginCaptures:
         '1': {name: keyword.control.for.jcsh}
-      end: ^\s*(end)\s*(?:\s(#)(.*))?$
+      end: ^\s*(end)\s*(?=\s|$)
       endCaptures:
-        '1': {name: keyword.control.for.end.jcsh}
-        '2': {name: punctuation.definition.comment.jcsh}
-        '3': {name: comment.line.jcsh}
+        '1': {name: keyword.control.end.for.jcsh}
       patterns:
       - include: '#flow-expression'
       - include: '#flow-statement'
@@ -628,27 +612,23 @@ repository:
     patterns:
     - comment: Break, continue or goto statement, only a label can be placed in front. Goto requires a label after. This is check before callable, thus we enforce keywords continue, goto and break to not be used as function/script name even though JCShell is not actively forbidding it (outside loops)
       name: meta.control.flow.jcsh
-      match: (?:^|(?<=.:))\s*(?:(break)|(continue)|(?:(goto)(?=\s+\S)))(?:\s*(\w[\w\-\.]*))?\s*(?:\s(#)(.*))?$|(\\)
+      match: (?:^|(?<=.:))\s*(?:(break)|(continue)|(?:(goto)(?=\s+\S)))(?:\s*(\w[\w\-\.]*))?\s*
       captures:
         '1': {name: keyword.control.break.jcsh}
         '2': {name: keyword.control.continue.jcsh}
         '3': {name: keyword.control.goto.jcsh}
         '4': {name: keyword.control.label.target.jcsh}
-        '5': {name: punctuation.definition.comment.jcsh}
-        '6': {name: comment.line.jcsh}
 
   while-block:
     patterns:
     - comment: While block, only a label can be placed in front
       name: meta.control.while.jcsh
-      begin: (?:^|(?<=.:))\s*(while)(?=\s+\S+.*$|(\\))
+      begin: (?:^|(?<=.:))\s*(while)(?=\s+[^\s\\#])
       beginCaptures:
         '1': {name: keyword.control.while.jcsh}
-      end: ^\s*(end)\s*(?:\s(#)(.*))?$
+      end: ^\s*(end)\s*(?=\s|$)
       endCaptures:
-        '1': {name: keyword.control.while.end.jcsh}
-        '2': {name: punctuation.definition.comment.jcsh}
-        '3': {name: comment.line.jcsh}
+        '1': {name: keyword.control.end.while.jcsh}
       patterns:
       - include: '#flow-expression'
       - include: '#flow-statement'
@@ -657,17 +637,15 @@ repository:
   function-definition:
     patterns:
     - comment: DEFUN function definition. 'GLOBAL' is the only value allowed after function name (with comments)
-      name: meta.section.function-definition.jcsh
-      begin: ^\s*(DEFUN)\s+(\S*)(\s*GLOBAL)?\s*(?=\s|\)|#|$)
+      name: meta.function-definition.jcsh
+      begin: ^\s*(DEFUN)\s+(\S+)(\s*GLOBAL)?(?=\s|$)
       beginCaptures:
         '1': {name: keyword.function.definition.begin.jcsh}
         '2': {name: entity.name.function.definition.jcsh}
         '3': {name: variable.parameter.definition.jcsh}
-      end: ^\s*(END)\s*(?:\s(#)(.*))?$
+      end: ^\s*(END)\s*(?=\s|$)
       endCaptures:
-        '1': {name: keyword.function.definition.begin.jcsh}
-        '2': {name: punctuation.definition.comment.jcsh}
-        '3': {name: comment.line.jcsh}
+        '1': {name: keyword.function.definition.end.jcsh}
       patterns:
       - include: '#return-statement'
       - include: $self
@@ -679,7 +657,7 @@ repository:
       begin: (?:^|(?<=.:))\s*(return)
       beginCaptures:
         '1': {name: keyword.control.return.jcsh}
-      end: \s*(?:\s#.*)?$|\\
+      end: \s*(?=(?:\s#.*)|$|\\)
       patterns:
       - include: '#flow-expression'
 
