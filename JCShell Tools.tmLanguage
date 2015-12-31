@@ -572,7 +572,7 @@
 					<key>comment</key>
 					<string>Callable built-in command, function or external script</string>
 					<key>end</key>
-					<string>(?&lt;=\S)(?=\s|\)|\s#|$)</string>
+					<string>(?&lt;!^|:|\(|\s)(?=\s|\)|\s#|$)</string>
 					<key>name</key>
 					<string>meta.callable.jcsh</string>
 					<key>patterns</key>
@@ -651,7 +651,7 @@
 							<key>comment</key>
 							<string>User-defined callable</string>
 							<key>end</key>
-							<string>(?&lt;=\S)(?=\s|\)|\s#|$)</string>
+							<string>(?&lt;!^|:|\(|\s)(?=\s|\)|\s#|$)</string>
 							<key>name</key>
 							<string>meta.callable.user.jcsh</string>
 							<key>patterns</key>

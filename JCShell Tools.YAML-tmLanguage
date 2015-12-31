@@ -357,7 +357,8 @@ repository:
     - comment: Callable built-in command, function or external script
       name: meta.callable.jcsh
       begin: (?<=^|:|\()
-      end: (?<=\S)(?=\s|\)|\s#|$)
+      # Make sure we do not match 0-length result or ST2 hang with infinite loop
+      end: (?<!^|:|\(|\s)(?=\s|\)|\s#|$)
       patterns:
       - comment: JCShell built-in slash command
         name: meta.support.function.builtin.slash.jcsh
@@ -381,7 +382,8 @@ repository:
       - comment: User-defined callable
         name: meta.callable.user.jcsh
         begin: (?<=^|:|\()
-        end: (?<=\S)(?=\s|\)|\s#|$)
+        # Make sure we do not match 0-length result or ST2 hang with infinite loop
+        end: (?<!^|:|\(|\s)(?=\s|\)|\s#|$)
         patterns:
         - match: (?<=^|:|\()\s*([@\-])?
           captures:
