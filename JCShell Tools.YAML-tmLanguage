@@ -9,7 +9,7 @@ version: 1.0.0
 
 # Define here variables to be re-used in the file for ease of modification
 yaml_variable: &CMD_LIST_SLASH_BUILTIN
-  match: (?<=^|:|\()\s*(?:(/)|([@\-]))(app|applet|atr|c-v|cap-clear|cap-del-auth|cap-extrdt-auth|cap-info|cap-inst-auth|cap-load-auth|cap-reg-update|cap-sign|card|change-protocol|channel|clear-vars|close|echo|error|exchange-poweroff|exchange-warmreset|exec|expr|glob|identify|l-r|l-v|list-readers|list-vars|manage-channel|mode|printf|r-echo|register|s-v|select|send|set-channel|set-var|sleep|start-timer|stop-timer|term|terminal)(?=\s|\)|#|$)
+  match: (?<=^|:|\()\s*([@\-])?(/)(app|applet|atr|c-v|cap-clear|cap-del-auth|cap-extrdt-auth|cap-info|cap-inst-auth|cap-load-auth|cap-reg-update|cap-sign|card|change-protocol|channel|clear-vars|close|echo|error|exchange-poweroff|exchange-warmreset|exec|expr|glob|identify|l-r|l-v|list-readers|list-vars|manage-channel|mode|printf|r-echo|register|s-v|select|send|set-channel|set-var|sleep|start-timer|stop-timer|term|terminal)(?=\s|\)|#|$)
 yaml_variable: &CMD_LIST_BUILTIN
   match: (?<=^|:|\()\s*([@\-])?(>|\?|auth|card-info|delete|delete-key|ext-auth|extradite|flush|get-cplc|get-crs-state|get-data|get-sd-cert|help|init-upd|init-update|install|internal-authenticate|ls|mutual-authenticate|perform-security-operation|personalize|print-key|put-key|put-key-ecc|put-keyset|put-pub-key|quit|registry-update|select|send|session-info|set-applet|set-crs-state|set-key|set-scp|set-sd-state|set-security|set-state|store-aid|store-data|store-keyset|upload|upload-install-make-selectable|version)(?=\s|\)|#|$)
 yaml_variable: &CMD_LIST_CRYPTO
@@ -24,6 +24,7 @@ patterns:
 - include: '#label'
 - include: '#line-continuation'
 - include: '#comment-line'
+- include: '#return-statement'
 - include: '#function-definition'
 - include: '#if-block'
 - include: '#while-block'
@@ -82,7 +83,6 @@ repository:
   label:
     patterns:
     - comment: Leading label that can be jumped to using goto. Labels can be placed at the beginning of any line and cannot contain variables
-      name: meta.control.label.definition.jcsh
       match: ^\s*(\w[\w\-\.]*)\s*(:)
       captures:
         '1': {name: keyword.control.label.definition.jcsh}
@@ -147,7 +147,7 @@ repository:
       - include: '#variable'
       - include: '#nested-call'
       - match: \S
-        name: variable.assigned.jcsh
+        name: variable.other.assigned.jcsh
       - include: '#invalid-character'
 
   variable:
@@ -156,11 +156,11 @@ repository:
       name: meta.reference.variable.jcsh
       begin: (\$)(\{)
       beginCaptures:
-        '1': {name: punctuation.definition.reference.variable.head.jcsh}
-        '2': {name: punctuation.definition.reference.variable.begin.jcsh}
+        '1': {name: punctuation.definition.variable.reference.head.jcsh}
+        '2': {name: punctuation.definition.variable.reference.begin.jcsh}
       end: \}
       endCaptures:
-        '0': {name: punctuation.definition.reference.variable.end.jcsh}
+        '0': {name: punctuation.definition.variable.reference.end.jcsh}
       patterns:
       - include: '#subscript'
       - include: '#plugin-modifier'
@@ -173,22 +173,22 @@ repository:
     - comment: Variable subscript (array '[]')
       begin: (\[)
       beginCaptures:
-        '1': {name: punctuation.definition.subscript.begin.jcsh}
+        '1': {name: string.unquoted.subscript.jcsh punctuation.definition.subscript.begin.jcsh}
       end: (\])
       endCaptures:
-        '1': {name: punctuation.definition.subscript.end.jcsh}
+        '1': {name: string.unquoted.subscript.jcsh punctuation.definition.subscript.end.jcsh}
       patterns:
       - comment: Inside the '[]' (no space allowed)
       - comment: Match '[*]' to color the '*'
         match: (?<=\[)\*(?=\])
-        name: punctuation.subscript.content.asterisk.jcsh
+        name: support.constant.subscript.asterisk.jcsh punctuation.subscript.content.asterisk.jcsh
       - comment: Match '[#]' to color the '#', only if it's not part of a variable call
         match: (?<=\[)\#(?=\](?:\s|=))
-        name: punctuation.subscript.content.number-sign.jcsh
+        name: support.constant.subscript.number-sign.jcsh punctuation.subscript.content.number-sign.jcsh
       - include: '#variable'
       - include: '#nested-call'
       - include: '#operator'
-      - comment: Float numbers are not allowed in subscript, this only include hex and dec
+      - comment: Float numbers are not allowed thus only include hex and dec
         include: '#number-hex'
       - include: '#number-dec'
       - include: '#invalid-character'
@@ -196,7 +196,6 @@ repository:
   variable-name:
     patterns:
     - comment: Variable name. May contain replaced variables and interpolations
-      name: meta.variable.name.jcsh
       begin: (?<=\{)
       end: (?=[:\[;\}])
       patterns:
@@ -209,35 +208,34 @@ repository:
   variable-name-builtin:
     patterns:
     - comment: Name of a JCShell built-in variable.
-      name: support.variable.name.builtin.jcsh
+      name: support.constant.builtin.jcsh
       <<: *VAR_LIST_BUILTIN
 
   variable-name-positional:
     patterns:
     - comment: Name of a positional variable
-      name: support.variable.name.positional.jcsh
+      name: support.constant.positional.jcsh
       match: (?<=\{)\d+(?=[\[;\}])
 
   variable-name-environment:
     patterns:
     - comment: Name of an environment variable (starting with '*')
-      name: meta.variable.name.environment.jcsh
-      match: (?<=\{)(\*)([\w.]+)(?=[\[;\}])
+      name: variable.other.environment.jcsh
+      match: (?<=\{)(\*)[\w.]+(?=[\[;\}])
       captures:
-        '1': {name: punctuation.definition.variable.name.environment.jcsh}
-        '2': {name: variable.name.environment.jcsh}
+        '1': {name: support.constant.environment.jcsh punctuation.definition.variable.name.environment.jcsh}
 
   variable-name-user:
     patterns:
     - comment: User-defined variable name
-      name: meta.variable.name.user.jcsh
+      name: meta.variable.other.user.jcsh
       begin: (?<=\{)
       end: (?=[:\[;\}])
       patterns:
       - include: '#variable'
       - include: '#nested-call'
       - match: \S
-        name: variable.name.user.jcsh
+        name: variable.other.user.jcsh
       - include: '#invalid-character'
 
   modifier:
@@ -246,7 +244,7 @@ repository:
       name: meta.variable.modifier.jcsh
       begin: ;
       beginCaptures:
-        '0': {name: punctuation.separator.variable.modifier.jcsh}
+        '0': {name: keyword.modifier.separator.jcsh punctuation.separator.variable.modifier.jcsh}
       end: (?=[;\}])
       patterns:
       - include: '#builtin-modifier'
@@ -260,11 +258,11 @@ repository:
       name: meta.modifier.name.builtin.jcsh
       match: (?<=;)([Dd]irname|[Ff]ilename|[Bb]asename|[Ee]xtension|[Ll]|[Qq]|[Qq]q|[Ll]c|[Uu]c)(?=[;\}])
       captures:
-        '0': {name: keyword.modifier.builtin.jcsh}
+        '0': {name: keyword.modifier.variable.jcsh}
     - comment: Built-in hex variable modifier ('h')
       begin: (?<=;)(h)
       beginCaptures:
-        '1': {name: keyword.modifier.builtin.jcsh}
+        '1': {name: keyword.modifier.variable.jcsh}
       end: \s*(?=[;\}])
       patterns:
       - include: '#variable'
@@ -275,7 +273,7 @@ repository:
     - comment: Built-in substring variable modifier ('s')
       begin: (?<=;)(s)
       beginCaptures:
-        '1': {name: keyword.modifier.builtin.jcsh}
+        '1': {name: keyword.modifier.variable.jcsh}
       end: (?=[;\}])
       patterns:
       - comment: First argument of substring variable modifier
@@ -302,7 +300,7 @@ repository:
     - comment: Built-in assigned variable modifier for Time ('time')
       begin: (?<={time;)(fmt)(\=)
       beginCaptures:
-        '1': {name: keyword.modifier.builtin.jcsh}
+        '1': {name: keyword.modifier.variable.jcsh}
         '2': {name: keyword.assignment.operator.jcsh}
       end: \s*(?=[;\}])
       patterns:
@@ -315,7 +313,7 @@ repository:
     - comment: Built-in assigned variable modifier for Random ('random')
       begin: (?<={random;)(max|len)(\=)
       beginCaptures:
-        '1': {name: keyword.modifier.builtin.jcsh}
+        '1': {name: keyword.modifier.variable.jcsh}
         '2': {name: keyword.assignment.operator.jcsh}
       end: (?=[;\}])
       patterns:
@@ -331,12 +329,12 @@ repository:
       name: meta.variable.plugin-modifier.jcsh
       begin: ':'
       beginCaptures:
-        '0': {name: punctuation.separator.variable.modifier.plugin.jcsh}
+        '0': {name: support.class.plugin.variable.jcsh punctuation.separator.variable.modifier.plugin.jcsh}
       end: (?=[\[;\}])
       patterns:
       - include: '#variable'
       - include: '#nested-call'
-      - name: support.variable.name.plugin.surrounding.jcsh
+      - name: support.class.plugin.variable.jcsh support.variable.name.plugin.jcsh
         match: \s*\w[\w\-\.]*\s*
       - include: '#invalid-character'
 
@@ -364,20 +362,20 @@ repository:
         name: meta.support.function.builtin.slash.jcsh
         <<: *CMD_LIST_SLASH_BUILTIN
         captures:
-          '1': {name: punctuation.definition.callable.builtin.slash.jcsh}
-          '2': {name: punctuation.call-modifier.builtin.jcsh}
+          '1': {name: string.unquoted.call-modifier.jcsh punctuation.call-modifier.builtin.jcsh}
+          '2': {name: support.function.builtin.slash.jcsh punctuation.definition.callable.builtin.slash.jcsh}
           '3': {name: support.function.builtin.slash.jcsh}
       - comment: JCShell built-in command
         name: meta.support.function.builtin.jcsh
         <<: *CMD_LIST_BUILTIN
         captures:
-          '1': {name: punctuation.call-modifier.builtin.jcsh}
+          '1': {name: string.unquoted.call-modifier.jcsh punctuation.call-modifier.builtin.jcsh}
           '2': {name: support.function.builtin.jcsh}
       - comment: JCShell Crypto Plugin command
         name: meta.support.function.plugin.crypto.jcsh
         <<: *CMD_LIST_CRYPTO
         captures:
-          '1': {name: punctuation.call-modifier.builtin.jcsh}
+          '1': {name: string.unquoted.call-modifier.jcsh punctuation.call-modifier.builtin.jcsh}
           '2': {name: support.function.plugin.crypto.jcsh}
       - comment: User-defined callable
         name: meta.callable.user.jcsh
@@ -387,11 +385,11 @@ repository:
         patterns:
         - match: (?<=^|:|\()\s*([@\-])?
           captures:
-            '1': {name: punctuation.call-modifier.user.jcsh}
+            '1': {name: string.unquoted.call-modifier.jcsh punctuation.call-modifier.user.jcsh}
         - include: '#variable'
         - include: '#nested-call'
         - match: \S
-          name: entity.name.function.surrounding.jcsh
+          name: entity.name.function.jcsh
         - include: '#invalid-character'
       - include: '#invalid-character'
 
@@ -429,9 +427,9 @@ repository:
     - include: '#operator'
     - include: '#number'
     - comment: Process the content of parenthesis the same way
-      begin: (#)?(\()
+      begin: (#|%)?(\()
       beginCaptures:
-        '1': {name: punctuation.parentheses.modifier.jcsh}
+        '1': {name: keyword.modifier.length.jcsh punctuation.parentheses.modifier.jcsh}
         '2': {name: punctuation.parentheses.begin.jcsh}
       end: \)
       endCaptures:
@@ -439,7 +437,7 @@ repository:
       patterns:
       - include: '#expression'
     - name: string.unquoted.expression.jcsh
-      match: '[\w\-\.\=,!:;\[\]#]+'
+      match: '[\w\-\.\=,!:;\[\]#]'
 
   nested-call:
     patterns:
@@ -447,11 +445,11 @@ repository:
       name: meta.nested-call.jcsh
       begin: (\$)(\()
       beginCaptures:
-        '1': {name: punctuation.definition.nested-call.head.jcsh}
-        '2': {name: punctuation.definition.nested-call.begin.jcsh}
+        '1': {name: keyword.control.nested-call.jcsh punctuation.definition.nested-call.head.jcsh}
+        '2': {name: string.unquoted.nested-call.jcsh punctuation.definition.nested-call.begin.jcsh}
       end: \)
       endCaptures:
-        '0': {name: punctuation.definition.nested-call.end.jcsh}
+        '0': {name: string.unquoted.nested-call.jcsh punctuation.definition.nested-call.end.jcsh}
       patterns:
       - begin: (?<=\()
         end: (?<=.)\s*(?=\)|#[^\(]|$|(\\))
@@ -499,7 +497,7 @@ repository:
         '0': {name: punctuation.definition.string.single.end.jcsh}
       patterns:
       - name: constant.character.escape.jcsh
-        match: \\['\\]
+        match: \\['\\nrt]
       - match: .
     - comment: Double-quoted string literal with variable replacement and interpolation
       name: string.quoted.double.jcsh
@@ -513,7 +511,7 @@ repository:
       - include: '#variable'
       - include: '#nested-call'
       - name: constant.character.escape.jcsh
-        match: \\[\$"\\]
+        match: \\["\\\$nrt]
       - match: .
 
   operator:
@@ -646,7 +644,6 @@ repository:
       endCaptures:
         '1': {name: keyword.function.definition.end.jcsh}
       patterns:
-      - include: '#return-statement'
       - include: $self
 
   return-statement:

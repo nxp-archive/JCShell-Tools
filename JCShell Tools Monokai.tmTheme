@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>name</key>
-	<string>JCShell Tools Monokai SyntaxTest</string>
+	<string>JCShell Tools Monokai</string>
 	<key>settings</key>
 	<array>
 		<dict>
@@ -372,25 +372,28 @@
 		</dict>
 		<dict>
 			<key>scope</key>
-			<string>entity.name.filename.find-in-files</string>
+			<string>entity.name.filename</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
 				<string>#E6DB74</string>
 			</dict>
 		</dict>
-
 		<dict>
-			<key>name</key>
-			<string>JCShell variable modifier separator</string>
 			<key>scope</key>
-			<string>punctuation.separator.variable.modifier</string>
+			<string>message.error</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#F92672</string>
+				<string>#F83333</string>
 			</dict>
 		</dict>
+
+
+		<!-- ===================================================
+		Additional scopes for better support of JCShell language 
+		======================================================== -->
+
 		<dict>
 			<key>name</key>
 			<string>JCShell function definition keyword</string>
@@ -399,145 +402,18 @@
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
-				<string>italic</string>
-				<key>foreground</key>
-				<string>#F92672</string>
+				<string>italic bold</string>
 			</dict>
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>JCShell built-in variable</string>
-			<key>scope</key>
-			<string>support.variable</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#66D9EF</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell callable command definition</string>
-			<key>scope</key>
-			<string>punctuation.definition.callable</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#66D9EF</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell environment variable definition</string>
-			<key>scope</key>
-			<string>punctuation.definition.variable.name.environment</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#66D9EF</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell variable plugin modifier separator</string>
-			<key>scope</key>
-			<string>punctuation.separator.variable.modifier.plugin</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#66D9EF</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell special subscript content</string>
-			<key>scope</key>
-			<string>punctuation.subscript.content</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#66D9EF</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell plugin variable name</string>
-			<key>scope</key>
-			<string>support.variable.name.plugin</string>
-			<key>settings</key>
-			<dict>
-				<key>fontStyle</key>
-				<string>italic</string>
-				<key>foreground</key>
-				<string>#66D9EF</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell flag definition</string>
-			<key>scope</key>
-			<string>punctuation.definition.flag</string>
-			<key>settings</key>
-			<dict>
-				<key>fontStyle</key>
-				<string>italic</string>
-				<key>foreground</key>
-				<string>#FD971F</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell string definition</string>
-			<key>scope</key>
-			<string>punctuation.definition.string</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#E6DB74</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell label</string>
+			<string>JCShell label (definition and target)</string>
 			<key>scope</key>
 			<string>keyword.control.label</string>
 			<key>settings</key>
 			<dict>
-				<key>foreground</key>
-				<string>#F8F8F2</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell label definition</string>
-			<key>scope</key>
-			<string>punctuation.definition.label</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#F8F8F2</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell parentheses modifier</string>
-			<key>scope</key>
-			<string>punctuation.parentheses.modifier</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#F92672</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell parentheses</string>
-			<key>scope</key>
-			<string>punctuation.parentheses</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#F8F8F2</string>
+				<key>fontStyle</key>
+				<string>italic</string>
 			</dict>
 		</dict>
 		<dict>
@@ -552,54 +428,10 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>JCShell subscript definition</key>
-			<string>Grey</string>
-			<key>scope</key>
-			<string>punctuation.definition.subscript</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#C6C4B8</string>
-			</dict>
-		</dict>
-		<dict>
 			<key>name</key>
-			<string>JCShell variable reference definition</string>
+			<string>JCShell variable name (definition and reference)</string>
 			<key>scope</key>
-			<string>punctuation.definition.reference.variable</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#D2D1FA</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell nested call definition</string>
-			<key>scope</key>
-			<string>punctuation.definition.nested-call</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#ECF9D2</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell user-defined call modifier</string>
-			<key>scope</key>
-			<string>punctuation.call-modifier.user</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#ECF9D2</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell user-defined variable name</string>
-			<key>scope</key>
-			<string>variable.name.user</string>
+			<string>variable.other</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -608,53 +440,20 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>JCShell environment variable name</string>
+			<string>JCShell variable reference punctuation</string>
 			<key>scope</key>
-			<string>variable.name.environment</string>
+			<string>punctuation.definition.variable</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#6967EF</string>
+				<string>#9AA5FF</string>
 			</dict>
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>JCShell assigned variable name</string>
+			<string>JCShell variable modifier</string>
 			<key>scope</key>
-			<string>variable.assigned</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#6967EF</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell built-in call modifier name</string>
-			<key>scope</key>
-			<string>punctuation.call-modifier.builtin</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#D1F3FA</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell user-defined variable modifier</string>
-			<key>scope</key>
-			<string>keyword.modifier.user</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#ECEF67</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell built-in variable modifier</string>
-			<key>scope</key>
-			<string>keyword.modifier.builtin</string>
+			<string>keyword.modifier.variable</string>
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
@@ -665,7 +464,7 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>JCShell assignment command/operator</string>
+			<string>JCShell assignment (command and operator)</string>
 			<key>scope</key>
 			<string>keyword.assignment</string>
 			<key>settings</key>
@@ -676,6 +475,6 @@
 		</dict>
 	</array>
 	<key>uuid</key>
-	<string>c7289f1c-cb74-4f2b-8a98-e2724530c9ab</string>
+	<string>e82163b1-fc55-421e-83c6-446a292df5d1</string>
 </dict>
 </plist>

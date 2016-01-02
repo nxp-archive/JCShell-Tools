@@ -32,6 +32,10 @@
 		</dict>
 		<dict>
 			<key>include</key>
+			<string>#return-statement</string>
+		</dict>
+		<dict>
+			<key>include</key>
 			<string>#function-definition</string>
 		</dict>
 		<dict>
@@ -200,7 +204,7 @@
 							<key>match</key>
 							<string>\S</string>
 							<key>name</key>
-							<string>variable.assigned.jcsh</string>
+							<string>variable.other.assigned.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -301,7 +305,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.modifier.builtin.jcsh</string>
+							<string>keyword.modifier.variable.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -319,7 +323,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.modifier.builtin.jcsh</string>
+							<string>keyword.modifier.variable.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -356,7 +360,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.modifier.builtin.jcsh</string>
+							<string>keyword.modifier.variable.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -445,7 +449,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.modifier.builtin.jcsh</string>
+							<string>keyword.modifier.variable.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
@@ -491,7 +495,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.modifier.builtin.jcsh</string>
+							<string>keyword.modifier.variable.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
@@ -583,12 +587,12 @@
 								<key>1</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.definition.callable.builtin.slash.jcsh</string>
+									<string>string.unquoted.call-modifier.jcsh punctuation.call-modifier.builtin.jcsh</string>
 								</dict>
 								<key>2</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.call-modifier.builtin.jcsh</string>
+									<string>support.function.builtin.slash.jcsh punctuation.definition.callable.builtin.slash.jcsh</string>
 								</dict>
 								<key>3</key>
 								<dict>
@@ -599,7 +603,7 @@
 							<key>comment</key>
 							<string>JCShell built-in slash command</string>
 							<key>match</key>
-							<string>(?&lt;=^|:|\()\s*(?:(/)|([@\-]))(app|applet|atr|c-v|cap-clear|cap-del-auth|cap-extrdt-auth|cap-info|cap-inst-auth|cap-load-auth|cap-reg-update|cap-sign|card|change-protocol|channel|clear-vars|close|echo|error|exchange-poweroff|exchange-warmreset|exec|expr|glob|identify|l-r|l-v|list-readers|list-vars|manage-channel|mode|printf|r-echo|register|s-v|select|send|set-channel|set-var|sleep|start-timer|stop-timer|term|terminal)(?=\s|\)|#|$)</string>
+							<string>(?&lt;=^|:|\()\s*([@\-])?(/)(app|applet|atr|c-v|cap-clear|cap-del-auth|cap-extrdt-auth|cap-info|cap-inst-auth|cap-load-auth|cap-reg-update|cap-sign|card|change-protocol|channel|clear-vars|close|echo|error|exchange-poweroff|exchange-warmreset|exec|expr|glob|identify|l-r|l-v|list-readers|list-vars|manage-channel|mode|printf|r-echo|register|s-v|select|send|set-channel|set-var|sleep|start-timer|stop-timer|term|terminal)(?=\s|\)|#|$)</string>
 							<key>name</key>
 							<string>meta.support.function.builtin.slash.jcsh</string>
 						</dict>
@@ -609,7 +613,7 @@
 								<key>1</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.call-modifier.builtin.jcsh</string>
+									<string>string.unquoted.call-modifier.jcsh punctuation.call-modifier.builtin.jcsh</string>
 								</dict>
 								<key>2</key>
 								<dict>
@@ -630,7 +634,7 @@
 								<key>1</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.call-modifier.builtin.jcsh</string>
+									<string>string.unquoted.call-modifier.jcsh punctuation.call-modifier.builtin.jcsh</string>
 								</dict>
 								<key>2</key>
 								<dict>
@@ -662,7 +666,7 @@
 										<key>1</key>
 										<dict>
 											<key>name</key>
-											<string>punctuation.call-modifier.user.jcsh</string>
+											<string>string.unquoted.call-modifier.jcsh punctuation.call-modifier.user.jcsh</string>
 										</dict>
 									</dict>
 									<key>match</key>
@@ -680,7 +684,7 @@
 									<key>match</key>
 									<string>\S</string>
 									<key>name</key>
-									<string>entity.name.function.surrounding.jcsh</string>
+									<string>entity.name.function.jcsh</string>
 								</dict>
 								<dict>
 									<key>include</key>
@@ -856,13 +860,13 @@
 				</dict>
 				<dict>
 					<key>begin</key>
-					<string>(#)?(\()</string>
+					<string>(#|%)?(\()</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.parentheses.modifier.jcsh</string>
+							<string>keyword.modifier.length.jcsh punctuation.parentheses.modifier.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
@@ -892,7 +896,7 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>[\w\-\.\=,!:;\[\]#]+</string>
+					<string>[\w\-\.\=,!:;\[\]#]</string>
 					<key>name</key>
 					<string>string.unquoted.expression.jcsh</string>
 				</dict>
@@ -1120,10 +1124,6 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#return-statement</string>
-						</dict>
-						<dict>
-							<key>include</key>
 							<string>$self</string>
 						</dict>
 					</array>
@@ -1217,8 +1217,6 @@
 					<string>Leading label that can be jumped to using goto. Labels can be placed at the beginning of any line and cannot contain variables</string>
 					<key>match</key>
 					<string>^\s*(\w[\w\-\.]*)\s*(:)</string>
-					<key>name</key>
-					<string>meta.control.label.definition.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1265,7 +1263,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.separator.variable.modifier.jcsh</string>
+							<string>keyword.modifier.separator.jcsh punctuation.separator.variable.modifier.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1308,12 +1306,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.nested-call.head.jcsh</string>
+							<string>keyword.control.nested-call.jcsh punctuation.definition.nested-call.head.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.nested-call.begin.jcsh</string>
+							<string>string.unquoted.nested-call.jcsh punctuation.definition.nested-call.begin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1325,7 +1323,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.nested-call.end.jcsh</string>
+							<string>string.unquoted.nested-call.jcsh punctuation.definition.nested-call.end.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
@@ -1453,7 +1451,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.separator.variable.modifier.plugin.jcsh</string>
+							<string>support.class.plugin.variable.jcsh punctuation.separator.variable.modifier.plugin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1476,7 +1474,7 @@
 							<key>match</key>
 							<string>\s*\w[\w\-\.]*\s*</string>
 							<key>name</key>
-							<string>support.variable.name.plugin.surrounding.jcsh</string>
+							<string>support.class.plugin.variable.jcsh support.variable.name.plugin.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1550,7 +1548,7 @@
 					<array>
 						<dict>
 							<key>match</key>
-							<string>\\['\\]</string>
+							<string>\\['\\nrt]</string>
 							<key>name</key>
 							<string>constant.character.escape.jcsh</string>
 						</dict>
@@ -1597,7 +1595,7 @@
 						</dict>
 						<dict>
 							<key>match</key>
-							<string>\\[\$"\\]</string>
+							<string>\\["\\\$nrt]</string>
 							<key>name</key>
 							<string>constant.character.escape.jcsh</string>
 						</dict>
@@ -1621,7 +1619,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.subscript.begin.jcsh</string>
+							<string>string.unquoted.subscript.jcsh punctuation.definition.subscript.begin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1633,7 +1631,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.subscript.end.jcsh</string>
+							<string>string.unquoted.subscript.jcsh punctuation.definition.subscript.end.jcsh</string>
 						</dict>
 					</dict>
 					<key>patterns</key>
@@ -1648,7 +1646,7 @@
 							<key>match</key>
 							<string>(?&lt;=\[)\*(?=\])</string>
 							<key>name</key>
-							<string>punctuation.subscript.content.asterisk.jcsh</string>
+							<string>support.constant.subscript.asterisk.jcsh punctuation.subscript.content.asterisk.jcsh</string>
 						</dict>
 						<dict>
 							<key>comment</key>
@@ -1656,7 +1654,7 @@
 							<key>match</key>
 							<string>(?&lt;=\[)\#(?=\](?:\s|=))</string>
 							<key>name</key>
-							<string>punctuation.subscript.content.number-sign.jcsh</string>
+							<string>support.constant.subscript.number-sign.jcsh punctuation.subscript.content.number-sign.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1672,7 +1670,7 @@
 						</dict>
 						<dict>
 							<key>comment</key>
-							<string>Float numbers are not allowed in subscript, this only include hex and dec</string>
+							<string>Float numbers are not allowed thus only include hex and dec</string>
 							<key>include</key>
 							<string>#number-hex</string>
 						</dict>
@@ -1747,12 +1745,12 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.reference.variable.head.jcsh</string>
+							<string>punctuation.definition.variable.reference.head.jcsh</string>
 						</dict>
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.reference.variable.begin.jcsh</string>
+							<string>punctuation.definition.variable.reference.begin.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
@@ -1764,7 +1762,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.reference.variable.end.jcsh</string>
+							<string>punctuation.definition.variable.reference.end.jcsh</string>
 						</dict>
 					</dict>
 					<key>name</key>
@@ -1806,8 +1804,6 @@
 					<string>Variable name. May contain replaced variables and interpolations</string>
 					<key>end</key>
 					<string>(?=[:\[;\}])</string>
-					<key>name</key>
-					<string>meta.variable.name.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1844,7 +1840,7 @@
 					<key>match</key>
 					<string>(?&lt;=\{)\s*(?:[Aa]rgv|[Cc]hannel|ECC_CURVEPARAM_A|ECC_CURVEPARAM_B|ECC_CURVEPARAM_G|ECC_CURVEPARAM_N|ECC_CURVEPARAM_P|ECC_SharedSecret|exec\.dir|exec\.errorlog|exec\.output|JCOPDIR|KEY_ECC_PrivateKey|KEY_ECC_PublicKeyX|KEY_ECC_PublicKeyY|KEY_RSA_PrivateKey|KEY_RSA_PrivateKey_dP|KEY_RSA_PrivateKey_dQ|KEY_RSA_PrivateKey_P|KEY_RSA_PrivateKey_PQ|KEY_RSA_PrivateKey_Q|KEY_RSA_PublicKey|last\.apdu\.executiontime|last\.apdu\.executiontime\.unit|last\.error|last\.errorlog|last\.executiontime|last\.executiontime\.unit|last\.response\.data|last\.response\.status|last\.return|logfile\.list|[Pp]ath|[Pp]lugin|random|[Rr]esponse|script\.dir|script\.line|script\.name|scrtimer\.exec\.time|SIGNATURE_ECDSA_R|SIGNATURE_ECDSA_S|SIGNATURE_RSA|timer\.execution\.time|timer\.id|[Tt]erminal|time|VERIFY_SIGN|[Vv]ersion)\s*(?=[\[;\}])</string>
 					<key>name</key>
-					<string>support.variable.name.builtin.jcsh</string>
+					<string>support.constant.builtin.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1858,20 +1854,15 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.variable.name.environment.jcsh</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>variable.name.environment.jcsh</string>
+							<string>support.constant.environment.jcsh punctuation.definition.variable.name.environment.jcsh</string>
 						</dict>
 					</dict>
 					<key>comment</key>
 					<string>Name of an environment variable (starting with '*')</string>
 					<key>match</key>
-					<string>(?&lt;=\{)(\*)([\w.]+)(?=[\[;\}])</string>
+					<string>(?&lt;=\{)(\*)[\w.]+(?=[\[;\}])</string>
 					<key>name</key>
-					<string>meta.variable.name.environment.jcsh</string>
+					<string>variable.other.environment.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1885,7 +1876,7 @@
 					<key>match</key>
 					<string>(?&lt;=\{)\d+(?=[\[;\}])</string>
 					<key>name</key>
-					<string>support.variable.name.positional.jcsh</string>
+					<string>support.constant.positional.jcsh</string>
 				</dict>
 			</array>
 		</dict>
@@ -1901,7 +1892,7 @@
 					<key>end</key>
 					<string>(?=[:\[;\}])</string>
 					<key>name</key>
-					<string>meta.variable.name.user.jcsh</string>
+					<string>meta.variable.other.user.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -1916,7 +1907,7 @@
 							<key>match</key>
 							<string>\S</string>
 							<key>name</key>
-							<string>variable.name.user.jcsh</string>
+							<string>variable.other.user.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
