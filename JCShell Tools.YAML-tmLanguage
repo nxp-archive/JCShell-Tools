@@ -266,11 +266,7 @@ repository:
         '1': {name: keyword.modifier.variable.jcsh}
       end: \s*(?=[;\}])
       patterns:
-      - include: '#variable'
-      - include: '#nested-call'
-      - name: constant.numeric.decimal.hex-modifier.surrounding.jcsh
-        match: \d*
-      - include: '#invalid-character'
+      - include: '#builtin-modifier-value'
     - comment: Built-in substring variable modifier ('s')
       begin: (?<=;)(s)
       beginCaptures:
@@ -281,23 +277,14 @@ repository:
         begin: (?<=s)
         end: (?=[,;\}])
         patterns:
-        - include: '#variable'
-        - include: '#nested-call'
-        - name: constant.numeric.decimal.substring-modifier.offset.surrounding.jcsh
-          match: \d*
-        - include: '#invalid-character'
+        - include: '#builtin-modifier-value'
       - comment: Second argument of substring variable modifier
         begin: (,)
         beginCaptures:
-          '1': {name: punctuation.separator.variable.modifier}
+          '1': {name: punctuation.separator.variable.modifier.jcsh}
         end: (?=[;\}])
         patterns:
-        - include: '#variable'
-        - include: '#nested-call'
-        - name: constant.numeric.decimal.substring-modifier.length.surrounding.jcsh
-          match: \d*
-        - include: '#invalid-character'
-      - include: '#invalid-character'
+        - include: '#builtin-modifier-value'
     - comment: Built-in assigned variable modifier for Time ('time')
       begin: (?<={time;)(fmt)(\=)
       beginCaptures:
@@ -308,7 +295,7 @@ repository:
       - include: '#string'
       - include: '#variable'
       - include: '#nested-call'
-      - name: string.unquoted.assigned-modifier.surrounding.jcsh
+      - name: string.unquoted.assigned-modifier.jcsh
         match: .
       - include: '#invalid-character'
     - comment: Built-in assigned variable modifier for Random ('random')
@@ -318,10 +305,18 @@ repository:
         '2': {name: keyword.assignment.operator.jcsh}
       end: (?=[;\}])
       patterns:
+      - include: '#builtin-modifier-value'
+
+  builtin-modifier-value:
+    patterns:
+      - comment: Values that can be given to a modifier (number)
       - include: '#variable'
       - include: '#nested-call'
-      - name: constant.numeric.decimal.hex-modifier.surrounding.jcsh
-        match: \d*
+      - comment: Either decimal or hexadecimal are accepted
+        match: (0x[\da-fA-F]*)|(\d*)
+        captures:
+          '1': {name: constant.numeric.hexadecimal.jcsh }
+          '2': {name: constant.numeric.decimal.jcsh }
       - include: '#invalid-character'
 
   plugin-modifier:
@@ -472,7 +467,7 @@ repository:
     patterns:
     - comment: Detect hex numbers starting with '0x'
       name: constant.numeric.hexadecimal.jcsh
-      match: (?<!\w)(0x)[\da-fA-F]+(?!\w|(?:\.[^\.]))
+      match: (?<!\w)0x[\da-fA-F]+(?!\w|(?:\.[^\.]))
 
   number-float:
     patterns:

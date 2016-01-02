@@ -61,7 +61,7 @@
 			<key>name</key>
 			<string>JCShell variable reference punctuation</string>
 			<key>scope</key>
-			<string>punctuation.definition.variable</string>
+			<string>punctuation.definition.variable.reference</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>

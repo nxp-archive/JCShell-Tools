@@ -334,21 +334,7 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#variable</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested-call</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\d*</string>
-							<key>name</key>
-							<string>constant.numeric.decimal.hex-modifier.surrounding.jcsh</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
+							<string>#builtin-modifier-value</string>
 						</dict>
 					</array>
 				</dict>
@@ -380,21 +366,7 @@
 							<array>
 								<dict>
 									<key>include</key>
-									<string>#variable</string>
-								</dict>
-								<dict>
-									<key>include</key>
-									<string>#nested-call</string>
-								</dict>
-								<dict>
-									<key>match</key>
-									<string>\d*</string>
-									<key>name</key>
-									<string>constant.numeric.decimal.substring-modifier.offset.surrounding.jcsh</string>
-								</dict>
-								<dict>
-									<key>include</key>
-									<string>#invalid-character</string>
+									<string>#builtin-modifier-value</string>
 								</dict>
 							</array>
 						</dict>
@@ -406,7 +378,7 @@
 								<key>1</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.separator.variable.modifier</string>
+									<string>punctuation.separator.variable.modifier.jcsh</string>
 								</dict>
 							</dict>
 							<key>comment</key>
@@ -417,27 +389,9 @@
 							<array>
 								<dict>
 									<key>include</key>
-									<string>#variable</string>
-								</dict>
-								<dict>
-									<key>include</key>
-									<string>#nested-call</string>
-								</dict>
-								<dict>
-									<key>match</key>
-									<string>\d*</string>
-									<key>name</key>
-									<string>constant.numeric.decimal.substring-modifier.length.surrounding.jcsh</string>
-								</dict>
-								<dict>
-									<key>include</key>
-									<string>#invalid-character</string>
+									<string>#builtin-modifier-value</string>
 								</dict>
 							</array>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
 						</dict>
 					</array>
 				</dict>
@@ -479,7 +433,7 @@
 							<key>match</key>
 							<string>.</string>
 							<key>name</key>
-							<string>string.unquoted.assigned-modifier.surrounding.jcsh</string>
+							<string>string.unquoted.assigned-modifier.jcsh</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -511,23 +465,50 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#variable</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#nested-call</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\d*</string>
-							<key>name</key>
-							<string>constant.numeric.decimal.hex-modifier.surrounding.jcsh</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#invalid-character</string>
+							<string>#builtin-modifier-value</string>
 						</dict>
 					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>builtin-modifier-value</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>comment</key>
+					<string>Values that can be given to a modifier (number)</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#variable</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#nested-call</string>
+				</dict>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>constant.numeric.hexadecimal.jcsh</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>constant.numeric.decimal.jcsh</string>
+						</dict>
+					</dict>
+					<key>comment</key>
+					<string>Either decimal or hexadecimal are accepted</string>
+					<key>match</key>
+					<string>(0x[\da-fA-F]*)|(\d*)</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#invalid-character</string>
 				</dict>
 			</array>
 		</dict>
@@ -1421,7 +1402,7 @@
 					<key>comment</key>
 					<string>Detect hex numbers starting with '0x'</string>
 					<key>match</key>
-					<string>(?&lt;!\w)(0x)[\da-fA-F]+(?!\w|(?:\.[^\.]))</string>
+					<string>(?&lt;!\w)0x[\da-fA-F]+(?!\w|(?:\.[^\.]))</string>
 					<key>name</key>
 					<string>constant.numeric.hexadecimal.jcsh</string>
 				</dict>
