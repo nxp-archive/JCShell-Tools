@@ -1,11 +1,11 @@
 <snippet>
     <tabTrigger>DEFUN</tabTrigger>
-    <scope>source.jcsh</scope>
+    <scope>meta.callable.jcsh</scope>
     <description>Function definition</description>
     <content><![CDATA[
-# Function ${1:$SELECTION}: ${2}
+# Function ${1:name}: ${2}
 # Arguments: ${3}
-DEFUN ${1:$SELECTION}
+DEFUN ${1:name}
 	${0:return}
 END
 ]]></content>

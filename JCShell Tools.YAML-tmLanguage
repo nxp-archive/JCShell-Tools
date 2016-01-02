@@ -198,6 +198,7 @@ repository:
     - comment: Variable name. May contain replaced variables and interpolations
       begin: (?<=\{)
       end: (?=[:\[;\}])
+      name: meta.variable.name.jcsh
       patterns:
       - include: '#variable-name-builtin'
       - include: '#variable-name-positional'

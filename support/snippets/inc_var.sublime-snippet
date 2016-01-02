@@ -1,6 +1,6 @@
 <snippet>
     <tabTrigger>inc</tabTrigger>
-    <scope>source.jcsh</scope>
+    <scope>meta.callable.jcsh</scope>
     <description>Variable increment</description>
     <content><![CDATA[
 /s-v ${1:$SELECTION} \$\{${1:$SELECTION}\} + 1

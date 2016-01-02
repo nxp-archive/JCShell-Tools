@@ -1,9 +1,9 @@
 <snippet>
     <tabTrigger>if</tabTrigger>
-    <scope>source.jcsh</scope>
+    <scope>meta.callable.jcsh</scope>
     <description>If condition</description>
     <content><![CDATA[
-if ${1:$SELECTION}
+if ${1:statement}
 	${0}
 end
 ]]></content>

@@ -1804,6 +1804,8 @@
 					<string>Variable name. May contain replaced variables and interpolations</string>
 					<key>end</key>
 					<string>(?=[:\[;\}])</string>
+					<key>name</key>
+					<string>meta.variable.name.jcsh</string>
 					<key>patterns</key>
 					<array>
 						<dict>

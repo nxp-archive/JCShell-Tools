@@ -1,9 +1,9 @@
 <snippet>
     <tabTrigger>while</tabTrigger>
-    <scope>source.jcsh</scope>
+    <scope>meta.callable.jcsh</scope>
     <description>While loop</description>
     <content><![CDATA[
-while ${1:$SELECTION}
+while ${1:statement}
 	${0}
 end
 ]]></content>

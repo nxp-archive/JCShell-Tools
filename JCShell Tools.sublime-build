@@ -1,4 +1,0 @@
-{
-	"cmd": ["jcshell", "-f", "$file"],
-    "selector": "source.jcsh"
-}

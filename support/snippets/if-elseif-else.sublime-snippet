@@ -1,11 +1,11 @@
 <snippet>
     <tabTrigger>if</tabTrigger>
-    <scope>source.jcsh</scope>
+    <scope>meta.callable.jcsh</scope>
     <description>If/Elseif/Else condition</description>
     <content><![CDATA[
-if ${1:$SELECTION}
+if ${1:statement}
 	${3}
-elseif ${2}
+elseif ${2:statement}
 	${4}
 else
 	${0}

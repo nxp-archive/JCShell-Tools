@@ -1,6 +1,6 @@
 <snippet>
     <tabTrigger>try</tabTrigger>
-    <scope>source.jcsh</scope>
+    <scope>meta.callable.jcsh</scope>
     <description>Try/Catch</description>
     <content><![CDATA[
 try
