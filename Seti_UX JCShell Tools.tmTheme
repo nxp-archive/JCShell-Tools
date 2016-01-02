@@ -1,60 +1,176 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>name</key>
-	<string>JCShell Tools Monokai</string>
-	<key>settings</key>
-	<array>
+	<dict>
+		<key>comment</key>
+		<string>Inspired by Seti UX: https://github.com/ctf0/Seti_UX. MIT License</string>
+		<key>name</key>
+		<string>Seti_UX JCShell Tools</string>
+		<key>settings</key>
+		<array>
+
+		<!-- ===================================================
+		Additional scopes for better support of JCShell language 
+		======================================================== -->
+
 		<dict>
+			<key>name</key>
+			<string>JCShell function definition keyword</string>
+			<key>scope</key>
+			<string>keyword.function.definition</string>
 			<key>settings</key>
 			<dict>
-				<key>background</key>
-				<string>#272822</string>
-				<key>caret</key>
-				<string>#F8F8F0</string>
-				<key>foreground</key>
-				<string>#F8F8F2</string>
-				<key>invisibles</key>
-				<string>#3B3A32</string>
-				<key>lineHighlight</key>
-				<string>#3E3D32</string>
-				<key>selection</key>
-				<string>#49483E</string>
-				<key>findHighlight</key>
-				<string>#FFE792</string>
-				<key>findHighlightForeground</key>
-				<string>#000000</string>
-				<key>selectionBorder</key>
-				<string>#222218</string>
-				<key>activeGuide</key>
-				<string>#9D550FB0</string>
-
-				<key>bracketsForeground</key>
-				<string>#F8F8F2A5</string>
-				<key>bracketsOptions</key>
-				<string>underline</string>
-
-				<key>bracketContentsForeground</key>
-				<string>#F8F8F2A5</string>
-				<key>bracketContentsOptions</key>
-				<string>underline</string>
-
-				<key>tagsOptions</key>
-				<string>stippled_underline</string>
+				<key>fontStyle</key>
+				<string>italic bold</string>
 			</dict>
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Comment</string>
+			<string>JCShell label (definition and target)</string>
+			<key>scope</key>
+			<string>keyword.control.label</string>
+			<key>settings</key>
+			<dict>
+				<key>background</key>
+				<string>#CD3F4530</string>
+				<key>fontStyle</key>
+				<string>italic</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>JCShell unquoted string</string>
+			<key>scope</key>
+			<string>string.unquoted</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#D8F6FF</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>JCShell variable name (definition and reference)</string>
+			<key>scope</key>
+			<string>variable.other</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#6967EF</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>JCShell variable reference punctuation</string>
+			<key>scope</key>
+			<string>punctuation.definition.variable</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#9AA5FF</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>JCShell variable modifier</string>
+			<key>scope</key>
+			<string>keyword.modifier.variable</string>
+			<key>settings</key>
+			<dict>
+				<key>fontStyle</key>
+				<string>italic</string>
+				<key>foreground</key>
+				<string>#ECEF67</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>JCShell assignment (command and operator)</string>
+			<key>scope</key>
+			<string>keyword.assignment</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#FEC481</string>
+			</dict>
+		</dict>
+
+		<!-- ====================================
+		General
+		====================================== -->
+
+		<dict>
+			<key>settings</key>
+			<dict>
+				<key>background</key>
+				<string>#151718</string>
+				<key>foreground</key>
+				<string>#D8F6FF</string>
+				<key>caret</key>
+				<string>#fed02e</string>
+				<key>invisibles</key>
+				<string>#F3FFB51A</string>
+				<key>lineHighlight</key>
+				<string>#101112</string>
+				<key>findHighlight</key>
+				<string>#4FA5C7</string>
+				<key>gutter</key>
+				<string>#151718</string>
+				<key>gutterForeground</key>
+				<string>#7292a180</string>
+				<key>selection</key>
+				<string>#4FA5C750</string>
+				<key>selectionForeground</key>
+				<string>#00000050</string>
+				<key>inactiveSelection</key>
+				<string>#2F627750</string>
+				<key>bracketContentsOptions</key>
+				<string>underline</string>
+				<key>tagsForeground</key>
+				<string>#B6DFEB</string>
+				<key>tagsOptions</key>
+				<string>underline</string>
+				<key>guide</key>
+				<string>#71787c40</string>
+				<key>stackGuide</key>
+				<string>#71787c66</string>
+				<key>activeGuide</key>
+				<string>#ffd20080</string>
+			</dict>
+		</dict>
+
+		<!-- ====================================
+		Main scopes (from Monokai mainly)
+		====================================== -->
+
+		<dict>
+			<key>name</key>
+			<string>Comment signs</string>
+			<key>scope</key>
+			<string>punctuation.definition.comment</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#FF0040</string>
+				<key>background</key>
+				<string></string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Comment txt</string>
 			<key>scope</key>
 			<string>comment</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#75715E</string>
+				<string>#7292a1</string>
+				<key>background</key>
+				<string>#29394060</string>
 			</dict>
 		</dict>
+
+	
 		<dict>
 			<key>name</key>
 			<string>String</string>
@@ -184,7 +300,7 @@
 				<key>fontStyle</key>
 				<string></string>
 				<key>foreground</key>
-				<string>#A6E22E</string>
+				<string>#11BD7C</string>
 			</dict>
 		</dict>
 		<dict>
@@ -388,93 +504,8 @@
 				<string>#F83333</string>
 			</dict>
 		</dict>
-
-
-		<!-- ===================================================
-		Additional scopes for better support of JCShell language 
-		======================================================== -->
-
-		<dict>
-			<key>name</key>
-			<string>JCShell function definition keyword</string>
-			<key>scope</key>
-			<string>keyword.function.definition</string>
-			<key>settings</key>
-			<dict>
-				<key>fontStyle</key>
-				<string>italic bold</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell label (definition and target)</string>
-			<key>scope</key>
-			<string>keyword.control.label</string>
-			<key>settings</key>
-			<dict>
-				<key>fontStyle</key>
-				<string>italic</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell unquoted string</string>
-			<key>scope</key>
-			<string>string.unquoted</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#F8F8F2</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell variable name (definition and reference)</string>
-			<key>scope</key>
-			<string>variable.other</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#6967EF</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell variable reference punctuation</string>
-			<key>scope</key>
-			<string>punctuation.definition.variable</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#9AA5FF</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell variable modifier</string>
-			<key>scope</key>
-			<string>keyword.modifier.variable</string>
-			<key>settings</key>
-			<dict>
-				<key>fontStyle</key>
-				<string>italic</string>
-				<key>foreground</key>
-				<string>#ECEF67</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>JCShell assignment (command and operator)</string>
-			<key>scope</key>
-			<string>keyword.assignment</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#FEC481</string>
-			</dict>
-		</dict>
 	</array>
 	<key>uuid</key>
-	<string>e82163b1-fc55-421e-83c6-446a292df5d1</string>
+	<string>15df2df1-951d-4503-8d2a-6e7ea10d90ee</string>
 </dict>
 </plist>
