@@ -3,7 +3,7 @@
     <scope>meta.callable.jcsh</scope>
     <description>For loop</description>
     <content><![CDATA[
-for ${1:var} ${2:$SELECTION}
+for ${1:var} ${2:$SELECTION} 
 	${0}
 end
 ]]></content>

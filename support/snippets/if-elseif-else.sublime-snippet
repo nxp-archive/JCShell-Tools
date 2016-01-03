@@ -3,9 +3,9 @@
     <scope>meta.callable.jcsh</scope>
     <description>If/Elseif/Else condition</description>
     <content><![CDATA[
-if ${1:condition}
+if ${1:condition} 
 	${3}
-elseif ${2:condition}
+elseif ${2:condition} 
 	${4}
 else
 	${0}

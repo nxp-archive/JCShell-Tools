@@ -3,7 +3,7 @@
     <scope>meta.callable.jcsh</scope>
     <description>If condition</description>
     <content><![CDATA[
-if ${1:condition}
+if ${1:condition} 
 	${0}
 end
 ]]></content>

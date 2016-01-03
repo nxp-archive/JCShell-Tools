@@ -5,7 +5,7 @@
     <content><![CDATA[
 try
 	${1:$SELECTION}
-catch ${2:1}
+catch ${2:1} 
 	${0}
 end
 ]]></content>
