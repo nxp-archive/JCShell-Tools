@@ -93,7 +93,10 @@
 			</dict>
 		</dict>
 
-		<!-- Default theme scopes -->
+
+		<!-- ==================
+		Default theme scopes 
+		=================== -->
 
 		<dict>
 			<key>settings</key>
