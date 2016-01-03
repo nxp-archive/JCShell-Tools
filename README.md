@@ -1,7 +1,7 @@
 JCShell Tools
 =============
 
-Language definition for NXP's JCShell scripts on Sublime Text 2/3.
+Language definition for NXP's JCShell scripts on Sublime Text 2/3.  
 Contains syntax highlighting, snippets and auto-completion.
 
 ## Screenshots
@@ -27,7 +27,7 @@ following:
 
 If you want to do the installation manually (for example on an offline computer):
 
-1. Clone (or [download](archive/master.zip)) this repository
+1. Clone (or [download](https://github.com/NXP/JCShell-Tools/archive/master.zip)) this repository
 2. Open your `Packages` folder (`Preferences: Browse Packages` in the Command Palette)
 3. Create a folder `JCShell Tools` and copy the repository content inside
 
