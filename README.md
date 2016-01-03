@@ -68,4 +68,4 @@ Licensed under the BSD 3-Clause license. See [license file](LICENSE) for more in
 
 Developed by @Mikaz-Fr, based on a draft from Connor Röhricht.
 
-Please create an [issue](https://github.com/nxp/jcshell-tools/issues) for any bug you may find.
+Please create an [issue](https://github.com/NXP/JCShell-Tools/issues) for any bug you may find.
