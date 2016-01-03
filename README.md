@@ -1,8 +1,8 @@
 JCShell Tools
 =============
 
-Language definition for NXP's JCShell scripts. 
-Contains syntax highlighting, snippets and auto-completion for Sublime Text 2/3. 
+Language definition for NXP's JCShell scripts for Sublime Text 2/3.
+Contains syntax highlighting, snippets and auto-completion.
 
 ## Screenshots
 
