@@ -1,7 +1,7 @@
 JCShell Tools
 =============
 
-Language definition for NXP's JCShell scripts for Sublime Text 2/3.
+Language definition for NXP's JCShell scripts on Sublime Text 2/3.
 Contains syntax highlighting, snippets and auto-completion.
 
 ## Screenshots
@@ -53,7 +53,7 @@ If you want to add support in a different color scheme the following supplementa
 - `punctuation.definition.variable.reference`
 - `keyword.assignment`
 
-You can see the [Monokai JCShell Tools.tmTheme](Monokai JCShell Tools.tmTheme#L10) file for example values.
+You can see the [Monokai JCShell Tools.tmTheme](Monokai JCShell Tools.tmTheme#L10#L94) file for example values.
 
 ## Known limitations
 
@@ -66,6 +66,6 @@ Even though the following syntaxes are valid, JCShell Tools is not accepting it:
 
 Licensed under the BSD 3-Clause license. See [license file](LICENSE) for more information.
 
-Developed by @Mikaz-Fr, based on a draft from Connor Röhricht.
+Developed by @[Mikaz-Fr](https://github.com/Mikaz-fr), based on a draft from Connor Röhricht.
 
 Please create an [issue](https://github.com/NXP/JCShell-Tools/issues) for any bug you may find.
