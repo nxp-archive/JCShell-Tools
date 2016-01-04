@@ -27,7 +27,7 @@ following:
 
 If you want to do the installation manually (for example on an offline computer):
 
-1. Clone (or [download](https://github.com/NXP/JCShell-Tools/archive/master.zip)) this repository
+1. Clone (or [download](https://github.com/nxp/jcshell-tools/archive/master.zip)) this repository
 2. Open your `Packages` folder (`Preferences: Browse Packages` in the Command Palette)
 3. Create a folder `JCShell Tools` and copy the repository content inside
 
@@ -68,4 +68,4 @@ Licensed under the BSD 3-Clause license. See [license file](LICENSE) for more in
 
 Developed by @[Mikaz-Fr](https://github.com/Mikaz-fr), based on a draft from Connor Röhricht.
 
-Please create an [issue](https://github.com/NXP/JCShell-Tools/issues) for any bug you may find.
+Please create an [issue](https://github.com/nxp/jcshell-tools/issues) for any bug you may find.
