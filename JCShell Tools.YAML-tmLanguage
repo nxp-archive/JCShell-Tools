@@ -5,7 +5,7 @@ name: JCShell Tools
 scopeName: source.jcsh
 fileTypes: [jcsh]
 uuid: 18d303a3-9fdd-4503-8eba-e8c0b283ddc1
-version: 1.0.0
+version: 1.0.1
 
 # Define here variables to be re-used in the file for ease of modification
 yaml_variable: &CMD_LIST_SLASH_BUILTIN
@@ -598,19 +598,27 @@ repository:
         '1': {name: keyword.control.end.for.jcsh}
       patterns:
       - include: '#flow-expression'
-      - include: '#flow-statement'
       - include: $self
 
   flow-statement:
     patterns:
     - comment: Break, continue or goto statement, only a label can be placed in front. Goto requires a label after. This is check before callable, thus we enforce keywords continue, goto and break to not be used as function/script name even though JCShell is not actively forbidding it (outside loops)
       name: meta.control.flow.jcsh
-      match: (?:^|(?<=.:))\s*(?:(break)|(continue)|(?:(goto)(?=\s+\S)))(?:\s*(\w[\w\-\.]*))?\s*
-      captures:
+      begin: (?:^|(?<=.:))\s*(?:(break)|(continue)|(?:(goto)(?=\s+\S)))
+      beginCaptures:
         '1': {name: keyword.control.break.jcsh}
         '2': {name: keyword.control.continue.jcsh}
         '3': {name: keyword.control.goto.jcsh}
-        '4': {name: keyword.control.label.target.jcsh}
+      end: \s*(?=(?:\s#.*)|$|\\)
+      patterns:
+      - include: '#variable'
+      - include: '#nested-call'
+      - comment: If the target label is a string, highlight it specially
+        match: \S
+        name: keyword.control.label.target.jcsh
+      - comment: Discard any remaining spaces
+        match: \s
+      - include: '#invalid-character'
 
   while-block:
     patterns:
@@ -624,7 +632,6 @@ repository:
         '1': {name: keyword.control.end.while.jcsh}
       patterns:
       - include: '#flow-expression'
-      - include: '#flow-statement'
       - include: $self
 
   function-definition:

@@ -983,7 +983,9 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>captures</key>
+					<key>begin</key>
+					<string>(?:^|(?&lt;=.:))\s*(?:(break)|(continue)|(?:(goto)(?=\s+\S)))</string>
+					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
 						<dict>
@@ -1000,18 +1002,42 @@
 							<key>name</key>
 							<string>keyword.control.goto.jcsh</string>
 						</dict>
-						<key>4</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.label.target.jcsh</string>
-						</dict>
 					</dict>
 					<key>comment</key>
 					<string>Break, continue or goto statement, only a label can be placed in front. Goto requires a label after. This is check before callable, thus we enforce keywords continue, goto and break to not be used as function/script name even though JCShell is not actively forbidding it (outside loops)</string>
-					<key>match</key>
-					<string>(?:^|(?&lt;=.:))\s*(?:(break)|(continue)|(?:(goto)(?=\s+\S)))(?:\s*(\w[\w\-\.]*))?\s*</string>
+					<key>end</key>
+					<string>\s*(?=(?:\s#.*)|$|\\)</string>
 					<key>name</key>
 					<string>meta.control.flow.jcsh</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#variable</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#nested-call</string>
+						</dict>
+						<dict>
+							<key>comment</key>
+							<string>If the target label is a string, highlight it specially</string>
+							<key>match</key>
+							<string>\S</string>
+							<key>name</key>
+							<string>keyword.control.label.target.jcsh</string>
+						</dict>
+						<dict>
+							<key>comment</key>
+							<string>Discard any remaining spaces</string>
+							<key>match</key>
+							<string>\s</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#invalid-character</string>
+						</dict>
+					</array>
 				</dict>
 			</array>
 		</dict>
@@ -1049,10 +1075,6 @@
 						<dict>
 							<key>include</key>
 							<string>#flow-expression</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#flow-statement</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -1937,10 +1959,6 @@
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#flow-statement</string>
-						</dict>
-						<dict>
-							<key>include</key>
 							<string>$self</string>
 						</dict>
 					</array>
@@ -1953,7 +1971,7 @@
 	<key>uuid</key>
 	<string>18d303a3-9fdd-4503-8eba-e8c0b283ddc1</string>
 	<key>version</key>
-	<string>1.0.0</string>
+	<string>1.0.1</string>
 	<key>yaml_variable</key>
 	<false/>
 </dict>
