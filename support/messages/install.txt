@@ -1,6 +1,3 @@
-JCShell Tools
-=============
-
 Thanks you for installing JCShell Tools.
 You can have a look at the README with "Preferences → Package Settings → JCShell Tools" or at: https://github.com/NXP/JCShell-Tools
 

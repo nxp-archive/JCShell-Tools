@@ -1,6 +1,4 @@
-JCShell Tools v1.0.1
-====================
-05-01-2015
+v1.0.1: 05-01-2015
 
 Changes in this release:
  - Added Menu to access to settings files in: Preferences → Package Settings → JCShell Tools
