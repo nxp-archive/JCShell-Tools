@@ -1,0 +1,7 @@
+JCShell Tools v1.0.1
+====================
+05-01-2015
+
+Changes in this release:
+ - Added Menu to access to settings files in: Preferences → Package Settings → JCShell Tools
+ - Fixed an issue with goto, continue or break when target label is a variable: https://github.com/NXP/JCShell-Tools/issues/1
