@@ -19,7 +19,7 @@ The preferred and easiest way to install the package for Sublime Text is the
 following:
 
 1. Install [Package Control](https://sublime.wbond.net/installation) if not done already
-2. Open `Tools` → `Command Palette...` (Shift+Ctrl|Super+P)
+2. Open `Tools` → `Command Palette...` (<kbd>cmd</kbd>+<kbd>shift</kbd>+<kbd>P</kbd>)
 3. Select `Package Control: Install Package`
 4. Search for `JCShell Tools` package and install it
 

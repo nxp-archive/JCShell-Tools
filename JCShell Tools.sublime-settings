@@ -1,4 +1,7 @@
 {
+	// List of extensions to open with JCShell Tools
 	"extensions": ["jcsh"],
+
+	// Default color scheme to apply for JCShell Tool
 	"color_scheme": "Packages/JCShell Tools/Monokai JCShell Tools.tmTheme"
 }
