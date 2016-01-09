@@ -66,6 +66,6 @@ Even though the following syntaxes are valid, JCShell Tools is not accepting it:
 
 Licensed under the BSD 3-Clause license. See [license file](LICENSE) for more information.
 
-Developed by @[Mikaz-Fr](https://github.com/Mikaz-fr), based on a draft from Connor Röhricht.
+Developed by [Michael Roy](https://github.com/Mikaz-fr), based on a draft from Connor Röhricht.
 
 Please create an [issue](https://github.com/nxp/jcshell-tools/issues) for any bug you may find.
